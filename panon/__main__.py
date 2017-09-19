@@ -138,9 +138,8 @@ class Panel:
         screen = win.get_screen()
         rgba = screen.get_rgba_visual()
         win.set_visual(rgba)
-        #win.set_wmclass(wmclass, wmclass)
-
-        win.set_name("panel")
+        win.set_wmclass("panon","Panon" )
+        win.set_name("panon")
         win.set_type_hint(Gdk.WindowTypeHint.DOCK)
         win.set_decorated(False)
         win.stick()
@@ -175,8 +174,8 @@ class Panel:
 
         P_WIDTH = self.screen.width_in_pixels
 
-        win.set_wm_name("Panel")
-        win.set_wm_class("panel", "Panel")
+        win.set_wm_name("panon")
+        win.set_wm_class("panon", "Panon")
         # win.set_wm_hints(flags=(Xutil.InputHint | Xutil.StateHint),
         #                 input=0, initial_state=1)
         win.set_wm_normal_hints(flags=(
