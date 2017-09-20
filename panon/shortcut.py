@@ -56,3 +56,7 @@ class Shortcut(Gtk.EventBox):
             if 'click' in self.shortcut:
                 os.system(self.shortcut['click'])
             return True
+        if event.button == 3:
+            if 'rightclick' in self.shortcut:
+                os.system(self.shortcut['rightclick'])
+            return True
