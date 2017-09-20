@@ -13,22 +13,8 @@ from . import helper
 if config.log == 'debug':
     logging.basicConfig(level=logging.DEBUG)
 
-css = b"""
-.fake-shadow-top{
-    border-top:solid 1px white;
-}
-.fake-shadow-bottom{
-    border-bottom:solid 1px black;
-}
-.shortcut{
-color:black;
-padding-left:5px;
-padding-right:5px;
-text-shadow: 1px 1px 5px black; 
-}
-"""
 style_provider = Gtk.CssProvider()
-style_provider.load_from_data(css)
+style_provider.load_from_data(config.style_sheet.encode())
 
 Gtk.StyleContext.add_provider_for_screen(
     Gdk.Screen.get_default(),

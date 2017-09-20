@@ -23,7 +23,7 @@ class Shortcut(Gtk.EventBox):
                 w = shortcut['max-width']
                 self.label.set_max_width_chars(w)
             ctx = self.label.get_style_context()
-            ctx.add_class('shortcut')
+            ctx.add_class('label')
             self.add(self.label)
             self.tick()
             GObject.timeout_add(1000 * shortcut['interval'], self.tick)

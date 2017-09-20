@@ -5,6 +5,21 @@ position = 'bottom'
 background_color = '#ffffff30'
 fake_shadow = True
 
+style_sheet="""
+.fake-shadow-top{
+    border-top:solid 1px white;
+}
+.fake-shadow-bottom{
+    border-bottom:solid 1px black;
+}
+.label{
+color:black;
+padding-left:5px;
+padding-right:5px;
+text-shadow: 1px 1px 5px black; 
+}
+"""
+
 sections = [
 #    {
 #        # mpd
