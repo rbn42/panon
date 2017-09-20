@@ -6,6 +6,7 @@ setup(
     version='v0.1.0',
     description='A status bar for X window managers',
     url='http://github.com/rbn42/panon',
+    download_url='https://github.com/rbn42/panon/archive/v0.1.0.tar.gz',
     author='rbn42',
     author_email='bl100@students.waikato.ac.nz',
     license='MIT',
