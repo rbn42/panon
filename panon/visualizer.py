@@ -15,14 +15,29 @@ def record_pyaudio(fps, channel_count, sample_rate):
                     channels=channel_count,
                     rate=sample_rate,
                     input=True)
-    while True:
-        yield np.fromstring(stream.read(buffer_size), 'int16')
+    stop = False
+    while not stop:
+        stop = yield np.fromstring(stream.read(buffer_size), 'int16')
+    stream.close()
+    yield
 
 
-class Visualizer(Gtk.DrawingArea):
+class Visualizer(Gtk.EventBox):
+    stop = False
+    empty = False
 
     def tick(self):
-        self.queue_draw()
+        if self.stop:
+            if not self.empty:
+                self.sample.send(True)
+                self.empty = True
+                self.queue_draw()
+        if not self.stop:
+            if self.empty:
+                self.sample = record_pyaudio(
+                    self.fps, self.channel_count, self.sample_rate)
+                self.empty = False
+            self.queue_draw()
         return True  # Causes timeout to tick again.
 
     def __init__(self, background_color, foreground_color, fps=60, channel_count=2, sample_rate=44100, padding=4):
@@ -38,12 +53,19 @@ class Visualizer(Gtk.DrawingArea):
         else:
             self.sources = [(1, helper.color(foreground_color))]
         self.padding = padding
+        self.fps = fps
+        self.channel_count = channel_count
+        self.sample_rate = sample_rate
         self.sample = record_pyaudio(fps, channel_count, sample_rate)
-        self.connect('draw', self.do_draw_cb)
         GObject.timeout_add(1000 // fps, self.tick)
+
+        self.da = Gtk.DrawingArea()
+        self.da.connect('draw', self.do_draw_cb)
+        self.add(self.da)
 
         self.add_events(Gdk.EventMask.SCROLL_MASK)
         self.connect('scroll-event', self.do_scroll_event)
+        self.connect('button-release-event', self.do_button_release_event)
 
     def update_hue_gradient(self):
         self.sources = [
@@ -53,6 +75,13 @@ class Visualizer(Gtk.DrawingArea):
             (1, self.create_gradient(alpha=0.5, position=self.hue_gradient_position)),
             (0.5, self.create_gradient(alpha=1, position=self.hue_gradient_position)),
         ]
+
+    def do_button_release_event(self, widget, event=None):
+        if event and event.button == 1:
+            self.stop = not self.stop
+            return True
+        else:
+            return False
 
     def do_scroll_event(self, widget, e):
         if type(self.sources[0][1]) is Gdk.RGBA:
@@ -79,6 +108,13 @@ class Visualizer(Gtk.DrawingArea):
     def do_draw_cb(self, widget, cr):
         alloc = self.get_allocation()
         w, h = alloc.width, alloc.height
+
+        cr.set_source_rgba(*self.background_color)
+        cr.rectangle(0, 0, w, h)
+        cr.fill()
+
+        if self.empty:
+            return
 
         data = next(self.sample)
         self.history.append(data)
@@ -113,8 +149,8 @@ class Visualizer(Gtk.DrawingArea):
         start = 0
         sections = []
         for rel, freq_width in zip(rels, len(data) * 1 / rels / sum(1 / rels) // 4):
-            if rel>2:
-                freq_width*=rel
+            if rel > 2:
+                freq_width *= rel
                 pass
             sections.append((start, start + freq_width, rel))
             start += freq_width
@@ -143,10 +179,6 @@ class Visualizer(Gtk.DrawingArea):
         vol = self.min_sample + np.mean(fft ** exp)
         self.max_sample = self.max_sample * retain + vol * decay
         bins = fft / self.max_sample ** (1 / exp)
-
-        cr.set_source_rgba(*self.background_color)
-        cr.rectangle(0, 0, w, h)
-        cr.fill()
 
         x, y = self.padding, self.padding
         w, h = w - 2 * self.padding, h - 2 * self.padding
