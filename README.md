@@ -14,5 +14,5 @@ But make sure you have `wmctrl` installed for window control and `pamixer` insta
 
 Credits
 ======
-This project is inspired by [PyPanel](http://pypanel.sourceforge.net/) and [PyVisualizer](https://github.com/ajalt/PyVisualizer).
+This project is inspired by [PyPanel](http://pypanel.sourceforge.net/), [PyVisualizer](https://github.com/ajalt/PyVisualizer), [gnome multiload panel applet](https://github.com/paradoxxxzero/gnome-shell-system-monitor-applet) and [yabar](https://github.com/geommer/yabar).
 
