@@ -18,7 +18,7 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     keywords=['visualizer', 'multiload', 'panel', 'xorg'],
-    packages=['panon'],
+    packages=['panon','panon.visualizer','panon.glsl'],
     install_requires=[
         #'docopt',
         'ewmh',
