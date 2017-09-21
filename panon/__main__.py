@@ -105,6 +105,7 @@ class Panel:
 
     def quit(self, e):
         self.multiload_cpu.destory()
+        self.visualizer.destory()
         Gtk.main_quit()
 
     def create_menu(self):
