@@ -37,7 +37,7 @@ class Visualizer(Gtk.EventBox):
     def destory(self):
         self.stop_gen_data = True
 
-    def __init__(self, background_color, foreground_color, fps=60, channel_count=2, sample_rate=44100, padding=4, use_opengl=False):
+    def __init__(self, background_color, fps=60, channel_count=2, sample_rate=44100, padding=4, use_opengl=False):
         super(Visualizer, self).__init__()
         self.sample_rate = sample_rate
         self.background_color = helper.color(background_color)
