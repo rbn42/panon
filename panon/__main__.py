@@ -38,8 +38,7 @@ class Panel:
         self.window_gtk.show()
 
         self.winid = self.window_gtk.get_window().get_xid()
-        self.window_xlib = display.create_resource_object('window', self.winid)
-        # Init the properties and then start the event loop
+        self.window_xlib = display.create_resource_object('window', self.winid) 
         self.setProps(self.display, self.window_xlib)
         self.setStruts(self.window_xlib)
         self.display.flush()
@@ -57,8 +56,7 @@ class Panel:
         for section in config.sections:
             if section == 'visualizer':
                 self.visualizer = Visualizer(
-                    background_color=config.visualizer_background,
-                    foreground_color=config.visualizer_foreground,
+                    background_color=config.visualizer_background, 
                     padding=config.visualizer_padding)
                 self.box.pack_start(self.visualizer, True, True, 0)
             elif section == 'taskbar':
