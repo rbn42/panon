@@ -52,9 +52,10 @@ class Visualizer(Gtk.EventBox):
         self.sample_rate = sample_rate
         self.sample = record_pyaudio(fps, channel_count, sample_rate)
         GObject.timeout_add(1000 // fps, self.tick)
-        Thread(target=self.run).start()
 
+        self.use_opengl=use_opengl
         if use_opengl:
+            Thread(target=self.run).start()
             self.da = VisualizerGL(self.getData)
             ol = Gtk.Overlay()
             ol.add(self.da)
@@ -95,7 +96,10 @@ class Visualizer(Gtk.EventBox):
             self.data_queue.put(self.__getData())
 
     def getData(self):
-        return self.data_queue.get()
+        if self.use_opengl:
+            return self.data_queue.get()
+        else:
+            return self.__getData()
 
     def __getData(self):
         #fft = np.absolute(np.fft.rfft(data, n=len(data)))/len(data)
