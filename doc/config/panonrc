@@ -8,7 +8,6 @@
 # this file contains proper Python formatting and no syntax errors.
 #------------------------------------------------------------------------------
 
-log = 'info'
 height = 32
 position = 'bottom'
 background_color = '#ffffff30'
