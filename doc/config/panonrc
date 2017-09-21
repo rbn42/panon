@@ -64,9 +64,7 @@ sections = [
         'interval': 1,
     },
 ]
-
-visualizer_foreground = 'hue_gradient'
-# visualizer_foreground =  '#000000a0'
+ 
 visualizer_background = background_color
 visualizer_padding = height / 8
 visualizer_decay = 0.01
