@@ -1,29 +1,15 @@
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, GObject, Gdk
+from gi.repository import Gtk, GObject
 import cairo
-import pyaudio
-import numpy as np
 from .. import helper
 from .. import config
 from .fallback import VisualizerCairo
 from .opengl import VisualizerGL
+from .source import Source
+from .spectrum import Spectrum
 from queue import Queue
 from threading import Thread
-
-
-def record_pyaudio(fps, channel_count, sample_rate):
-    p = pyaudio.PyAudio()
-    stream = p.open(format=pyaudio.paInt16,
-                    channels=channel_count,
-                    rate=sample_rate,
-                    input=True)
-    stop = False
-    while not stop:
-        size = stream.get_read_available()
-        stop = yield np.fromstring(stream.read(size), 'int16')
-    stream.close()
-    yield
 
 
 class Visualizer(Gtk.EventBox):
@@ -41,19 +27,20 @@ class Visualizer(Gtk.EventBox):
         super(Visualizer, self).__init__()
         self.sample_rate = sample_rate
         self.background_color = helper.color(background_color)
-        self.history = [[]] * 8
         self.data_queue = Queue(3)
-        self.min_sample = 10
-        self.max_sample = self.min_sample
+
         self.padding = padding
-        self.buffer_size = sample_rate // fps * channel_count
         self.fps = fps
         self.channel_count = channel_count
         self.sample_rate = sample_rate
-        self.sample = record_pyaudio(fps, channel_count, sample_rate)
+        self.sample = Source(channel_count, sample_rate)
+        buffer_size = sample_rate // fps * channel_count
+        self.spectrum = Spectrum(
+            self.sample, buffer_size, config.visualizer_decay)
         GObject.timeout_add(1000 // fps, self.tick)
 
-        self.use_opengl=use_opengl
+        self.use_opengl = use_opengl
+
         if use_opengl:
             Thread(target=self.run).start()
             self.da = VisualizerGL(self.getData)
@@ -80,12 +67,11 @@ class Visualizer(Gtk.EventBox):
         if event and event.button == 1:
             if not self.stop:
                 self.da.stop()
-                self.sample.send(True)
+                self.sample.stop()
                 self.stop = True
             else:
                 self.stop = False
-                self.sample = record_pyaudio(
-                    self.fps, self.channel_count, self.sample_rate)
+                self.sample.start()
                 self.da.start()
             return True
         else:
@@ -99,72 +85,4 @@ class Visualizer(Gtk.EventBox):
         if self.use_opengl:
             return self.data_queue.get()
         else:
-            return self.__getData()
-
-    def __getData(self):
-        #fft = np.absolute(np.fft.rfft(data, n=len(data)))/len(data)
-
-        data = next(self.sample)
-        self.history.append(data)
-        if sum([len(d) for d in self.history[1:]]) > self.buffer_size * 8:
-            self.history.pop(0)
-
-        data_history = np.concatenate(self.history)
-        fft_freq = []
-
-        def fun(start, end,  rel):
-            size = self.buffer_size
-            if rel > 20:
-                start, end = int(start), int(end)
-                rel = int(rel)
-                d = data_history[-size * rel:].reshape((rel, size))
-                d = np.mean(d, axis=0)
-            else:
-                start = int(start * rel)
-                end = int(end * rel)
-                size = int(size * rel)
-                d = data_history[-size:]
-
-            fft = np.absolute(np.fft.rfft(d, n=size))
-            end = min(len(fft) // 2, end)
-            fft_freq.insert(0, fft[start:end])
-            fft_freq.append(fft[len(fft) - end:len(fft) - start])
-        # higher resolution and latency for lower frequency
-
-        sections = 8
-        r = 0.6
-        rels = 8 * r**np.arange(sections)
-        start = 0
-        sections = []
-        for rel, freq_width in zip(rels, len(data) * 1 / rels / sum(1 / rels) // 4):
-            if rel > 2:
-                freq_width *= rel
-                pass
-            sections.append((start, start + freq_width, rel))
-            start += freq_width
-        sections.reverse()
-        for start, end, rel in sections:
-            #fun(start, end, rel)
-            pass
-
-        #fun(400, len(data),  0.3)
-        #fun(300, 400,  0.5)
-        #fun(200,300 ,  0.75)
-        #fun(150, 200,  1)
-        fun(110, 150,  2)
-        fun(80, 110,  3)
-        fun(50, 80,  4)
-        fun(30, 50,  5)
-        fun(10, 30,  6)
-        fun(0, 10,  8)
-
-        fft = np.concatenate(fft_freq)
-
-        exp = 2
-        retain = (1 - config.visualizer_decay)**exp
-        decay = 1 - retain
-
-        vol = self.min_sample + np.mean(fft ** exp)
-        self.max_sample = self.max_sample * retain + vol * decay
-        bins = fft / self.max_sample ** (1 / exp)
-        return bins
+            return self.spectrum.getData()
