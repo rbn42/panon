@@ -8,6 +8,7 @@ from .fallback import VisualizerCairo
 from .opengl import VisualizerGL
 from .source import Source
 from .spectrum import Spectrum
+#from .glspectrum2 import GLSpectrum as Spectrum
 from queue import Queue
 from threading import Thread
 

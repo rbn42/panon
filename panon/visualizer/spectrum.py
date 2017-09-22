@@ -40,16 +40,10 @@ class Spectrum:
 
         def fun(start, end,  rel):
             size = self.buffer_size
-            if rel > 20:
-                start, end = int(start), int(end)
-                rel = int(rel)
-                d = data_history[-size * rel:].reshape((rel, size))
-                d = np.mean(d, axis=0)
-            else:
-                start = int(start * rel)
-                end = int(end * rel)
-                size = int(size * rel)
-                d = data_history[-size:]
+            start = int(start * rel)
+            end = int(end * rel)
+            size = int(size * rel)
+            d = data_history[-size:]
 
             fft = np.absolute(np.fft.rfft(d, n=size))
             end = min(len(fft) // 2, end)

@@ -2,9 +2,14 @@ import pyaudio
 
 
 class Source:
-    def __init__(self,  channel_count, sample_rate):
+    def __init__(self,  channel_count, sample_rate, dtype='int16'):
         self.channel_count = channel_count
         self.sample_rate = sample_rate
+        self.dtype = {
+            'int16': pyaudio.paInt16,
+            'float32': pyaudio.paFloat32,
+            'int32': pyaudio.paInt32,
+        }[dtype]
 
         self.start()
 
@@ -17,7 +22,7 @@ class Source:
 
     def start(self):
         p = pyaudio.PyAudio()
-        self.stream = p.open(format=pyaudio.paInt16,
+        self.stream = p.open(format=self.dtype,
                              channels=self.channel_count,
                              rate=self.sample_rate,
                              input=True)
