@@ -5,24 +5,37 @@ class Spectrum:
     def __init__(self, sample, buffer_size, decay):
         self.sample = sample
         self.decay = decay
-        self.history = [[]] * 8
+        self.history = np.zeros(buffer_size * 8, dtype='int16')
+        self.history_index = 0
         self.buffer_size = buffer_size
         self.min_sample = 10
         self.max_sample = self.min_sample
 
-        if False:
-            from .glfft import GLFFT
-            self.glfft = GLFFT(512)
+    def updateHistory(self):
 
-    def getData(self):
         data = self.sample.read()
         data = np.fromstring(data, 'int16')
+        assert len(data) < len(self.history)
+        if self.history_index + len(data) > len(self.history):
+            self.history[self.history_index:] = data[:len(
+                self.history) - self.history_index]
+            self.history[:self.history_index + len(data) - len(
+                self.history)] = data[len(self.history) - self.history_index:]
+            self.history_index -= len(self.history)
+        else:
+            self.history[self.history_index:self.history_index +
+                         len(data)] = data
+        self.history_index += len(data)
 
-        self.history.append(data)
-        if sum([len(d) for d in self.history[1:]]) > self.buffer_size * 8:
-            self.history.pop(0)
+        data_history = np.concatenate([
+            self.history[self.history_index:],
+            self.history[:self.history_index],
+        ])
+        return data_history
 
-        data_history = np.concatenate(self.history)
+    def getData(self):
+        data_history = self.updateHistory()
+
         fft_freq = []
 
         def fun(start, end,  rel):
@@ -38,32 +51,12 @@ class Spectrum:
                 size = int(size * rel)
                 d = data_history[-size:]
 
-            if False:
-                fft = self.glfft.compute(d.astype('float32')[:512].tobytes())
-                fft = np.frombuffer(fft, dtype='float32')
-            else:
-                fft = np.absolute(np.fft.rfft(d, n=size))
+            fft = np.absolute(np.fft.rfft(d, n=size))
             end = min(len(fft) // 2, end)
             fft_freq.insert(0, fft[start:end])
             fft_freq.append(fft[len(fft) - end:len(fft) - start])
+
         # higher resolution and latency for lower frequency
-
-        sections = 8
-        r = 0.6
-        rels = 8 * r**np.arange(sections)
-        start = 0
-        sections = []
-        for rel, freq_width in zip(rels, len(data) * 1 / rels / sum(1 / rels) // 4):
-            if rel > 2:
-                freq_width *= rel
-                pass
-            sections.append((start, start + freq_width, rel))
-            start += freq_width
-        sections.reverse()
-        for start, end, rel in sections:
-            #fun(start, end, rel)
-            pass
-
         fun(110, 150, 2)
         fun(80, 110, 3)
         fun(50, 80, 4)
@@ -79,5 +72,4 @@ class Spectrum:
 
         vol = self.min_sample + np.mean(fft ** exp)
         self.max_sample = self.max_sample * retain + vol * decay
-        bins = fft / self.max_sample ** (1 / exp)
-        return bins
+        return fft / self.max_sample ** (1 / exp)
