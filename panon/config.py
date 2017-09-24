@@ -68,11 +68,11 @@ multiload_fake_shadow = True
 multiload_cpu_background = '#00000010'
 multiload_cpu_foreground = '#00ffffff', '#ff00ffff', '#0000ffff', '#00ff00ff',  '#008080ff', '#0080ffff',
 multiload_mem_background = multiload_cpu_background
-multiload_mem_foreground = '#00ff00ff', '#ff00ffff', '#008080ff', '#0080ffff', '#008000ff', '#008080ff',
+multiload_mem_foreground = '#00ff00ff', '#ff00ffff', 
 multiload_net_background = multiload_cpu_background
-multiload_net_foreground = '#008080ff', '#0080ffff', '#008000ff', '#008080ff',
+multiload_net_foreground = '#f08000ff', '#0080ffff',
 multiload_disk_background = multiload_cpu_background
-multiload_disk_foreground = '#008000ff', '#008080ff',
+multiload_disk_foreground = '#808000ff', '#008080ff',
 
 # overwrite default configuration
 import os.path
