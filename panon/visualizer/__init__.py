@@ -6,7 +6,6 @@ from .. import helper
 from .. import config
 from .fallback import VisualizerCairo
 from .opengl import VisualizerGL
-from .source import Source
 from .spectrum import Spectrum
 from queue import Queue
 from threading import Thread
@@ -23,20 +22,13 @@ class Visualizer(Gtk.EventBox):
     def destory(self):
         self.stop_gen_data = True
 
-    def __init__(self, background_color, fps=60, channel_count=2, sample_rate=44100, padding=4, use_opengl=False):
+    def __init__(self, background_color, fps=60, padding=4, use_opengl=False):
         super(Visualizer, self).__init__()
-        self.sample_rate = sample_rate
         self.background_color = helper.color(background_color)
         self.data_queue = Queue(3)
 
         self.padding = padding
-        self.fps = fps
-        self.channel_count = channel_count
-        self.sample_rate = sample_rate
-        self.sample = Source(channel_count, sample_rate)
-        buffer_size = sample_rate // fps * channel_count
-        self.spectrum = Spectrum(
-            self.sample, buffer_size, config.visualizer_decay)
+        self.spectrum = Spectrum(fps,  config.visualizer_decay)
         GObject.timeout_add(1000 // fps, self.tick)
 
         self.use_opengl = use_opengl
@@ -67,11 +59,11 @@ class Visualizer(Gtk.EventBox):
         if event and event.button == 1:
             if not self.stop:
                 self.da.stop()
-                self.sample.stop()
+                self.spectrum.stop()
                 self.stop = True
             else:
                 self.stop = False
-                self.sample.start()
+                self.spectrum.start()
                 self.da.start()
             return True
         else:

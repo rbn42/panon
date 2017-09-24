@@ -67,6 +67,7 @@ class VisualizerCairo(Gtk.DrawingArea):
         if self.empty:
             return
         bins = self.getData()
+        assert bins.shape[0]==2
         x, y = self.padding, self.padding
         w, h = w - 2 * self.padding, h - 2 * self.padding
 
@@ -77,14 +78,17 @@ class VisualizerCairo(Gtk.DrawingArea):
                 cr.set_source(source)
             cr.set_operator(cairo.OPERATOR_SOURCE)
             cr.move_to(x + 0, y + h / 2)  # middle left
-            width = 2 * w / len(bins)
-            for i in range(len(bins) // 2):
-                height = rel * h * bins[i]
+            width =  w / bins.shape[1]
+            for i in range(bins.shape[1]):
+                height = rel * h * bins[0,i]
                 cr.line_to(x + i * width, y + h / 2 - height / 2)
             cr.line_to(x + w, y + h / 2)  # middle right
-            for i in range(len(bins) // 2, len(bins)):
-                freq = len(bins) - i
-                height = rel * h * bins[i]
-                cr.line_to(x + freq * width, y + h / 2 + height / 2)
+            cr.close_path()
+
+            cr.move_to(x + 0, y + h / 2)  # middle left
+            for i in range(bins.shape[1]):
+                height = rel * h * bins[1,i]
+                cr.line_to(x + i * width, y + h / 2 + height / 2)
+            cr.line_to(x + w, y + h / 2)  # middle right
             cr.close_path()
             cr.fill()
