@@ -34,7 +34,7 @@ class VisualizerGL(Gtk.GLArea):
     def loadTex(self, data):
         img_data = np.zeros((3, data.shape[0], 4), dtype='uint8')
         img_data[:, :, 0] = data * 256
-        image =  Image.fromarray(img_data)
+        image = Image.fromarray(img_data)
         width = image.size[0]
         height = image.size[1]
         image_bytes = image.convert("RGBA").tobytes("raw", "RGBA", 0, -1)
@@ -84,6 +84,7 @@ class VisualizerGL(Gtk.GLArea):
         if self.empty:
             return
         data = self.getData()
+        data = np.concatenate([data[0], data[1, ::-1]])
         GL.glBindTexture(GL_TEXTURE_2D, self.tex1)
         self.loadTex(data)
         widget.attach_buffers()

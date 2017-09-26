@@ -2,6 +2,7 @@ import cairo
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
+import numpy as np
 from .. import helper
 
 
@@ -67,7 +68,11 @@ class VisualizerCairo(Gtk.DrawingArea):
         if self.empty:
             return
         bins = self.getData()
-        assert bins.shape[0]==2
+
+        if np.sum(bins) == 0:
+            return
+
+        assert bins.shape[0] == 2
         x, y = self.padding, self.padding
         w, h = w - 2 * self.padding, h - 2 * self.padding
 
@@ -78,16 +83,16 @@ class VisualizerCairo(Gtk.DrawingArea):
                 cr.set_source(source)
             cr.set_operator(cairo.OPERATOR_SOURCE)
             cr.move_to(x + 0, y + h / 2)  # middle left
-            width =  w / bins.shape[1]
+            width = w / bins.shape[1]
             for i in range(bins.shape[1]):
-                height = rel * h * bins[0,i]
+                height = rel * h * bins[0, i]
                 cr.line_to(x + i * width, y + h / 2 - height / 2)
             cr.line_to(x + w, y + h / 2)  # middle right
             cr.close_path()
 
             cr.move_to(x + 0, y + h / 2)  # middle left
             for i in range(bins.shape[1]):
-                height = rel * h * bins[1,i]
+                height = rel * h * bins[1, i]
                 cr.line_to(x + i * width, y + h / 2 + height / 2)
             cr.line_to(x + w, y + h / 2)  # middle right
             cr.close_path()

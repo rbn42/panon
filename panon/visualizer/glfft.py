@@ -22,8 +22,8 @@ class GLFFT:
         self.buf2 = buf2
 
     def compute(self, data):
-        data=data[-1024*4*4:]
-        self.compute_shader.uniforms['real_size'].value = len(data)//4
+        data = data[-1024 * 4 * 4:]
+        self.compute_shader.uniforms['real_size'].value = len(data) // 4
         #self.compute_shader.uniforms['mul'].value = 100.0
         self.buf1.write(data)
         self.compute_shader.run()
