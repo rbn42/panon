@@ -5,7 +5,7 @@ position = 'bottom'
 background_color = '#ffffff30'
 fake_shadow = True
 
-style_sheet="""
+style_sheet = """
 .fake-shadow-top{
     border-top:solid 1px white;
 }
@@ -21,15 +21,15 @@ text-shadow: 1px 1px 5px black;
 """
 
 sections = [
-#    {
-#        # mpd
-#        'auto-command': 'mpc | head -n 1',
-#        'interval': 1,
-#        'max-width': 20,
-#        'click': 'mpc toggle',
-#        'scroll-up': 'mpc prev',
-#        'scroll-down': 'mpc next',
-#    },
+    #    {
+    #        # mpd
+    #        'auto-command': 'mpc | head -n 1',
+    #        'interval': 1,
+    #        'max-width': 20,
+    #        'click': 'mpc toggle',
+    #        'scroll-up': 'mpc prev',
+    #        'scroll-down': 'mpc next',
+    #    },
     'taskbar',
     'visualizer',
     {
@@ -55,7 +55,7 @@ sections = [
         'interval': 1,
     },
 ]
- 
+
 visualizer_background = background_color
 visualizer_padding = height / 8
 visualizer_decay = 0.01
@@ -68,7 +68,7 @@ multiload_fake_shadow = True
 multiload_cpu_background = '#00000010'
 multiload_cpu_foreground = '#00ffffff', '#ff00ffff', '#0000ffff', '#00ff00ff',  '#008080ff', '#0080ffff',
 multiload_mem_background = multiload_cpu_background
-multiload_mem_foreground = '#00ff00ff', '#ff00ffff', 
+multiload_mem_foreground = '#00ff00ff', '#ff00ffff',
 multiload_net_background = multiload_cpu_background
 multiload_net_foreground = '#f08000ff', '#0080ffff',
 multiload_disk_background = multiload_cpu_background

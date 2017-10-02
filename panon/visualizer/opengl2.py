@@ -6,14 +6,13 @@ from PySide.QtCore import *
 from PySide.QtGui import *
 
 from .spectrum import Spectrum
-from .. import config
 from .. import glsl
 import numpy as np
 from PIL import Image
 
 
 class QGLControllerWidget(QtOpenGL.QGLWidget):
-    def __init__(self, fps=60, padding=4, use_opengl=False):
+    def __init__(self, fps=60, decay=0.01):
 
         fmt = QtOpenGL.QGLFormat()
         fmt.setVersion(3, 3)
@@ -21,7 +20,7 @@ class QGLControllerWidget(QtOpenGL.QGLWidget):
         fmt.setSampleBuffers(True)
         super(QGLControllerWidget, self).__init__(fmt, None)
 
-        self.spectrum = Spectrum(fps,  config.visualizer_decay)
+        self.spectrum = Spectrum(fps,  decay)
 
     def initializeGL(self):
         self.ctx = ModernGL.create_context()
@@ -35,37 +34,51 @@ class QGLControllerWidget(QtOpenGL.QGLWidget):
         self.vao = self.ctx.simple_vertex_array(prog, vbo, ['vert'])
 
         data = self.spectrum.getData()
-        data = np.concatenate([data[0], data[1, ::-1]])
         img = self.loadTex(data)
         self.tex1 = self.ctx.texture(img.size, 4, img.tobytes())
         self.tex1.use()
 
+#        self.ctx.enable(ModernGL.BLEND)
+
     def paintGL(self):
         data = self.spectrum.getData()
-        data = np.concatenate([data[0], data[1, ::-1]])
         img = self.loadTex(data)
         image_bytes = img.convert("RGBA").tobytes("raw", "RGBA", 0, -1)
         self.tex1.write(image_bytes)
 
         self.ctx.viewport = (0, 0, self.width(), self.height())
-        self.ctx.clear(0.9, 0.9, 0.9)
+        #self.ctx.clear(0.9, 0.9, 0.9)
         self.vao.render()
         # self.ctx.finish()
 
     def loadTex(self, data):
-        img_data = np.zeros((3, data.shape[0], 4), dtype='uint8')
-        img_data[:, :, 0] = data * 256
+        data = data / 3.0
+        data = np.clip(data, 0, 0.99)
+
+        img_data = np.zeros((3, data.shape[1], 4), dtype='uint8')
+        img_data[:, :, 0] = data[0] * 256
+        img_data[:, :, 1] = data[1] * 256
         image = Image.fromarray(img_data)
         return image
 
 
 if __name__ == '__main__':
     app = QApplication([])
-    window = QGLControllerWidget()
+    qgl = QGLControllerWidget()
+
+    window = qgl
+    window.setAttribute(Qt.WA_TranslucentBackground)
     window.show()
 
-    w = window
-    timer = QTimer(w)
-    w.connect(timer, SIGNAL("timeout()"), w.updateGL)
+    timer = QTimer(qgl)
+    qgl.connect(timer, SIGNAL("timeout()"), qgl.updateGL)
     timer.start(1000 // 60)
+
+    winid = window.winId()
+    from .. import xpanel
+    from Xlib import display
+    xpanel.Panel(display.Display(), winid, 'bottom', 32)
+    import signal
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+
     app.exec_()
