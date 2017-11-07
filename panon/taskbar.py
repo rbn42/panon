@@ -177,9 +177,11 @@ class Taskbar(Gtk.EventBox):
         self.display.flush()
 
     def getTask(self, event):
-        index = event.x // self.size
-        index = int(index)
-        return self.tasks_draw[index]  # .windows[0]
+        end = 0
+        for task in self.tasks_draw:
+            end += task.size * self.size
+            if event.x < end:
+                return task
 
     def tick(self):
         childLogger.debug('tick')
@@ -300,14 +302,14 @@ class TaskCat:
         self.icon = icon
         self.wm_class = wm_class
         self.size = 0
-        self.hidden=False
+        self.hidden = False
 
     def destroy(self):
         return len(self.windows) < 1 and self.size <= 0
 
     def hide(self):
-        self.size=0.01
-        self.hidden=True
+        self.size = 0.01
+        self.hidden = True
 
     def animate(self, animate_step):
         if len(self.windows) < 1:

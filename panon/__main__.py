@@ -38,7 +38,7 @@ class Panel:
         self.window_gtk.show()
 
         self.winid = self.window_gtk.get_window().get_xid()
-        self.window_xlib = display.create_resource_object('window', self.winid) 
+        self.window_xlib = display.create_resource_object('window', self.winid)
         self.setProps(self.display, self.window_xlib)
         self.setStruts(self.window_xlib)
         self.display.flush()
@@ -56,7 +56,7 @@ class Panel:
         for section in config.sections:
             if section == 'visualizer':
                 self.visualizer = Visualizer(
-                    background_color=config.visualizer_background, 
+                    background_color=config.visualizer_background,
                     padding=config.visualizer_padding)
                 self.box.pack_start(self.visualizer, True, True, 0)
             elif section == 'taskbar':
@@ -123,7 +123,7 @@ class Panel:
         screen = win.get_screen()
         rgba = screen.get_rgba_visual()
         win.set_visual(rgba)
-        win.set_wmclass("panon","Panon" )
+        win.set_wmclass("panon", "Panon")
         win.set_name("panon")
         win.set_type_hint(Gdk.WindowTypeHint.DOCK)
         win.set_decorated(False)
@@ -221,6 +221,8 @@ from threading import Thread
 import os
 from Xlib import X, display, error, Xatom, Xutil
 import Xlib.protocol.event
+
+
 def main():
     SOCKET_FILE = "/run/user/%s/gtk_visualizer.socket" % os.getuid()
     sin = Singleton(SOCKET_FILE)
@@ -231,5 +233,6 @@ def main():
         signal.signal(signal.SIGINT, signal.SIG_DFL)
         Gtk.main()
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     main()
