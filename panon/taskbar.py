@@ -76,6 +76,11 @@ class Taskbar(Gtk.EventBox):
             # win.destroy()
         return True
 
+    def hide_task(self, event):
+        self.target_task.hide()
+        self.update(force_draw=True)
+        return True
+
     def setup_atom(self):
         self._NET_WM_STATE_SKIP_TASKBAR = self.display.intern_atom(
             '_NET_WM_STATE_SKIP_TASKBAR')
@@ -138,6 +143,9 @@ class Taskbar(Gtk.EventBox):
         i1 = Gtk.MenuItem("Close All")
         i1.connect("activate", self.close_all)
         self.menu.append(i1)
+        i2 = Gtk.MenuItem("Hide")
+        i2.connect("activate", self.hide_task)
+        self.menu.append(i2)
         self.menu.show_all()
 
     def activateWindow(self, taskcat, offset=1):
@@ -214,7 +222,7 @@ class Taskbar(Gtk.EventBox):
             cr.paint()
             x += w * rel
 
-    def update(self):
+    def update(self, force_draw=False):
         draw = False
         for t in self.tasks_draw:
             if t.animate(1 / self.animation_duration / self.fps):
@@ -222,7 +230,7 @@ class Taskbar(Gtk.EventBox):
             elif t.destroy():
                 self.tasks_draw.remove(t)
                 t.icon.finish()
-        if draw:
+        if draw or force_draw:
             w = self.size * sum([t.size for t in self.tasks_draw])
             h = self.size
             self.set_size_request(w, h)
@@ -292,9 +300,14 @@ class TaskCat:
         self.icon = icon
         self.wm_class = wm_class
         self.size = 0
+        self.hidden=False
 
     def destroy(self):
         return len(self.windows) < 1 and self.size <= 0
+
+    def hide(self):
+        self.size=0.01
+        self.hidden=True
 
     def animate(self, animate_step):
         if len(self.windows) < 1:
@@ -303,7 +316,7 @@ class TaskCat:
                 self.size = max(0, self.size)
                 return True
         else:
-            if self.size < 1:
+            if self.size < 1 and not self.hidden:
                 self.size += animate_step
                 self.size = min(1, self.size)
                 return True

@@ -17,7 +17,7 @@ class VisualizerCairo(Gtk.DrawingArea):
         self.getData = getData
         self.update_hue_gradient()
         self.add_events(Gdk.EventMask.SCROLL_MASK)
-        self.connect('scroll-event', self.do_scroll_event)
+        #self.connect('scroll-event', self.do_scroll_event)
         self.connect('draw', self.do_draw_cb)
 
     def stop(self):
