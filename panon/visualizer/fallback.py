@@ -52,8 +52,7 @@ class VisualizerCairo(Gtk.DrawingArea):
         hue_gradient = cairo.LinearGradient(0.0, 0.0, width, 0)
         for hue in range(0, 360, hue_step):
             rgb = helper.hsv2rgb((hue + hue_start) % 360, 1, alpha)
-            hue_gradient.add_color_stop_rgba(
-                (hue / 360 + position) % 1, *rgb, alpha)
+            hue_gradient.add_color_stop_rgba((hue / 360 + position) % 1, *rgb, alpha)
         hue_gradient.set_extend(cairo.EXTEND_REPEAT)
         return hue_gradient
 
@@ -82,18 +81,18 @@ class VisualizerCairo(Gtk.DrawingArea):
             else:
                 cr.set_source(source)
             cr.set_operator(cairo.OPERATOR_SOURCE)
-            cr.move_to(x + 0, y + h / 2)  # middle left
+            cr.move_to(x + 0, y + h / 2)    # middle left
             width = w / bins.shape[1]
             for i in range(bins.shape[1]):
                 height = rel * h * bins[0, i]
                 cr.line_to(x + i * width, y + h / 2 - height / 2)
-            cr.line_to(x + w, y + h / 2)  # middle right
+            cr.line_to(x + w, y + h / 2)    # middle right
             cr.close_path()
 
-            cr.move_to(x + 0, y + h / 2)  # middle left
+            cr.move_to(x + 0, y + h / 2)    # middle left
             for i in range(bins.shape[1]):
                 height = rel * h * bins[1, i]
                 cr.line_to(x + i * width, y + h / 2 + height / 2)
-            cr.line_to(x + w, y + h / 2)  # middle right
+            cr.line_to(x + w, y + h / 2)    # middle right
             cr.close_path()
             cr.fill()

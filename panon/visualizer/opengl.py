@@ -38,16 +38,13 @@ class VisualizerGL(Gtk.GLArea):
         width = image.size[0]
         height = image.size[1]
         image_bytes = image.convert("RGBA").tobytes("raw", "RGBA", 0, -1)
-        gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, width, height,
-                          GL_RGBA, GL_UNSIGNED_BYTE, image_bytes)
+        gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, width, height, GL_RGBA, GL_UNSIGNED_BYTE, image_bytes)
 
     def on_configure_event(self, widget):
         widget.make_current()
         context = widget.get_context()
-        vs = shaders.compileShader(
-            glsl.load('./vert.glsl'), GL.GL_VERTEX_SHADER)
-        fs = shaders.compileShader(
-            glsl.load('./frag.glsl'), GL.GL_FRAGMENT_SHADER)
+        vs = shaders.compileShader(glsl.load('./vert.glsl'), GL.GL_VERTEX_SHADER)
+        fs = shaders.compileShader(glsl.load('./frag.glsl'), GL.GL_FRAGMENT_SHADER)
         self.program = shaders.compileProgram(vs, fs)
 
         self.vertex_array_object = GL.glGenVertexArrays(1)
@@ -58,22 +55,38 @@ class VisualizerGL(Gtk.GLArea):
         position = GL.glGetAttribLocation(self.program, 'a_position')
 
         GL.glEnableVertexAttribArray(position)
-        GL.glVertexAttribPointer(
-            position, 4, GL.GL_FLOAT, False, 0, ctypes.c_void_p(0))
+        GL.glVertexAttribPointer(position, 4, GL.GL_FLOAT, False, 0, ctypes.c_void_p(0))
 
         vertices = [
-            1,  1, 0, 1,
-            -1,  1, 0, 1,
-            -1, -1, 0, 1,
-            1,  1, 0, 1,
-            1,  -1, 0, 1,
-            -1, -1, 0, 1,
+            1,
+            1,
+            0,
+            1,
+            -1,
+            1,
+            0,
+            1,
+            -1,
+            -1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            -1,
+            0,
+            1,
+            -1,
+            -1,
+            0,
+            1,
         ]
 
         vertices = np.array(vertices, dtype=np.float32)
 
-        GL.glBufferData(GL.GL_ARRAY_BUFFER, 96,
-                        vertices, GL.GL_STATIC_DRAW)
+        GL.glBufferData(GL.GL_ARRAY_BUFFER, 96, vertices, GL.GL_STATIC_DRAW)
         GL.glBindVertexArray(0)
         GL.glDisableVertexAttribArray(position)
         GL.glBindBuffer(GL.GL_ARRAY_BUFFER, 0)

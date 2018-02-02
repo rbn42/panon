@@ -17,7 +17,7 @@ class Visualizer(Gtk.EventBox):
 
     def tick(self):
         self.queue_draw()
-        return True  # Causes timeout to tick again.
+        return True    # Causes timeout to tick again.
 
     def destory(self):
         self.stop_gen_data = True
@@ -28,7 +28,7 @@ class Visualizer(Gtk.EventBox):
         self.data_queue = Queue(3)
 
         self.padding = padding
-        self.spectrum = Spectrum(fps,  config.visualizer_decay)
+        self.spectrum = Spectrum(fps, config.visualizer_decay)
         GObject.timeout_add(1000 // fps, self.tick)
 
         self.use_opengl = use_opengl
@@ -46,12 +46,10 @@ class Visualizer(Gtk.EventBox):
             label.set_text("bbbbbbbbbHHHHHH")
             label.show()
             ol.add(label)
-            self.override_background_color(
-                Gtk.StateType.NORMAL, self.background_color)
+            self.override_background_color(Gtk.StateType.NORMAL, self.background_color)
             self.da = ol
         else:
-            self.da = VisualizerCairo(
-                self.background_color, self.getData, self.padding)
+            self.da = VisualizerCairo(self.background_color, self.getData, self.padding)
         self.add(self.da)
         self.connect('button-release-event', self.do_button_release_event)
 

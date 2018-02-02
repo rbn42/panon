@@ -7,8 +7,7 @@ import logging
 
 
 class Singleton:
-
-    def __init__(self,  socket_file, timeout=0.01):
+    def __init__(self, socket_file, timeout=0.01):
         self.socket_file = socket_file
         self.timeout = timeout
         self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -84,7 +83,7 @@ class Singleton:
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG,)
+    logging.basicConfig(level=logging.DEBUG, )
     SOCKET_FILE = "/run/user/%s/desktop_menu.socket" % os.getuid()
     sin = Singleton(SOCKET_FILE)
     if sin.start():

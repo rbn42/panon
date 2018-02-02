@@ -3,16 +3,20 @@ from .source import Source
 
 
 class Spectrum:
-
-    def __init__(self, fps, decay, channel_count=2, sample_rate=44100,):
+    def __init__(
+            self,
+            fps,
+            decay,
+            channel_count=2,
+            sample_rate=44100,
+    ):
         self.sample = Source(channel_count, sample_rate)
         self.decay = decay
 
         buffer_size = sample_rate // fps
         self.buffer_size = buffer_size
 
-        self.history = np.zeros(
-            (channel_count, buffer_size * 8), dtype='int16')
+        self.history = np.zeros((channel_count, buffer_size * 8), dtype='int16')
         self.history_index = 0
 
         self.min_sample = 10
@@ -40,17 +44,17 @@ class Spectrum:
 
         if index + len_data > len_history:
             self.history[:, index:] = data[:, :len_history - index]
-            self.history[:, :index + len_data -
-                         len_history] = data[:, len_history - index:]
+            self.history[:, :index + len_data - len_history] = data[:, len_history - index:]
             self.history_index -= len_history
         else:
             self.history[:, index:index + len_data] = data
         self.history_index += len_data
 
-        data_history = np.concatenate([
-            self.history[:, self.history_index:],
-            self.history[:, :self.history_index],
-        ], axis=1)
+        data_history = np.concatenate(
+            [
+                self.history[:, self.history_index:],
+                self.history[:, :self.history_index],
+            ], axis=1)
 
         return data_history
 
@@ -59,7 +63,7 @@ class Spectrum:
 
         fft_freq = []
 
-        def fun(start, end,  rel):
+        def fun(start, end, rel):
             size = self.buffer_size
             start = int(start * rel)
             end = int(end * rel)
@@ -83,6 +87,6 @@ class Spectrum:
         retain = (1 - self.decay)**exp
         decay = 1 - retain
 
-        vol = self.min_sample + np.mean(fft ** exp)
+        vol = self.min_sample + np.mean(fft**exp)
         self.max_sample = self.max_sample * retain + vol * decay
-        return fft / self.max_sample ** (1 / exp)
+        return fft / self.max_sample**(1 / exp)

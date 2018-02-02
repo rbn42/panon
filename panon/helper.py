@@ -13,7 +13,8 @@ def color(_str):
         red=f[0],
         green=f[1],
         blue=f[2],
-        alpha=f[3],)
+        alpha=f[3],
+    )
     return rgba
     return f
 

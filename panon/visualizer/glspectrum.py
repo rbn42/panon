@@ -24,7 +24,7 @@ class GLSpectrum:
         data_history = np.concatenate(self.history)
         fft_freq = []
 
-        def fun(start, end,  rel):
+        def fun(start, end, rel):
             size = self.buffer_size
             if rel > 20:
                 start, end = int(start), int(end)
@@ -42,6 +42,7 @@ class GLSpectrum:
             end = min(len(fft) // 2, end)
             fft_freq.insert(0, fft[start:end])
             fft_freq.append(fft[len(fft) - end:len(fft) - start])
+
         # higher resolution and latency for lower frequency
 
         sections = 8
@@ -61,7 +62,7 @@ class GLSpectrum:
             pass
 
         fun(110, 150, 2)
-#        fun(0, 110, 3)
+        #        fun(0, 110, 3)
         fun(80, 110, 3)
         fun(50, 80, 4)
         fun(30, 50, 5)
@@ -74,7 +75,7 @@ class GLSpectrum:
         retain = (1 - self.decay)**exp
         decay = 1 - retain
 
-        vol = self.min_sample + np.mean(fft ** exp)
+        vol = self.min_sample + np.mean(fft**exp)
         self.max_sample = self.max_sample * retain + vol * decay
-        bins = fft / self.max_sample ** (1 / exp)
+        bins = fft / self.max_sample**(1 / exp)
         return bins

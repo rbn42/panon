@@ -33,15 +33,18 @@ sections = [
     'taskbar',
     'visualizer',
     {
-        # volume control
+    # volume control
         'icon-name': 'preferences-system-sound',
         'scroll-up': 'pamixer -u;pamixer -i 1;',
         'scroll-down': 'pamixer -u;pamixer -d 1;',
         'click': 'pamixer -t',
-    }, {
-        # show desktop
-        'icon-name': 'desktop',
-        'click': """
+    },
+    {
+    # show desktop
+        'icon-name':
+        'desktop',
+        'click':
+        """
         if wmctrl -m | grep "mode: ON";then
             wmctrl -k off
         else
@@ -50,7 +53,7 @@ sections = [
     },
     'multiload',
     {
-        # time
+    # time
         'auto-command': 'date +%T',
         'interval': 1,
     },
@@ -66,7 +69,7 @@ multiload_inner_gap = 2
 multiload_outer_gap = 2
 multiload_fake_shadow = True
 multiload_cpu_background = '#00000010'
-multiload_cpu_foreground = '#00ffffff', '#ff00ffff', '#0000ffff', '#00ff00ff',  '#008080ff', '#0080ffff',
+multiload_cpu_foreground = '#00ffffff', '#ff00ffff', '#0000ffff', '#00ff00ff', '#008080ff', '#0080ffff',
 multiload_mem_background = multiload_cpu_background
 multiload_mem_foreground = '#00ff00ff', '#ff00ffff',
 multiload_net_background = multiload_cpu_background

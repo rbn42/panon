@@ -13,14 +13,11 @@ childLogger = getLogger(__name__)
 
 
 class Taskbar(Gtk.EventBox):
-
-    def __init__(self, display, size,
-                 background_color,
-                 fps=60, animation_duration=0.1):
+    def __init__(self, display, size, background_color, fps=60, animation_duration=0.1):
         super(Taskbar, self).__init__()
         self.display = display
-        self.screen = display.screen()          # Screen obj
-        self.root = self.screen.root          # Display root
+        self.screen = display.screen()    # Screen obj
+        self.root = self.screen.root    # Display root
 
         self.setup_atom()
         self.size = size
@@ -32,8 +29,7 @@ class Taskbar(Gtk.EventBox):
         self.icontheme = Gtk.IconTheme()
         self.icontheme.set_screen(self.get_screen())
 
-        lst = self.root.get_full_property(
-            self._CLIENT_LIST, Xatom.WINDOW).value
+        lst = self.root.get_full_property(self._CLIENT_LIST, Xatom.WINDOW).value
         for _id in lst:
             self.addTask(_id)
 
@@ -58,8 +54,7 @@ class Taskbar(Gtk.EventBox):
             return True
         elif event.button == 3:
             self.target_task = self.getTask(event)
-            self.menu.popup(None, None, None, None, 0,
-                            Gtk.get_current_event_time())
+            self.menu.popup(None, None, None, None, 0, Gtk.get_current_event_time())
             return True
 
     def do_scroll_event(self, widget, e):
@@ -82,22 +77,14 @@ class Taskbar(Gtk.EventBox):
         return True
 
     def setup_atom(self):
-        self._NET_WM_STATE_SKIP_TASKBAR = self.display.intern_atom(
-            '_NET_WM_STATE_SKIP_TASKBAR')
-        self._NET_WM_WINDOW_TYPE_DOCK = self.display.intern_atom(
-            '_NET_WM_WINDOW_TYPE_DOCK')
-        self._NET_WM_WINDOW_TYPE_NORMAL = self.display.intern_atom(
-            '_NET_WM_WINDOW_TYPE_NORMAL')
-        self._NET_WM_WINDOW_TYPE_MENU = self.display.intern_atom(
-            '_NET_WM_WINDOW_TYPE_MENU')
-        self._NET_WM_WINDOW_TYPE_SPLASH = self.display.intern_atom(
-            '_NET_WM_WINDOW_TYPE_SPLASH')
-        self._NET_WM_WINDOW_TYPE_TOOLBAR = self.display.intern_atom(
-            '_NET_WM_WINDOW_TYPE_TOOLBAR')
-        self._NET_WM_WINDOW_TYPE_UTILITY = self.display.intern_atom(
-            '_NET_WM_WINDOW_TYPE_UTILITY')
-        self._NET_WM_STATE_HIDDEN = self.display.intern_atom(
-            "_NET_WM_STATE_HIDDEN")
+        self._NET_WM_STATE_SKIP_TASKBAR = self.display.intern_atom('_NET_WM_STATE_SKIP_TASKBAR')
+        self._NET_WM_WINDOW_TYPE_DOCK = self.display.intern_atom('_NET_WM_WINDOW_TYPE_DOCK')
+        self._NET_WM_WINDOW_TYPE_NORMAL = self.display.intern_atom('_NET_WM_WINDOW_TYPE_NORMAL')
+        self._NET_WM_WINDOW_TYPE_MENU = self.display.intern_atom('_NET_WM_WINDOW_TYPE_MENU')
+        self._NET_WM_WINDOW_TYPE_SPLASH = self.display.intern_atom('_NET_WM_WINDOW_TYPE_SPLASH')
+        self._NET_WM_WINDOW_TYPE_TOOLBAR = self.display.intern_atom('_NET_WM_WINDOW_TYPE_TOOLBAR')
+        self._NET_WM_WINDOW_TYPE_UTILITY = self.display.intern_atom('_NET_WM_WINDOW_TYPE_UTILITY')
+        self._NET_WM_STATE_HIDDEN = self.display.intern_atom("_NET_WM_STATE_HIDDEN")
         self.WM_CHANGE_STATE = self.display.intern_atom("WM_CHANGE_STATE")
 
         dsp = self.display
@@ -131,8 +118,7 @@ class Taskbar(Gtk.EventBox):
         #------------------------------------------------
         """ Send a ClientMessage event to the root """
         data = (data + [0] * (5 - len(data)))[:5]
-        ev = Xlib.protocol.event.ClientMessage(
-            window=win, client_type=ctype, data=(32, (data)))
+        ev = Xlib.protocol.event.ClientMessage(window=win, client_type=ctype, data=(32, (data)))
 
         if not mask:
             mask = (X.SubstructureRedirectMask | X.SubstructureNotifyMask)
@@ -163,8 +149,7 @@ class Taskbar(Gtk.EventBox):
         winids = [win.id for win in taskcat.windows]
         if ewmh.getActiveWindow().id in winids:
             for win in taskcat.windows:
-                self.sendEvent(win, self.WM_CHANGE_STATE,
-                               [Xutil.IconicState])
+                self.sendEvent(win, self.WM_CHANGE_STATE, [Xutil.IconicState])
         else:
             for win in taskcat.windows:
                 if self._NET_WM_STATE_HIDDEN not in ewmh.getWmState(win):
@@ -199,7 +184,7 @@ class Taskbar(Gtk.EventBox):
                     draw = True
         if draw:
             GObject.timeout_add(1000 // self.fps, self.update)
-        return True  # Causes timeout to tick again.
+        return True    # Causes timeout to tick again.
 
     def do_draw_cb(self, widget, cr):
         w = self.size * sum([t.size for t in self.tasks_draw])
@@ -284,9 +269,8 @@ class Taskbar(Gtk.EventBox):
             for icon_name in wm_class:
                 icon_name = icon_name.lower()
                 if self.icontheme.has_icon(icon_name):
-                    icon = self.icontheme.load_surface(icon_name, self.size,
-                                                       1, self.get_window(), 0)
-                    taskcat = TaskCat(self.display,  icon, wm_class)
+                    icon = self.icontheme.load_surface(icon_name, self.size, 1, self.get_window(), 0)
+                    taskcat = TaskCat(self.display, icon, wm_class)
                     taskcat.windows.append(win)
                     self.tasks_draw.append(taskcat)
                     mask = X.PropertyChangeMask | X.FocusChangeMask | X.StructureNotifyMask
@@ -296,8 +280,7 @@ class Taskbar(Gtk.EventBox):
 
 
 class TaskCat:
-
-    def __init__(self, display,  icon, wm_class):
+    def __init__(self, display, icon, wm_class):
         self.windows = []
         self.icon = icon
         self.wm_class = wm_class

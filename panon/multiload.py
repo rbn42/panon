@@ -16,16 +16,19 @@ vertical = True
 class Multiload(Gtk.DrawingArea):
     stop = False
 
-    def __init__(self,
-                 background_color,
-                 colors,
-                 width, height,
-                 fake_shadow=True,
-                 grid=(4, 3),
-                 inner_gap=2,
-                 outer_gap=2,
-                 layout=(2, 2),
-                 interval=1,):
+    def __init__(
+            self,
+            background_color,
+            colors,
+            width,
+            height,
+            fake_shadow=True,
+            grid=(4, 3),
+            inner_gap=2,
+            outer_gap=2,
+            layout=(2, 2),
+            interval=1,
+    ):
         super(Multiload, self).__init__()
 
         self.interval = interval
@@ -39,8 +42,7 @@ class Multiload(Gtk.DrawingArea):
         self.inner_gap = inner_gap
         self.outer_gap = outer_gap
         self.unit_width = (width - 2 * outer_gap) // layout[0] - inner_gap * 2
-        self.unit_height = (
-            height - 2 * outer_gap) // layout[1] - inner_gap * 2
+        self.unit_height = (height - 2 * outer_gap) // layout[1] - inner_gap * 2
         self.layout = layout
 
         self.override_background_color(Gtk.StateType.NORMAL, Gdk.RGBA(alpha=0))
@@ -117,8 +119,7 @@ class Multiload(Gtk.DrawingArea):
             return
 
         max_net = 1 + max([sum(item['net']) for item in self.history if item])
-        max_disk = 1 + max([sum(item['disk'])
-                            for item in self.history if item])
+        max_disk = 1 + max([sum(item['disk']) for item in self.history if item])
         postions = []
         for x in range(self.layout[0]):
             for y in range(self.layout[1]):
@@ -128,16 +129,12 @@ class Multiload(Gtk.DrawingArea):
                     (self.unit_height + 2 * self.inner_gap)
                 postions.append((_x, _y))
 
-        for unit, max_value, position in zip(
-                ['cpu', 'mem', 'net',  'disk'],
-                [1, 1, max_net,  max_disk],
-                postions):
+        for unit, max_value, position in zip(['cpu', 'mem', 'net', 'disk'], [1, 1, max_net, max_disk], postions):
             x, y = position
-            self.draw_unit(cr, x + self.inner_gap, y +
-                           self.inner_gap, unit,  max_value)
+            self.draw_unit(cr, x + self.inner_gap, y + self.inner_gap, unit, max_value)
         childLogger.debug('cairo end')
 
-    def draw_unit(self, cr, x, y, unit,   max_value=1):
+    def draw_unit(self, cr, x, y, unit, max_value=1):
         colors = self.colors[unit]['foreground']
         back = self.colors[unit]['background']
 
@@ -162,11 +159,9 @@ class Multiload(Gtk.DrawingArea):
         cr.set_operator(cairo.OPERATOR_OVER)
         line_count = len(self.history[-1][unit])
         for num_line in range(line_count):
-            cr.set_source_rgba(
-                *helper.color(colors[num_line % len(self.colors)]))
+            cr.set_source_rgba(*helper.color(colors[num_line % len(self.colors)]))
             cr.move_to(x, y + self.unit_height)
-            self.draw_line(x, y, cr, lambda item: sum(
-                item[unit][num_line:]) / max_value)
+            self.draw_line(x, y, cr, lambda item: sum(item[unit][num_line:]) / max_value)
             self.draw_line(x, y, cr, 'bottom', True)
             cr.close_path()
             cr.fill()
@@ -174,9 +169,7 @@ class Multiload(Gtk.DrawingArea):
             cr.set_line_width(1)
             cr.set_source_rgba(1, 1, 1, 1)
             cr.move_to(-.5 + x + self.unit_width, -.5 + y)
-            cr.line_to(
-                -.5 + x + self.unit_width,
-                -.5 + y + self.unit_height)
+            cr.line_to(-.5 + x + self.unit_width, -.5 + y + self.unit_height)
             cr.line_to(-.5 + x, -.5 + y + self.unit_height)
             cr.stroke()
             cr.set_source_rgba(0, 0, 0, 1)

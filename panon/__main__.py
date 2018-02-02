@@ -16,22 +16,19 @@ if config.log == 'debug':
 style_provider = Gtk.CssProvider()
 style_provider.load_from_data(config.style_sheet.encode())
 
-Gtk.StyleContext.add_provider_for_screen(
-    Gdk.Screen.get_default(),
-    style_provider,
-    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), style_provider,
+                                         Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
 
 class Panel:
-
     def destroy(self, window):
         Gtk.main_quit()
 
     def __init__(self, display):
         self.background_color = helper.color(config.background_color)
 
-        self.display = display                   # Display obj
-        self.screen = display.screen()          # Screen obj
+        self.display = display    # Display obj
+        self.screen = display.screen()    # Screen obj
 
         self.window_gtk = Gtk.Window()
         self.setGtkProps(self.window_gtk)
@@ -56,33 +53,46 @@ class Panel:
         for section in config.sections:
             if section == 'visualizer':
                 self.visualizer = Visualizer(
-                    background_color=config.visualizer_background,
-                    padding=config.visualizer_padding)
+                    background_color=config.visualizer_background, padding=config.visualizer_padding)
                 self.box.pack_start(self.visualizer, True, True, 0)
             elif section == 'taskbar':
-                self.taskbar = Taskbar(self.display,
-                                       background_color=self.background_color,
-                                       size=config.height,)
+                self.taskbar = Taskbar(
+                    self.display,
+                    background_color=self.background_color,
+                    size=config.height,
+                )
                 self.box.pack_start(self.taskbar, False, False, 0)
             elif type(section) is not str:
-                self.box.pack_start(Shortcut(
-                    background_color=self.background_color,
-                    size=config.height, shortcut=section), False, False, 0)
+                self.box.pack_start(
+                    Shortcut(background_color=self.background_color, size=config.height, shortcut=section), False,
+                    False, 0)
             elif section == 'multiload':
-                colors = {'cpu': {'background': config.multiload_cpu_background,
-                                  'foreground': config.multiload_cpu_foreground, },
-                          'mem': {'background': config.multiload_mem_background,
-                                  'foreground': config.multiload_mem_foreground, },
-                          'net': {'background': config.multiload_net_background,
-                                  'foreground': config.multiload_net_foreground, },
-                          'disk': {'background': config.multiload_disk_background,
-                                   'foreground': config.multiload_disk_foreground, }, }
+                colors = {
+                    'cpu': {
+                        'background': config.multiload_cpu_background,
+                        'foreground': config.multiload_cpu_foreground,
+                    },
+                    'mem': {
+                        'background': config.multiload_mem_background,
+                        'foreground': config.multiload_mem_foreground,
+                    },
+                    'net': {
+                        'background': config.multiload_net_background,
+                        'foreground': config.multiload_net_foreground,
+                    },
+                    'disk': {
+                        'background': config.multiload_disk_background,
+                        'foreground': config.multiload_disk_foreground,
+                    },
+                }
                 w = config.height * 2 * \
                     config.multiload_layout[0] // config.multiload_layout[1]
 
                 self.multiload_cpu = Multiload(
                     self.background_color,
-                    colors, w, config.height,
+                    colors,
+                    w,
+                    config.height,
                     fake_shadow=config.multiload_fake_shadow,
                     interval=config.multiload_interval,
                     layout=config.multiload_layout,
@@ -111,11 +121,9 @@ class Panel:
         i1 = Gtk.MenuItem("Quit")
         i1.connect("activate", self.quit)
         self.menu.append(i1)
-        self.window_gtk.connect('button-release-event',
-                                lambda b, e: e.button == 3
-                                and self.menu.popup(
-                                    None, None, None, None, 0,
-                                    Gtk.get_current_event_time()))
+        self.window_gtk.connect(
+            'button-release-event',
+            lambda b, e: e.button == 3 and self.menu.popup(None, None, None, None, 0, Gtk.get_current_event_time()))
         self.menu.show_all()
 
     def setGtkProps(self, win):
@@ -163,10 +171,12 @@ class Panel:
         win.set_wm_class("panon", "Panon")
         # win.set_wm_hints(flags=(Xutil.InputHint | Xutil.StateHint),
         #                 input=0, initial_state=1)
-        win.set_wm_normal_hints(flags=(
-            Xutil.PPosition | Xutil.PMaxSize | Xutil.PMinSize),
-            min_width=P_WIDTH, min_height=config.height,
-            max_width=P_WIDTH, max_height=config.height)
+        win.set_wm_normal_hints(
+            flags=(Xutil.PPosition | Xutil.PMaxSize | Xutil.PMinSize),
+            min_width=P_WIDTH,
+            min_height=config.height,
+            max_width=P_WIDTH,
+            max_height=config.height)
         # win.change_property(dsp.intern_atom("_WIN_STATE"),
         #                    Xatom.CARDINAL, 32, [1])
         # win.change_property(dsp.intern_atom("_MOTIF_WM_HINTS"),
@@ -210,10 +220,9 @@ class Panel:
             bottom_start = P_START
             bottom_end = P_START + P_WIDTH
 
-        win.change_property(self._STRUT, Xatom.CARDINAL,
-                            32, [0, 0, top, bottom])
-        win.change_property(self._STRUTP, Xatom.CARDINAL, 32, [0, 0, top, bottom,
-                                                               0, 0, 0, 0, top_start, top_end, bottom_start, bottom_end])
+        win.change_property(self._STRUT, Xatom.CARDINAL, 32, [0, 0, top, bottom])
+        win.change_property(self._STRUTP, Xatom.CARDINAL, 32,
+                            [0, 0, top, bottom, 0, 0, 0, 0, top_start, top_end, bottom_start, bottom_end])
 
 
 from .singleton import Singleton
