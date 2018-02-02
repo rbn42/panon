@@ -41,10 +41,8 @@ sections = [
     },
     {
     # show desktop
-        'icon-name':
-        'desktop',
-        'click':
-        """
+        'icon-name': 'desktop',
+        'click': """
         if wmctrl -m | grep "mode: ON";then
             wmctrl -k off
         else

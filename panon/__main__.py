@@ -16,8 +16,7 @@ if config.log == 'debug':
 style_provider = Gtk.CssProvider()
 style_provider.load_from_data(config.style_sheet.encode())
 
-Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), style_provider,
-                                         Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
 
 class Panel:
@@ -52,8 +51,7 @@ class Panel:
         self.window_gtk.add(self.box)
         for section in config.sections:
             if section == 'visualizer':
-                self.visualizer = Visualizer(
-                    background_color=config.visualizer_background, padding=config.visualizer_padding)
+                self.visualizer = Visualizer(background_color=config.visualizer_background, padding=config.visualizer_padding)
                 self.box.pack_start(self.visualizer, True, True, 0)
             elif section == 'taskbar':
                 self.taskbar = Taskbar(
@@ -63,9 +61,7 @@ class Panel:
                 )
                 self.box.pack_start(self.taskbar, False, False, 0)
             elif type(section) is not str:
-                self.box.pack_start(
-                    Shortcut(background_color=self.background_color, size=config.height, shortcut=section), False,
-                    False, 0)
+                self.box.pack_start(Shortcut(background_color=self.background_color, size=config.height, shortcut=section), False, False, 0)
             elif section == 'multiload':
                 colors = {
                     'cpu': {
@@ -121,9 +117,7 @@ class Panel:
         i1 = Gtk.MenuItem("Quit")
         i1.connect("activate", self.quit)
         self.menu.append(i1)
-        self.window_gtk.connect(
-            'button-release-event',
-            lambda b, e: e.button == 3 and self.menu.popup(None, None, None, None, 0, Gtk.get_current_event_time()))
+        self.window_gtk.connect('button-release-event', lambda b, e: e.button == 3 and self.menu.popup(None, None, None, None, 0, Gtk.get_current_event_time()))
         self.menu.show_all()
 
     def setGtkProps(self, win):
@@ -171,12 +165,7 @@ class Panel:
         win.set_wm_class("panon", "Panon")
         # win.set_wm_hints(flags=(Xutil.InputHint | Xutil.StateHint),
         #                 input=0, initial_state=1)
-        win.set_wm_normal_hints(
-            flags=(Xutil.PPosition | Xutil.PMaxSize | Xutil.PMinSize),
-            min_width=P_WIDTH,
-            min_height=config.height,
-            max_width=P_WIDTH,
-            max_height=config.height)
+        win.set_wm_normal_hints(flags=(Xutil.PPosition | Xutil.PMaxSize | Xutil.PMinSize), min_width=P_WIDTH, min_height=config.height, max_width=P_WIDTH, max_height=config.height)
         # win.change_property(dsp.intern_atom("_WIN_STATE"),
         #                    Xatom.CARDINAL, 32, [1])
         # win.change_property(dsp.intern_atom("_MOTIF_WM_HINTS"),
@@ -221,8 +210,7 @@ class Panel:
             bottom_end = P_START + P_WIDTH
 
         win.change_property(self._STRUT, Xatom.CARDINAL, 32, [0, 0, top, bottom])
-        win.change_property(self._STRUTP, Xatom.CARDINAL, 32,
-                            [0, 0, top, bottom, 0, 0, 0, 0, top_start, top_end, bottom_start, bottom_end])
+        win.change_property(self._STRUTP, Xatom.CARDINAL, 32, [0, 0, top, bottom, 0, 0, 0, 0, top_start, top_end, bottom_start, bottom_end])
 
 
 from .singleton import Singleton
