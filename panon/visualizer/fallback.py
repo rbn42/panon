@@ -81,6 +81,7 @@ class VisualizerCairo(Gtk.DrawingArea):
             else:
                 cr.set_source(source)
             cr.set_operator(cairo.OPERATOR_SOURCE)
+            cr.set_operator(cairo.OPERATOR_OVER)
             cr.move_to(x + 0, y + h / 2)    # middle left
             width = w / bins.shape[1]
             for i in range(bins.shape[1]):
