@@ -53,6 +53,8 @@ class Shortcut(Gtk.EventBox):
         if event.button == 1:
             if 'click' in self.shortcut:
                 os.system(self.shortcut['click'])
+                if self.shortcut.get('refresh-on-click',False):
+                    self.tick()
             return True
         if event.button == 3:
             if 'rightclick' in self.shortcut:
