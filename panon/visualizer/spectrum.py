@@ -1,5 +1,5 @@
 import numpy as np
-from .source import Source
+from .source import Source2 as Source
 
 
 class Spectrum:
