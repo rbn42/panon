@@ -1,5 +1,6 @@
 import pyaudio
 
+from ..config import visualizer_fifo 
 
 class Source:
     def __init__(self, channel_count, sample_rate):
@@ -20,7 +21,6 @@ class Source:
         self.stream = p.open(format=pyaudio.paInt16, channels=self.channel_count, rate=self.sample_rate, input=True)
 
 FPS=25
-FIFO = '/tmp/mpd.fifo'
 class Source2:
     def __init__(self, channel_count, sample_rate):
         self.channel_count = channel_count
@@ -34,6 +34,6 @@ class Source2:
         self.stream.close()
 
     def start(self):
-        self.stream=open(FIFO,'rb')
+        self.stream=open(visualizer_fifo,'rb')
 
 

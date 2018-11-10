@@ -5,6 +5,8 @@ position = 'bottom'
 background_color = '#ffffff30'
 fake_shadow = True
 
+visualizer_fifo = '/tmp/mpd.fifo'
+
 style_sheet = """
 .fake-shadow-top{
     border-top:solid 1px white;
