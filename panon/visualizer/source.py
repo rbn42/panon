@@ -28,12 +28,20 @@ class Source2:
 
         self.start()
     def read(self):
-        return self.stream.read(self.sample_rate//FPS*self.channel_count)
+        data=self.stream.read(self.sample_rate//FPS*self.channel_count)
+        if data is None:
+            data=b'\x00'*2**14
+        return data
 
     def stop(self):
         self.stream.close()
 
     def start(self):
         self.stream=open(visualizer_fifo,'rb')
-
-
+        # nonblock
+        fd = self.stream.fileno()
+        flag = fcntl.fcntl(fd, fcntl.F_GETFL)
+        fcntl.fcntl(fd, fcntl.F_SETFL, flag | os.O_NONBLOCK)
+        flag = fcntl.fcntl(fd, fcntl.F_GETFL)
+import fcntl
+import os
