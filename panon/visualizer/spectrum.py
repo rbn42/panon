@@ -31,24 +31,25 @@ class Spectrum:
     def updateHistory(self):
 
         data = self.sample.read()
-        data = np.fromstring(data, 'int16')
+        if data is not None:
+            data = np.fromstring(data, 'int16')
 
-        len_data = len(data) // self.history.shape[0]
+            len_data = len(data) // self.history.shape[0]
 
-        len_history = self.history.shape[1]
-        index = self.history_index
-        assert len_data < len_history
+            len_history = self.history.shape[1]
+            index = self.history_index
+            #assert len_data < len_history
 
-        data = data.reshape((len_data, self.history.shape[0]))
-        data = np.rollaxis(data, 1)
+            data = data.reshape((len_data, self.history.shape[0]))
+            data = np.rollaxis(data, 1)
 
-        if index + len_data > len_history:
-            self.history[:, index:] = data[:, :len_history - index]
-            self.history[:, :index + len_data - len_history] = data[:, len_history - index:]
-            self.history_index -= len_history
-        else:
-            self.history[:, index:index + len_data] = data
-        self.history_index += len_data
+            if index + len_data > len_history:
+                self.history[:, index:] = data[:, :len_history - index]
+                self.history[:, :index + len_data - len_history] = data[:, len_history - index:]
+                self.history_index -= len_history
+            else:
+                self.history[:, index:index + len_data] = data
+            self.history_index += len_data
 
         data_history = np.concatenate([
             self.history[:, self.history_index:],
