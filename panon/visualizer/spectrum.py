@@ -50,11 +50,10 @@ class Spectrum:
             self.history[:, index:index + len_data] = data
         self.history_index += len_data
 
-        data_history = np.concatenate(
-            [
-                self.history[:, self.history_index:],
-                self.history[:, :self.history_index],
-            ], axis=1)
+        data_history = np.concatenate([
+            self.history[:, self.history_index:],
+            self.history[:, :self.history_index],
+        ], axis=1)
 
         return data_history
 
