@@ -33,7 +33,10 @@ class Shortcut(Gtk.EventBox):
         self.connect('button-release-event', self.do_button_release_event)
 
     def tick(self):
-        text = subprocess.check_output(self.shortcut['auto-command'], shell=True)
+        try:
+            text = subprocess.check_output(self.shortcut['auto-command'], shell=True)
+        except:
+            return True
         text = text.decode(errors='ignore')
         text = text.strip()
         self.label.set_text(text)
