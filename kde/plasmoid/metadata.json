@@ -2,29 +2,28 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "jowenn@kde.org, davide.bettio@kdemail.net, piotrkakol@protonmail.com",
-                "Name": "Joseph Wenninger,Davide Bettio,Piotr Kąkol"
+                "Email": "",
+                "Name": "rbn42"
             }
         ],
-        "Category": "Date and Time",
+        "Category": "Eye Candy",
         "Dependencies": [
         ],
-        "Description": "Time displayed in binary format",
+        "Description": "A Simple Audio Spectrum Analyzer",
         "EnabledByDefault": true,
-        "Icon": "clock",
-        "Id": "org.kde.tutorial",
+        "Icon": "music",
+        "Id": "io.github.rbn42.panon",
         "License": "GPL-2.0+",
-        "Name": "Binary Clock tutor",
+        "Name": "Panon",
         "ServiceTypes": [
             "Plasma/Applet"
         ],
         "Version": "2.0",
-        "Website": "plasma.kde.org"
+        "Website": "rbn42.github.io"
     },
     "X-Plasma-API": "declarativeappletscript",
     "X-Plasma-MainScript": "ui/main.qml",
     "X-Plasma-Provides": [
-        "org.kde.plasma.time",
-        "org.kde.plasma.date"
+        "io.github.rbn42.panon"
     ]
 }
