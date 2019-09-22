@@ -1,0 +1,30 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "jowenn@kde.org, davide.bettio@kdemail.net, piotrkakol@protonmail.com",
+                "Name": "Joseph Wenninger,Davide Bettio,Piotr Kąkol"
+            }
+        ],
+        "Category": "Date and Time",
+        "Dependencies": [
+        ],
+        "Description": "Time displayed in binary format",
+        "EnabledByDefault": true,
+        "Icon": "clock",
+        "Id": "org.kde.tutorial",
+        "License": "GPL-2.0+",
+        "Name": "Binary Clock tutor",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "Version": "2.0",
+        "Website": "plasma.kde.org"
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml",
+    "X-Plasma-Provides": [
+        "org.kde.plasma.time",
+        "org.kde.plasma.date"
+    ]
+}

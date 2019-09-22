@@ -1,8 +1,7 @@
 #version 400
 uniform sampler2D tex1;
-in vec2 v_position;
+varying mediump vec2 qt_TexCoord0;
 out vec4 out_Color;
-
 
 vec3 hsv2rgb(vec3 c) {
     vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
@@ -12,16 +11,16 @@ vec3 hsv2rgb(vec3 c) {
 
 void main()
 {
-    vec4 sample1= texture(tex1, vec2(v_position.x,0.5)) ;
-    float h=v_position.y;
+    vec4 sample1= texture(tex1, vec2(qt_TexCoord0.x,0.5)) ;
+    float h=qt_TexCoord0.y;
 
     float[] rels=float[5](4.,3.,2.,1.,.5);
     float[] alphas=float[5](.1,.2,.3,.5,1.);
     //float[] rels=float[1](1.0);
     //float[] alphas=float[1](1.0);
-    vec3 hsv=vec3(v_position.x*1.5+0.5,1,1);
+    vec3 hsv=vec3(qt_TexCoord0.x*1.5+0.5,1,1);
     vec3 rgb=hsv2rgb(hsv);
-    out_Color=vec4(0.1,0.1,0.1,0.1);
+    out_Color=vec4(0.001,0.001,0.001,0.001);
     for (int i=0;i<5;i++){
         float r=rels[i];
         float a=alphas[i];
