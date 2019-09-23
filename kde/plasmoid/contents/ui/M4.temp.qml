@@ -5,7 +5,7 @@ import Qt3D.Render 2.0
 import QtQuick.Layouts 1.1
 
 Item{
-    Layout.preferredWidth: 100
+    Layout.preferredWidth: 300
     Layout.fillWidth: true
 
     ShaderEffect {

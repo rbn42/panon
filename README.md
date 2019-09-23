@@ -20,7 +20,7 @@ Start panon server.
 ```
 python -m panon.server
 ```
-Drag panon widget to your panel.
+Drag panon widget to your panel (eg. [latte-dock](https://github.com/psifidotos/Latte-Dock)).
 ![](../../wiki/plasma-widget1.png)
 ![](../../wiki/plasma-widget2.png)
 
