@@ -6,6 +6,11 @@ import websockets
 from PIL import Image
 from . import spectrum
 
+port=8765
+import sys
+if len(sys.argv)>1:
+    port=int(sys.argv[1])
+
 s = spectrum.Spectrum(60, 0.01)
 
 async def hello(websocket, path):
@@ -37,7 +42,7 @@ async def hello(websocket, path):
         await websocket.send(data)
 
 
-start_server = websockets.serve(hello, "localhost", 8765)
+start_server = websockets.serve(hello, "localhost", port)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()

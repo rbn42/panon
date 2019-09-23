@@ -2,10 +2,10 @@ from setuptools import setup
 
 setup(
     name='panon',
-    version='v0.2.0',
+    version='v0.2.1',
     description='A Different Audio Spectrum Analyzer',
     url='http://github.com/rbn42/panon',
-    download_url='https://github.com/rbn42/panon/archive/v0.2.0.tar.gz',
+    download_url='https://github.com/rbn42/panon/archive/v0.2.1.tar.gz',
     author='rbn42',
     author_email='',
     license='GPLv3',

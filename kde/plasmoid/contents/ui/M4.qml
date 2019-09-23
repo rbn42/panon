@@ -5,9 +5,11 @@ import Qt3D.Core 2.0
 import Qt3D.Render 2.0
 import QtQuick.Layouts 1.1
 
+import org.kde.plasma.plasmoid 2.0
+
 Item{
-    Layout.preferredWidth: 300
-    Layout.fillWidth: true
+    Layout.preferredWidth: plasmoid.configuration.preferredWidth
+    Layout.fillWidth:plasmoid.configuration.autoExtend 
 
     ShaderEffect {
         property variant tex1:messageBox
@@ -50,15 +52,19 @@ void main()
 
     WebSocket {
         id: socket
-        url : "ws://localhost:8765"
         onTextMessageReceived: {
             messageBox.source = message
         }
-        active:true
     }
+
     Image {
         id: messageBox
         visible:false
+    }
+
+    function restart_socket(){
+        socket.url=plasmoid.configuration.panonServer;
+        socket.active=false; socket.active=true; 
     }
 
     Timer {
@@ -67,13 +73,14 @@ void main()
         running: true 
         onTriggered: {
             if(socket.status == WebSocket.Error) {
-                socket.active=false; socket.active=true; 
+                restart_socket()
                 console.log("Error: " + socket.errorString)
             } else if (socket.status == WebSocket.Open) {
                 socket.sendBinaryMessage("b");
             } else if (socket.status == WebSocket.Closed) {
-                socket.active=false; socket.active=true; 
+                restart_socket()
                 console.log("closed: " + socket.errorString)
+                console.log(socket.url)
             }
         }
     }
