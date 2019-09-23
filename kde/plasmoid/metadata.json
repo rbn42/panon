@@ -6,24 +6,24 @@
                 "Name": "rbn42"
             }
         ],
-        "Category": "Eye Candy",
+        "Category": "Multimedia",
         "Dependencies": [
         ],
         "Description": "A Different Audio Spectrum Analyzer",
         "EnabledByDefault": true,
         "Icon": "music",
-        "Id": "io.github.rbn42.panon",
-        "License": "GPL-2.0+",
+        "Id": "panon",
+        "License": "GPL-3.0+",
         "Name": "Panon",
         "ServiceTypes": [
             "Plasma/Applet"
         ],
-        "Version": "2.0",
-        "Website": "rbn42.github.io"
+        "Version": "0.2",
+        "Website": "github.com/rbn42/panon"
     },
     "X-Plasma-API": "declarativeappletscript",
     "X-Plasma-MainScript": "ui/main.qml",
     "X-Plasma-Provides": [
-        "io.github.rbn42.panon"
+        "panon"
     ]
 }

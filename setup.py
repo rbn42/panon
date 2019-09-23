@@ -2,13 +2,13 @@ from setuptools import setup
 
 setup(
     name='panon',
-    version='v0.1.2',
-    description='A status bar for X window managers',
+    version='v0.2.0',
+    description='A Different Audio Spectrum Analyzer',
     url='http://github.com/rbn42/panon',
-    download_url='https://github.com/rbn42/panon/archive/v0.1.2.tar.gz',
+    download_url='https://github.com/rbn42/panon/archive/v0.2.0.tar.gz',
     author='rbn42',
-    author_email='bl100@students.waikato.ac.nz',
-    license='MIT',
+    author_email='',
+    license='GPLv3',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: End Users/Desktop',
