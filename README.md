@@ -1,4 +1,4 @@
-![](../../wiki/screenshot.png)
+![](../../wiki/plasmoid/preview.png)
 
 [Previews](../../wiki/Previews).
 
@@ -21,8 +21,8 @@ Running
 python -m panon.server
 ```
 2. Drag panon widget to your panel (eg. [latte-dock](https://github.com/psifidotos/Latte-Dock)).
-![](../../wiki/plasma-widget1.png)
-![](../../wiki/plasma-widget2.png)
+![](../../wiki/plasmoid/step1.png)
+![](../../wiki/plasmoid/step2.png)
 
 Credits
 ======
