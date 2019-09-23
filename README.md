@@ -1,3 +1,7 @@
+# Panon
+
+A Different Audio Spectrum Analyzer
+
 ![](../../wiki/plasmoid/preview.png)
 
 [Previews](../../wiki/Previews).

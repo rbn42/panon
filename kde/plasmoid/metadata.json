@@ -9,7 +9,7 @@
         "Category": "Eye Candy",
         "Dependencies": [
         ],
-        "Description": "A Simple Audio Spectrum Analyzer",
+        "Description": "A Different Audio Spectrum Analyzer",
         "EnabledByDefault": true,
         "Icon": "music",
         "Id": "io.github.rbn42.panon",
