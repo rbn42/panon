@@ -51,6 +51,8 @@ Kirigami.FormLayout {
         id: preferredWidth
 
         Kirigami.FormData.label: vertical ? i18nc("@label:spinbox", "Preferred height:"):i18nc("@label:spinbox", "Preferred width:")
+        editable:true
+        stepSize:10
 
         from: 1
         to:8000
@@ -75,6 +77,8 @@ Kirigami.FormLayout {
         id:hslHueFrom
         Kirigami.FormData.label:i18nc("@label:spinbox","Hue from")
         visible:colorSpaceHSL.checked
+        editable:true
+        stepSize:10
         from:-4000
         to:4000
     }
@@ -83,6 +87,8 @@ Kirigami.FormLayout {
         id:hslHueTo
         Kirigami.FormData.label:i18nc("@label:spinbox","Hue to")
         visible:colorSpaceHSL.checked
+        editable:true
+        stepSize:10
         from:-4000
         to:4000
     }
@@ -91,6 +97,8 @@ Kirigami.FormLayout {
         id:hsluvHueFrom
         Kirigami.FormData.label:i18nc("@label:spinbox","Hue from")
         visible:colorSpaceHSLuv.checked
+        editable:true
+        stepSize:10
         from:-4000
         to:4000
     }
@@ -99,6 +107,8 @@ Kirigami.FormLayout {
         id:hsluvHueTo
         Kirigami.FormData.label:i18nc("@label:spinbox","Hue to")
         visible:colorSpaceHSLuv.checked
+        editable:true
+        stepSize:10
         from:-4000
         to:4000
     }
@@ -107,6 +117,8 @@ Kirigami.FormLayout {
         id:hslSaturation
         Kirigami.FormData.label:i18nc("@label:spinbox","Saturation")
         visible:colorSpaceHSL.checked
+        editable:true
+        stepSize:10
         from:0
         to:100
     }
@@ -115,6 +127,8 @@ Kirigami.FormLayout {
         id:hslLightness
         Kirigami.FormData.label:i18nc("@label:spinbox","Lightness")
         visible:colorSpaceHSL.checked
+        editable:true
+        stepSize:10
         from:0
         to:100
     }
@@ -123,6 +137,8 @@ Kirigami.FormLayout {
         id:hsluvSaturation
         Kirigami.FormData.label:i18nc("@label:spinbox","Saturation")
         visible:colorSpaceHSLuv.checked
+        editable:true
+        stepSize:10
         from:0
         to:100
     }
@@ -131,6 +147,8 @@ Kirigami.FormLayout {
         id:hsluvLightness
         Kirigami.FormData.label:i18nc("@label:spinbox","Lightness")
         visible:colorSpaceHSLuv.checked
+        editable:true
+        stepSize:10
         from:0
         to:100
     }
