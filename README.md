@@ -8,7 +8,7 @@ A Different Audio Spectrum Analyzer
 
 Dependencies
 ==
-python-numpy python-pyaudio python-websockets qt5-websockets qt5-3d 
+python-numpy python-pillow python-pyaudio python-websockets qt5-websockets qt5-3d 
 
 Installation
 ===========

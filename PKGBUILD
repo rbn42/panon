@@ -1,11 +1,11 @@
 pkgname=panon-git
 pkgver=0.1.0
 pkgrel=1
-pkgdesc="X"
+pkgdesc="A Different Audio Spectrum Analyzer"
 arch=('any')
 url="http://github.com/rbn42/panon"
-license=('MIT')
-depends=('python-numpy' 'python-pyaudio' 'python-websockets' 'qt5-websockets' 'qt5-3d') 
+license=('GPL3')
+depends=('python-numpy' 'python-pillow' 'python-pyaudio' 'python-websockets' 'qt5-websockets' 'qt5-3d') 
 makedepends=('git')
 provides=('panon')
 conflicts=('panon')
