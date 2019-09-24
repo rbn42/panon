@@ -118,7 +118,7 @@ Kirigami.FormLayout {
         Kirigami.FormData.label:i18nc("@label:spinbox","Saturation")
         visible:colorSpaceHSL.checked
         editable:true
-        stepSize:10
+        stepSize:2
         from:0
         to:100
     }
@@ -128,7 +128,7 @@ Kirigami.FormLayout {
         Kirigami.FormData.label:i18nc("@label:spinbox","Lightness")
         visible:colorSpaceHSL.checked
         editable:true
-        stepSize:10
+        stepSize:2
         from:0
         to:100
     }
@@ -138,7 +138,7 @@ Kirigami.FormLayout {
         Kirigami.FormData.label:i18nc("@label:spinbox","Saturation")
         visible:colorSpaceHSLuv.checked
         editable:true
-        stepSize:10
+        stepSize:2
         from:0
         to:100
     }
@@ -148,7 +148,7 @@ Kirigami.FormLayout {
         Kirigami.FormData.label:i18nc("@label:spinbox","Lightness")
         visible:colorSpaceHSLuv.checked
         editable:true
-        stepSize:10
+        stepSize:2
         from:0
         to:100
     }
