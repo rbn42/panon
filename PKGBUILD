@@ -17,9 +17,17 @@ pkgver() {
   git describe --always | sed -e 's|-|.|g' -e '1s|^.||'
 }
 
+build() {
+  cd "$srcdir/$pkgname/kde"
+  python build.py
+}
+
 package() {
   cd "$srcdir/$pkgname"
   python setup.py install --root "$pkgdir"
-  install -Dm644 LICENSE $pkgdir/usr/share/licenses/${pkgname%-*}/LICENSE
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/${pkgname%-*}/LICENSE"
+
+  cd kde
+  kpackagetool5 -p "$pkgdir/usr/share/plasma/plasmoids/" -t Plasma/Applet -i plasmoid
 }
 
