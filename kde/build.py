@@ -7,11 +7,11 @@
 """
 import glob
 import os
-qml_temp=glob.glob('./plasmoid/contents/*/*.temp.qml')
+qml_temp=glob.glob('./plasmoid/contents/*/*.template.qml')
 root='./plasmoid/contents/shaders/'
 shaders={name:open(root+name).read() for name in os.listdir(root)}
 for path in qml_temp:
-    path_dst=path[:-9]+'.qml'
+    path_dst=path[:-13]+'.qml'
     print(path_dst)
     src=open(path).read()
     for name in shaders:

@@ -1,23 +1,3 @@
-/*
- *  Copyright 2015 David Rosca <nowrep@gmail.com>
- *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License as
- *  published by the Free Software Foundation; either version 2 of
- *  the License or (at your option) version 3 or any later version
- *  accepted by the membership of KDE e.V. (or its successor approved
- *  by the membership of KDE e.V.), which shall act as a proxy
- *  defined in Section 14 of version 3 of the license.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
-
 import QtQuick 2.5
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.5 as QQC2
@@ -35,6 +15,18 @@ Kirigami.FormLayout {
     property alias cfg_preferredWidth: preferredWidth.value
     property alias cfg_panonServer: panonServer.text
     property alias cfg_autoExtend: autoExtend.checked
+
+    property alias cfg_colorSpaceHSL: colorSpaceHSL.checked
+    property alias cfg_colorSpaceHSLuv: colorSpaceHSLuv.checked
+
+    property alias cfg_hslHueFrom       :hslHueFrom.value
+    property alias cfg_hslHueTo         :hslHueTo.value
+    property alias cfg_hsluvHueFrom     :hsluvHueFrom.value
+    property alias cfg_hsluvHueTo       :hsluvHueTo.value
+    property alias cfg_hslSaturation    :hslSaturation.value
+    property alias cfg_hslLightness     :hslLightness.value
+    property alias cfg_hsluvSaturation  :hsluvSaturation.value
+    property alias cfg_hsluvLightness   :hsluvLightness.value
 
     RowLayout {
         Kirigami.FormData.label: i18nc("@title:group", "Panon server:")
@@ -64,10 +56,87 @@ Kirigami.FormLayout {
         to:8000
     }
 
-
     Item {
         Kirigami.FormData.isSection: true
     }
 
+    QQC2.RadioButton {
+        id:colorSpaceHSL
+        Kirigami.FormData.label: i18nc("@label", "Color space:")
+        text: i18nc("@option:radio", "HSL")
+    }
 
+    QQC2.RadioButton {
+        id:colorSpaceHSLuv
+        text: i18nc("@option:radio", "HSLuv")
+    }
+
+    QQC2.SpinBox {
+        id:hslHueFrom
+        Kirigami.FormData.label:i18nc("@label:spinbox","Hue from")
+        visible:colorSpaceHSL.checked
+        from:-4000
+        to:4000
+    }
+
+    QQC2.SpinBox {
+        id:hslHueTo
+        Kirigami.FormData.label:i18nc("@label:spinbox","Hue to")
+        visible:colorSpaceHSL.checked
+        from:-4000
+        to:4000
+    }
+
+    QQC2.SpinBox {
+        id:hsluvHueFrom
+        Kirigami.FormData.label:i18nc("@label:spinbox","Hue from")
+        visible:colorSpaceHSLuv.checked
+        from:-4000
+        to:4000
+    }
+
+    QQC2.SpinBox {
+        id:hsluvHueTo
+        Kirigami.FormData.label:i18nc("@label:spinbox","Hue to")
+        visible:colorSpaceHSLuv.checked
+        from:-4000
+        to:4000
+    }
+
+    QQC2.SpinBox {
+        id:hslSaturation
+        Kirigami.FormData.label:i18nc("@label:spinbox","Saturation")
+        visible:colorSpaceHSL.checked
+        from:0
+        to:100
+    }
+
+    QQC2.SpinBox {
+        id:hslLightness
+        Kirigami.FormData.label:i18nc("@label:spinbox","Lightness")
+        visible:colorSpaceHSL.checked
+        from:0
+        to:100
+    }
+
+    QQC2.SpinBox {
+        id:hsluvSaturation
+        Kirigami.FormData.label:i18nc("@label:spinbox","Saturation")
+        visible:colorSpaceHSLuv.checked
+        from:0
+        to:100
+    }
+
+    QQC2.SpinBox {
+        id:hsluvLightness
+        Kirigami.FormData.label:i18nc("@label:spinbox","Lightness")
+        visible:colorSpaceHSLuv.checked
+        from:0
+        to:100
+    }
+
+
+    Item {
+        Kirigami.FormData.isSection: true
+    }
 }

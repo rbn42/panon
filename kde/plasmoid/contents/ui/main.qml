@@ -14,6 +14,6 @@ Item {
 
     Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
 
-    Plasmoid.compactRepresentation: M4{
+    Plasmoid.compactRepresentation: Spectrum{
     }
 }

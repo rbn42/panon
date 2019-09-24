@@ -15,6 +15,39 @@
     <entry name="panonServer" type="String">
       <default>ws://localhost:8765</default>
     </entry>
+
+    <entry name="colorSpaceHSL" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="colorSpaceHSLuv" type="Bool">
+      <default>false</default>
+    </entry>
+
+    <entry name="hslHueFrom" type="Int">
+        <default>180</default>        
+    </entry>
+    <entry name="hslHueTo" type="Int">
+        <default>720</default>    
+    </entry>
+    <entry name="hsluvHueFrom" type="Int">
+        <default>270</default>    
+    </entry>
+    <entry name="hsluvHueTo" type="Int">
+        <default>-270</default>    
+    </entry>
+    <entry name="hslSaturation" type="Int">
+        <default>100</default>    
+    </entry>
+    <entry name="hslLightness" type="Int">
+        <default>100</default>    
+    </entry>
+    <entry name="hsluvSaturation" type="Int">
+        <default>100</default>    
+    </entry>
+    <entry name="hsluvLightness" type="Int">
+        <default>50</default>    
+    </entry>
+
   </group>
 
 </kcfg>
