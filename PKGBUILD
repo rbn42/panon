@@ -29,5 +29,6 @@ package() {
 
   cd kde
   kpackagetool5 -p "$pkgdir/usr/share/plasma/plasmoids/" -t Plasma/Applet -i plasmoid
+  rm "$pkgdir/usr/share/plasma/plasmoids/kpluginindex.json"
 }
 
