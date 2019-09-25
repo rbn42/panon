@@ -14,12 +14,11 @@ if len(sys.argv)>1:
 s = spectrum.Spectrum(60, 0.01)
 
 async def hello(websocket, path):
+    print('hello')
     while True:
         check = await websocket.recv()
-        print(check)
 
         data = s.getData()
-        print(data.dtype, data.shape)
 
         data = data / 3.0
         data = np.clip(data, 0, 0.99)
