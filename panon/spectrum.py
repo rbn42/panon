@@ -58,28 +58,50 @@ class Spectrum:
 
         return data_history
 
+    def fun(
+            self,
+            data_history,
+            freq_from,
+            freq_to,
+            latency,
+            weight_from=None,
+            weight_to=None,
+    ):
+        size = self.buffer_size
+        freq_from = int(freq_from * latency)
+        freq_to = int(freq_to * latency)
+        size = int(size * latency)
+        d = data_history[:, -size:]
+
+        fft = np.absolute(np.fft.rfft(d, n=size))
+        result = fft[:, freq_from:freq_to]
+        if weight_from:
+            size_output = result.shape[1]
+            result = result * np.arange(weight_from, weight_to, (weight_to - weight_from) / size_output)[:size_output]
+        debug = False
+        if debug:
+            #add splitters
+            result = np.concatenate([result, np.zeros((2, 8))], axis=1)
+            return result
+        else:
+            return result
+
     def getData(self):
         data_history = self.updateHistory()
 
-        fft_freq = []
-
-        def fun(start, end, rel):
-            size = self.buffer_size
-            start = int(start * rel)
-            end = int(end * rel)
-            size = int(size * rel)
-            d = data_history[:, -size:]
-
-            fft = np.absolute(np.fft.rfft(d, n=size))
-            fft_freq.insert(0, fft[:, start:end])
-
         # higher resolution and latency for lower frequency
-        fun(110, 150, 2)
-        fun(80, 110, 3)
-        fun(50, 80, 4)
-        fun(30, 50, 5)
-        fun(10, 30, 6)
-        fun(0, 10, 8)
+        fft_freq = [
+        #self.fun(data_history, 250, 4000, 0.25),    # 25px
+        #self.fun(data_history, 200, 250, 0.5),    # 25px
+        #self.fun(data_history, 150, 200, 1),    # 50px
+            self.fun(data_history, 110, 150, 2),    # 80px
+            self.fun(data_history, 80, 110, 3),    # 90px
+            self.fun(data_history, 50, 80, 4),    #120px
+            self.fun(data_history, 30, 50, 5, 1 / 1.2, 1),    #100px
+            self.fun(data_history, 10, 30, 6, 1 / 1.5, 1 / 1.2),    #120px
+            self.fun(data_history, 0, 10, 8, 1 / 3, 1 / 1.5),    # 80px
+        ]
+        fft_freq.reverse()
 
         fft = np.concatenate(fft_freq, axis=1)
 
