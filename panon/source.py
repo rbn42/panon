@@ -8,9 +8,14 @@ class Source:
 
         self.start()
 
-    def read(self):
+    def readlatest(self, max_size=1000000):
         size = self.stream.get_read_available()
-        return self.stream.read(size)
+        result = b''
+        while size > 0:
+            result += self.stream.read(size)
+            result = result[-max_size:]
+            size = self.stream.get_read_available()
+        return result
 
     def stop(self):
         self.stream.close()

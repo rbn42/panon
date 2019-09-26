@@ -10,10 +10,14 @@ Kirigami.FormLayout {
     anchors.right: parent.right
     anchors.left: parent.left
 
+
     readonly property bool vertical: plasmoid.formFactor == PlasmaCore.Types.Vertical || (plasmoid.formFactor == PlasmaCore.Types.Planar && plasmoid.height > plasmoid.width)
 
-    property alias cfg_preferredWidth: preferredWidth.value
     property alias cfg_panonServer: panonServer.text
+    property alias cfg_reduceBass: reduceBass.checked
+    property alias cfg_fps: fps.value
+
+    property alias cfg_preferredWidth: preferredWidth.value
     property alias cfg_autoExtend: autoExtend.checked
 
     property alias cfg_colorSpaceHSL: colorSpaceHSL.checked
@@ -38,13 +42,22 @@ Kirigami.FormLayout {
         }
     }
 
-    Item {
-        Kirigami.FormData.isSection: true
+    QQC2.CheckBox {
+        id: reduceBass
+        text: i18nc("@option:check", "Reduce the weight of bass")
     }
 
-    QQC2.CheckBox {
-        id: autoExtend
-        text: i18nc("@option:check", "Automatic extending")
+    QQC2.SpinBox {
+        id:fps
+        Kirigami.FormData.label:i18nc("@label:spinbox","Fps")
+        editable:true
+        stepSize:1
+        from:1
+        to:300
+    }
+
+    Item {
+        Kirigami.FormData.isSection: true
     }
 
     QQC2.SpinBox {
@@ -56,6 +69,11 @@ Kirigami.FormLayout {
 
         from: 1
         to:8000
+    }
+
+    QQC2.CheckBox {
+        id: autoExtend
+        text: i18nc("@option:check", "Fill width")
     }
 
     Item {

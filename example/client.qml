@@ -19,7 +19,7 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            socket.sendBinaryMessage("b")
+            socket.sendBinaryMessage("{}")
         }
     }
 }

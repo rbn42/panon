@@ -18,7 +18,7 @@
         "ServiceTypes": [
             "Plasma/Applet"
         ],
-        "Version": "0.2.2",
+        "Version": "0.2.5",
         "Website": "github.com/rbn42/panon"
     },
     "X-Plasma-API": "declarativeappletscript",
