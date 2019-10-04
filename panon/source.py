@@ -28,12 +28,19 @@ class Source:
 if __name__ == '__main__':
     import numpy as np
     import time
+
     sample = Source(2, 44100)
+
     time.sleep(2)
+
     data = sample.readlatest()
     data = np.fromstring(data, 'int16')
+
     _max = np.max(data)
     _min = np.min(data)
     _sum = np.sum(data)
     print(_max, _min, _sum)
-    assert _max > 0
+    if _max > 0:
+        print('success')
+    else:
+        print('fail')
