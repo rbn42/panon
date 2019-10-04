@@ -30,7 +30,7 @@ class Spectrum:
         data = self.sample.readlatest(max_size=len_history * num_channel)
 
         if data is not None:
-            data = np.fromstring(data, 'int16')
+            data = np.frombuffer(data, 'int16')
 
             len_data = len(data) // num_channel
 

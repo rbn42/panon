@@ -34,7 +34,7 @@ if __name__ == '__main__':
     time.sleep(2)
 
     data = sample.readlatest()
-    data = np.fromstring(data, 'int16')
+    data = np.frombuffer(data, 'int16')
 
     _max = np.max(data)
     _min = np.min(data)
