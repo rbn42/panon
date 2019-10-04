@@ -1,33 +1,32 @@
 import numpy as np
-from .source import Source as Source
+
+NUM_CHANNEL = 2
+HISTORY_LENGTH = 8
 
 
 class Spectrum:
     def __init__(
             self,
-            fps,
+            source,
             decay,
-            channel_count=2,
-            sample_rate=44100,
+            fft_size=44100 // 60,
     ):
-        self.sample = Source(channel_count, sample_rate)
+        self.sample = source
         self.decay = decay
+        self.fft_size = fft_size
 
-        buffer_size = sample_rate // fps
-        self.buffer_size = buffer_size
-
-        self.history = np.zeros((channel_count, buffer_size * 8), dtype='int16')
+        self.history = np.zeros((NUM_CHANNEL, self.fft_size * HISTORY_LENGTH), dtype='int16')
         self.history_index = 0
 
         self.min_sample = 10
         self.max_sample = self.min_sample
 
-    def updateHistory(self):
+    def updateHistory(self, expect_buffer_size):
 
         len_history = self.history.shape[1]
         num_channel = self.history.shape[0]
 
-        data = self.sample.readlatest(max_size=len_history * num_channel)
+        data = self.sample.readlatest(expect_buffer_size, len_history * num_channel)
 
         if data is not None:
             data = np.frombuffer(data, 'int16')
@@ -65,7 +64,7 @@ class Spectrum:
             weight_from=None,
             weight_to=None,
     ):
-        size = self.buffer_size
+        size = self.fft_size
         freq_from = int(freq_from * latency)
         freq_to = int(freq_to * latency)
         size = int(size * latency)
@@ -86,10 +85,10 @@ class Spectrum:
 
     def getData(
             self,
+            data_history,
             reduceBass=False,
             **args,
     ):
-        data_history = self.updateHistory()
         if np.max(data_history) == 0:
             return None
 

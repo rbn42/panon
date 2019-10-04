@@ -7,13 +7,22 @@ import json
 import websockets
 from PIL import Image
 from . import spectrum
+from .source import Source as Source
 
 port = 8765
 import sys
 if len(sys.argv) > 1:
     port = int(sys.argv[1])
 
-s = spectrum.Spectrum(60, 0.01)
+spectrum_decay = 0.01
+spectrum_map = {}
+sample_rate = 44100
+spectrum_source = Source(spectrum.NUM_CHANNEL, sample_rate)
+
+spec = spectrum.Spectrum(
+    spectrum_source,
+    spectrum_decay,
+)
 
 
 async def hello(websocket, path):
@@ -26,7 +35,11 @@ async def hello(websocket, path):
     img_data = None
 
     while True:
-        data = s.getData(**config)
+        fps = config['fps']
+        expect_buffer_size = sample_rate // fps
+        hist = spec.updateHistory(expect_buffer_size)
+        data = spec.getData(hist, **config)
+
         if data is None:
             data = ''
         else:
@@ -51,7 +64,7 @@ async def hello(websocket, path):
         await websocket.send(data)
 
         new_timestamp = time.time()
-        time_sleep = max(0, 1 / config['fps'] - (new_timestamp - old_timestamp))
+        time_sleep = max(0, 1 / fps - (new_timestamp - old_timestamp))
         old_timestamp = new_timestamp
         try:
             config = await asyncio.wait_for(websocket.recv(), timeout=time_sleep)
