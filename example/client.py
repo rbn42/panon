@@ -8,7 +8,7 @@ import websockets
 async def hello():
     uri = "ws://localhost:8765"
     async with websockets.connect(uri) as websocket:
-        await websocket.send('{}')
+        await websocket.send('{"fps":30}')
         img = await websocket.recv()
         open('/dev/shm/t.html', 'w').write("""
         <img src="%s" ></img>
