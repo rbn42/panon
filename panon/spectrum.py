@@ -21,6 +21,12 @@ class Spectrum:
         self.min_sample = 10
         self.max_sample = self.min_sample
 
+        try:
+            from .glfft import GLFFT
+            self.glfft = GLFFT()
+        except:
+            self.glfft = None
+
     def updateHistory(self, expect_buffer_size):
 
         len_history = self.history.shape[1]
@@ -70,12 +76,21 @@ class Spectrum:
         size = int(size * latency)
         d = data_history[:, -size:]
 
-        fft = np.absolute(np.fft.rfft(d, n=size))
+        #self.glfft=None
+        if self.glfft:
+            fft0 = self.glfft.compute(d[0].astype('float32').tobytes())
+            fft1 = self.glfft.compute(d[1].astype('float32').tobytes())
+            fft0 = np.frombuffer(fft0, dtype='float32')
+            fft1 = np.frombuffer(fft1, dtype='float32')
+            fft=np.absolute(np.asarray([fft0,fft1]))
+        else:
+            fft = np.absolute(np.fft.rfft(d, n=size))
+
         result = fft[:, freq_from:freq_to]
         if reduceBass and weight_from:
             size_output = result.shape[1]
             result = result * np.arange(weight_from, weight_to, (weight_to - weight_from) / size_output)[:size_output]
-        debug = False
+        debug = True
         if debug:
             #add splitters
             result = np.concatenate([result, np.zeros((2, 8))], axis=1)
