@@ -6,8 +6,11 @@
   <kcfgfile name=""/>
 
   <group name="General">
-    <entry name="panonServer" type="String">
-      <default>ws://localhost:8765</default>
+    <entry name="serverPort" type="Int">
+      <default>8738</default>
+    </entry>
+    <entry name="startServer" type="Bool">
+      <default>true</default>
     </entry>
     <entry name="reduceBass" type="Bool">
       <default>true</default>
@@ -20,7 +23,7 @@
       <default>true</default>
     </entry>
     <entry name="preferredWidth" type="Int">
-      <default>400</default>
+      <default>700</default>
     </entry>
 
     <entry name="colorSpaceHSL" type="Bool">

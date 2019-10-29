@@ -6,6 +6,7 @@ import Qt3D.Render 2.0
 import QtQuick.Layouts 1.1
 
 import org.kde.plasma.plasmoid 2.0
+import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item{
     Layout.preferredWidth: plasmoid.configuration.preferredWidth
@@ -367,7 +368,7 @@ void main()
 
     WebSocket {
         id: socket
-        url:plasmoid.configuration.panonServer
+        url:"ws://localhost:"+plasmoid.configuration.serverPort
         onTextMessageReceived: {
             messageBox= message
         }
@@ -424,6 +425,24 @@ void main()
                 }));
             }
         }
+    }
+
+    function startServer(){
+        if(plasmoid.configuration.startServer){
+            var p_ui=plasmoid.file("ui");
+            p_ui=p_ui.split('/')
+            p_ui.pop(-1)
+            p_ui.push('server')
+            p_ui.push('run-server.sh')
+            return 'sh '+'"'+p_ui.join('/')+'" '+plasmoid.configuration.serverPort;
+        }else{
+            return "echo do nothing";
+        }
+    }
+    
+    PlasmaCore.DataSource {
+        engine: 'executable'
+        connectedSources: [startServer()]
     }
 }
 
