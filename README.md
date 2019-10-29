@@ -8,23 +8,16 @@ A Different Audio Spectrum Analyzer
 
 Dependencies
 ==
-python-numpy python-pillow python-pyaudio python-websockets qt5-websockets qt5-3d 
+python3 python-numpy python-pillow python-pyaudio python-websockets qt5-websockets qt5-3d 
 
 Installation
 ===========
 ```
-python setup.py install --user
 cd kde
 kpackagetool5 -t Plasma/Applet --install plasmoid
 ```
 
-Running
-===
-1. Start panon server.
-```
-python -m panon.server
-```
-2. Drag panon widget to your panel (eg. [latte-dock](https://github.com/psifidotos/Latte-Dock)).
+Drag panon widget to your panel (eg. [latte-dock](https://github.com/psifidotos/Latte-Dock)).
 ![](../../wiki/plasmoid/step1.png)
 ![](../../wiki/plasmoid/step2.png)
 
