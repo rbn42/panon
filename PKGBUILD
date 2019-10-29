@@ -24,7 +24,7 @@ build() {
 
 package() {
   cd "$srcdir/$pkgname"
-  python setup.py install --root "$pkgdir"
+  #python setup.py install --root "$pkgdir"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/${pkgname%-*}/LICENSE"
 
   cd kde
