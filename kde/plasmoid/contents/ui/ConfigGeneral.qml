@@ -242,9 +242,9 @@ Kirigami.FormLayout {
                     if(cbItems.get(i).d_index==cfg_deviceIndex)
                         deviceIndex.currentIndex=i;
             }else if(sourceName==sh_get_styles){
-                var lst=data.stdout.trim().split('\n')
+                var lst=data.stdout.substr(0,data.stdout.length-1).split('\n')
                 for(var i in lst)
-                    shaderOptions.append({text:lst[i].trim()})
+                    shaderOptions.append({text:lst[i]})
                 for(var i=0;i<lst.length;i++)
                     if(shaderOptions.get(i).text==cfg_shader)
                         shader.currentIndex=i;

@@ -30,7 +30,7 @@ Item{
         property variant tex1:texture
         anchors.fill: parent
         blending: true
-        fragmentShader: "#version 400\n"+src_shader1+"\n"+src_shader2
+        fragmentShader: "#version 400\n"+src_shader1+"\n"+src_shader2+"\n"+src_shader3
     }
 
     WebSocket {
@@ -110,18 +110,22 @@ Item{
     //Shader Source Reader
     property string src_shader1
     property string src_shader2
+    property string src_shader3
     PlasmaCore.DataSource {
         engine: 'executable'
         connectedSources: [
             Utils.read_shader('husl-glsl.fsh'),
+            Utils.read_shader('utils.fsh'),
             Utils.read_shader(plasmoid.configuration.shader)
         ]
 
         onNewData:{
             if(sourceName==Utils.read_shader('husl-glsl.fsh'))
                 src_shader1=data.stdout
-            else if(sourceName==Utils.read_shader(plasmoid.configuration.shader))
+            else if(sourceName==Utils.read_shader('utils.fsh'))
                 src_shader2=data.stdout
+            else if(sourceName==Utils.read_shader(plasmoid.configuration.shader))
+                src_shader3=data.stdout
         }
     }
 }
