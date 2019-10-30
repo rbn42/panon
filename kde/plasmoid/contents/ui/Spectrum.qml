@@ -114,13 +114,13 @@ Item{
         engine: 'executable'
         connectedSources: [
             Utils.read_shader('husl-glsl.fsh'),
-            Utils.read_shader('panon.frag')
+            Utils.read_shader(plasmoid.configuration.shader)
         ]
 
         onNewData:{
             if(sourceName==Utils.read_shader('husl-glsl.fsh'))
                 src_shader1=data.stdout
-            else if(sourceName==Utils.read_shader('panon.frag'))
+            else if(sourceName==Utils.read_shader(plasmoid.configuration.shader))
                 src_shader2=data.stdout
         }
     }

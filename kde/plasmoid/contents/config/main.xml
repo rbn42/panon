@@ -36,6 +36,10 @@
       <default>false</default>
     </entry>
 
+    <entry name="shader" type="String">
+      <default>default.frag</default>
+    </entry>
+
     <entry name="hslHueFrom" type="Int">
         <default>180</default>        
     </entry>

@@ -21,6 +21,7 @@ Kirigami.FormLayout {
     property alias cfg_fps: fps.value
 
     property int cfg_deviceIndex
+    property string cfg_shader
 
     property alias cfg_preferredWidth: preferredWidth.value
     property alias cfg_autoExtend: autoExtend.checked
@@ -105,6 +106,19 @@ Kirigami.FormLayout {
 
     Item {
         Kirigami.FormData.isSection: true
+    }
+
+    RowLayout {
+        Kirigami.FormData.label: "Shader"
+        Layout.fillWidth: true
+
+        QQC2.ComboBox {
+            id:shader
+            model: ListModel {
+                id: shaderOptions
+            }
+            onCurrentIndexChanged:cfg_shader= shaderOptions.get(currentIndex).text
+        }
     }
 
     QQC2.RadioButton {
@@ -204,26 +218,37 @@ Kirigami.FormLayout {
     }
 
     QQC2.Label {
+        id:cons
         text: str_options
     }
+
+    readonly property string sh_get_devices:'sh '+'"'+Utils.get_scripts_root()+'/get-devices.sh'+'" '
+    readonly property string sh_get_styles:'sh '+'"'+Utils.get_scripts_root()+'/get-shaders.sh'+'" '
 
     PlasmaCore.DataSource {
         //id: getOptionsDS
         engine: 'executable'
-        connectedSources: ['sh '+'"'+Utils.get_scripts_root()+'/get-devices.sh'+'" ']
+        connectedSources: [
+            sh_get_devices,
+            sh_get_styles
+        ]
         onNewData: {
-            connectedSources.length = 0
-            //if (data['exit code'] > 0) {
-            //    print('Error running redshift with command: ' + sourceName + '   ...stderr: ' + data.stderr)
-            //    return
-            //}
-            var lst=JSON.parse(data.stdout)//['lst']
-            cbItems.append({name:'auto',d_index:-1})
-            for(var i in lst)
-                cbItems.append({name:lst[i]['name'],d_index:lst[i]['index']})
-            for(var i=0;i<deviceIndex.count;i++)
-                if(cbItems.get(i).d_index==cfg_deviceIndex)
-                    deviceIndex.currentIndex=i;
+            if(sourceName==sh_get_devices){
+                var lst=JSON.parse(data.stdout)
+                cbItems.append({name:'auto',d_index:-1})
+                for(var i in lst)
+                    cbItems.append({name:lst[i]['name'],d_index:lst[i]['index']})
+                for(var i=0;i<deviceIndex.count;i++)
+                    if(cbItems.get(i).d_index==cfg_deviceIndex)
+                        deviceIndex.currentIndex=i;
+            }else if(sourceName==sh_get_styles){
+                var lst=data.stdout.trim().split('\n')
+                for(var i in lst)
+                    shaderOptions.append({text:lst[i].trim()})
+                for(var i=0;i<lst.length;i++)
+                    if(shaderOptions.get(i).text==cfg_shader)
+                        shader.currentIndex=i;
+            }
         }
     }
 }
