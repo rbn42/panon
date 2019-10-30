@@ -7,4 +7,11 @@ ConfigModel {
          icon: "music"
          source: "ConfigGeneral.qml"
     }
+    /*
+    ConfigCategory {
+         name: i18n('Backend')
+         icon: 'music'
+         source: 'config/ConfigBackend.qml'
+    }
+    */
 }

@@ -4,5 +4,5 @@ echo $wid
 kill $wid
 
 cd "$(dirname "$0")"
-port=$1
-exec python3 -m panon.server $port
+#port=$1
+exec python3 -m panon.server $@

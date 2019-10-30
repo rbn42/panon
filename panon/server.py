@@ -9,15 +9,17 @@ from PIL import Image
 from . import spectrum
 from .source import Source as Source
 
-port = 8765
 import sys
-if len(sys.argv) > 1:
-    port = int(sys.argv[1])
+server_port, device_index = sys.argv[1:]
+server_port = int(server_port)
+device_index = int(device_index)
+if device_index < 0:
+    device_index = None
 
 spectrum_decay = 0.01
 spectrum_map = {}
 sample_rate = 44100
-spectrum_source = Source(spectrum.NUM_CHANNEL, sample_rate)
+spectrum_source = Source(spectrum.NUM_CHANNEL, sample_rate, device_index)
 
 spec = spectrum.Spectrum(
     spectrum_source,
@@ -74,7 +76,7 @@ async def hello(websocket, path):
             pass
 
 
-start_server = websockets.serve(hello, "localhost", port)
+start_server = websockets.serve(hello, "localhost", server_port)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()

@@ -7,6 +7,8 @@ import QtQuick.Layouts 1.1
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
+import "utils.js" as Utils
+
 Item{
     Layout.preferredWidth: plasmoid.configuration.preferredWidth
     Layout.fillWidth:plasmoid.configuration.autoExtend 
@@ -96,12 +98,7 @@ Item{
 
     function startServer(){
         if(plasmoid.configuration.startServer){
-            var p_ui=plasmoid.file("ui");
-            p_ui=p_ui.split('/')
-            p_ui.pop(-1)
-            p_ui.push('server')
-            p_ui.push('run-server.sh')
-            return 'sh '+'"'+p_ui.join('/')+'" '+plasmoid.configuration.serverPort;
+            return 'sh '+'"'+Utils.get_scripts_root()+'/run-server.sh'+'" '+plasmoid.configuration.serverPort+' '+plasmoid.configuration.deviceIndex;
         }else{
             return "echo do nothing";
         }

@@ -2,10 +2,11 @@ import pyaudio
 
 
 class Source:
-    def __init__(self, channel_count, sample_rate, chunk=1024):
+    def __init__(self, channel_count, sample_rate, device_index, chunk=1024):
         self.channel_count = channel_count
         self.sample_rate = sample_rate
         self.chunk = chunk
+        self.device_index = device_index
 
         self.start()
 
@@ -36,6 +37,7 @@ class Source:
             rate=self.sample_rate,
             input=True,
             frames_per_buffer=self.chunk,
+            input_device_index=self.device_index,
         )
 
 

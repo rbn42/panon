@@ -5,6 +5,8 @@ import QtQuick.Controls 2.5 as QQC2
 import org.kde.kirigami 2.8 as Kirigami
 import org.kde.plasma.core 2.0 as PlasmaCore
 
+import "utils.js" as Utils
+
 Kirigami.FormLayout {
 
     anchors.right: parent.right
@@ -17,6 +19,8 @@ Kirigami.FormLayout {
     property alias cfg_startServer: startServer.checked
     property alias cfg_reduceBass: reduceBass.checked
     property alias cfg_fps: fps.value
+
+    property int cfg_deviceIndex
 
     property alias cfg_preferredWidth: preferredWidth.value
     property alias cfg_autoExtend: autoExtend.checked
@@ -33,6 +37,8 @@ Kirigami.FormLayout {
     property alias cfg_hsluvSaturation  :hsluvSaturation.value
     property alias cfg_hsluvLightness   :hsluvLightness.value
 
+    property string str_options: ''
+
     RowLayout {
         Kirigami.FormData.label: i18nc("@title:group", "Panon server: ws://localhost:")
         Layout.fillWidth: true
@@ -47,6 +53,20 @@ Kirigami.FormLayout {
     QQC2.CheckBox {
         id: startServer
         text: i18nc("@option:check", "Start a server along with this widget")
+    }
+
+    RowLayout {
+        Kirigami.FormData.label: "Input device"
+        Layout.fillWidth: true
+
+        QQC2.ComboBox {
+            id:deviceIndex
+            model: ListModel {
+                id: cbItems
+            }
+            textRole:'name'
+            onCurrentIndexChanged:cfg_deviceIndex= cbItems.get(currentIndex).d_index
+        }
     }
 
     QQC2.CheckBox {
@@ -181,5 +201,29 @@ Kirigami.FormLayout {
 
     Item {
         Kirigami.FormData.isSection: true
+    }
+
+    QQC2.Label {
+        text: str_options
+    }
+
+    PlasmaCore.DataSource {
+        //id: getOptionsDS
+        engine: 'executable'
+        connectedSources: ['sh '+'"'+Utils.get_scripts_root()+'/get-devices.sh'+'" ']
+        onNewData: {
+            connectedSources.length = 0
+            //if (data['exit code'] > 0) {
+            //    print('Error running redshift with command: ' + sourceName + '   ...stderr: ' + data.stderr)
+            //    return
+            //}
+            var lst=JSON.parse(data.stdout)//['lst']
+            cbItems.append({name:'auto',d_index:-1})
+            for(var i in lst)
+                cbItems.append({name:lst[i]['name'],d_index:lst[i]['index']})
+            for(var i=0;i<deviceIndex.count;i++)
+                if(cbItems.get(i).d_index==cfg_deviceIndex)
+                    deviceIndex.currentIndex=i;
+        }
     }
 }
