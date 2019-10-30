@@ -17,11 +17,6 @@ pkgver() {
   git describe --always | sed -e 's|-|.|g' -e '1s|^.||'
 }
 
-build() {
-  cd "$srcdir/$pkgname/kde"
-  python build.py
-}
-
 package() {
   cd "$srcdir/$pkgname"
   #python setup.py install --root "$pkgdir"
