@@ -8,8 +8,9 @@ PlasmaCore.DataSource {
     //Shader Source Reader
     property string src_shader1
     property string src_shader2
-    property string src_shader3
-    property string shader_source:"#version 400\n"+src_shader1+"\n"+src_shader2+"\n"+src_shader3
+    property string src_body
+    property string src_glsl_version
+    property string shader_source:src_glsl_version+"\n"+src_shader1+"\n"+src_shader2+"\n"+src_body
 
     engine: 'executable'
     connectedSources: [
@@ -23,7 +24,10 @@ PlasmaCore.DataSource {
             src_shader1=data.stdout
         else if(sourceName==Utils.read_shader('utils.fsh'))
             src_shader2=data.stdout
-        else if(sourceName==Utils.read_shader(plasmoid.configuration.shader))
-            src_shader3=data.stdout
+        else if(sourceName==Utils.read_shader(plasmoid.configuration.shader)){
+            var i=data.stdout.indexOf('\n')
+            src_glsl_version=data.stdout.substr(0,i)
+            src_body=data.stdout.substr(i,data.stdout.length)
+        }
     }
 }

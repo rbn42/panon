@@ -1,3 +1,4 @@
+#version 130
 uniform sampler2D tex1;
 in mediump vec2 qt_TexCoord0;
 out vec4 out_Color;
