@@ -15,6 +15,7 @@ Item{
     Layout.fillWidth:plasmoid.configuration.autoExtend 
 
     ShaderEffect {
+        id:se
         readonly property bool colorSpaceHSL:plasmoid.configuration.colorSpaceHSL
         readonly property bool colorSpaceHSLuv:plasmoid.configuration.colorSpaceHSLuv
 
@@ -28,6 +29,9 @@ Item{
         readonly property int hsluvLightness :plasmoid.configuration.hsluvLightness
 
         property variant tex1:texture
+
+        property double random_seed
+
         anchors.fill: parent
         blending: true
         fragmentShader:shaderSource.shader_source
@@ -62,6 +66,7 @@ Item{
         repeat: true
         running: true 
         onTriggered: {
+            se.random_seed=Math.random()
             texture.source=messageBox  // Trigger 
         }
     }
