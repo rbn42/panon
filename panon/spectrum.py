@@ -8,18 +8,13 @@ class Spectrum:
     def __init__(
             self,
             source,
-            decay,
             fft_size=44100 // 60,
     ):
         self.sample = source
-        self.decay = decay
         self.fft_size = fft_size
 
         self.history = np.zeros((NUM_CHANNEL, self.fft_size * HISTORY_LENGTH), dtype='int16')
         self.history_index = 0
-
-        self.min_sample = 10
-        self.max_sample = self.min_sample
 
     def updateHistory(self, expect_buffer_size):
 
@@ -107,11 +102,4 @@ class Spectrum:
         fft_freq.reverse()
 
         fft = np.concatenate(fft_freq, axis=1)
-
-        exp = 2
-        retain = (1 - self.decay)**exp
-        decay = 1 - retain
-
-        vol = self.min_sample + np.mean(fft**exp)
-        self.max_sample = self.max_sample * retain + vol * decay
-        return fft / self.max_sample**(1 / exp)
+        return fft
