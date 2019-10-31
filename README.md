@@ -24,7 +24,7 @@ Shaders
 =======
 Shaders are stored in [kde/plasmoid/contents/shaders/](kde/plasmoid/contents/shaders/). 
 
-Providing panon is installed in your home directory, you can add your own shader files to ```~/.local/share/plasma/plasmoids/panon/contents/shaders/```. The name of the shader file must be ended with ".frag". Panon can detect and load new shaders in this folder during runtime.
+Providing panon is installed in your home directory, you can add your own shader files to ```~/.local/share/plasma/plasmoids/panon/contents/shaders/```. Panon can detect and load new shaders in this folder during runtime. The name of a shader file must be ended with ".frag".
 
 Credits
 ======
