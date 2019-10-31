@@ -5,15 +5,13 @@ A Different Audio Spectrum Analyzer
 
 [Previews](../../wiki/Previews).
 
-### Dependencies
+## Dependencies
 
 #### Arch Linux
 
 ```bash
 sudo pacman -S python-numpy python-pillow python-pyaudio python-websockets qt5-websockets qt5-3d 
 ```
-
-PKGBUILD is available
 
 #### Ubuntu
 
@@ -22,7 +20,15 @@ sudo apt-get install qml-module-qt3d qml-module-qt-websockets \
     python3-numpy python3-pyaudio python3-websockets python3-pil 
 ```
 
-### Installation
+## Installation
+
+#### Via KDE Store
+
+1. Open the "Add Widgets" dialog of your desktop
+2. Go to "Get New Widgets" in the bottom
+3. Click "Download New Plasma Widgets"
+4. Search for "panon"
+5. Click "Install"
 
 #### Via Command Line
 
@@ -32,11 +38,15 @@ cd panon/kde
 kpackagetool5 -t Plasma/Applet --install plasmoid
 ```
 
-Drag panon widget to your panel (eg. [latte-dock](https://github.com/psifidotos/Latte-Dock)).
+#### Via PKGBUILD
+
+If you want to modify shaders, PKGBUILD is not a preferred solution right now 
+
+#### Drag panon widget to your panel (eg. [latte-dock](https://github.com/psifidotos/Latte-Dock)).
 ![](../../wiki/plasmoid/step1.png)
 ![](../../wiki/plasmoid/step2.png)
 
-### Shaders
+## Shaders
 
 Shaders are stored in [kde/plasmoid/contents/shaders/](kde/plasmoid/contents/shaders/). 
 
@@ -53,6 +63,6 @@ plasmoidviewer --applet ./plasmoid/
 In plasmoidviewer, go to the configuration window and pick your own shader. 
 Then plasmoidviewer will run your shader and show the errors, if exist, in the console.
 
-### Credits
+## Credits
 
 Some code parts are adapted from [PyVisualizer](https://github.com/ajalt/PyVisualizer).
