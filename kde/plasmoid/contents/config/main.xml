@@ -6,12 +6,6 @@
   <kcfgfile name=""/>
 
   <group name="General">
-    <entry name="serverPort" type="Int">
-      <default>8738</default>
-    </entry>
-    <entry name="startServer" type="Bool">
-      <default>true</default>
-    </entry>
     <entry name="reduceBass" type="Bool">
       <default>true</default>
     </entry>

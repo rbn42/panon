@@ -15,8 +15,6 @@ Kirigami.FormLayout {
 
     readonly property bool vertical: plasmoid.formFactor == PlasmaCore.Types.Vertical || (plasmoid.formFactor == PlasmaCore.Types.Planar && plasmoid.height > plasmoid.width)
 
-    property alias cfg_serverPort: serverPort.text
-    property alias cfg_startServer: startServer.checked
     property alias cfg_reduceBass: reduceBass.checked
     property alias cfg_fps: fps.value
 
@@ -39,22 +37,6 @@ Kirigami.FormLayout {
     property alias cfg_hsluvLightness   :hsluvLightness.value
 
     property string str_options: ''
-
-    RowLayout {
-        Kirigami.FormData.label: i18nc("@title:group", "Panon server: ws://localhost:")
-        Layout.fillWidth: true
-
-        QQC2.TextField {
-            id: serverPort
-            Layout.fillWidth: true
-            validator: IntValidator {bottom: 1; top: 30000;}
-        }
-    }
-
-    QQC2.CheckBox {
-        id: startServer
-        text: i18nc("@option:check", "Start a server along with this widget")
-    }
 
     RowLayout {
         Kirigami.FormData.label: "Input device"

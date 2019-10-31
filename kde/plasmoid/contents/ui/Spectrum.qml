@@ -30,44 +30,26 @@ Item{
         property variant tex1:texture
         anchors.fill: parent
         blending: true
-        fragmentShader: "#version 400\n"+src_shader1+"\n"+src_shader2+"\n"+src_shader3
+        fragmentShader:shaderSource.shader_source
     }
 
-    WebSocket {
-        id: socket
-        url:"ws://localhost:"+plasmoid.configuration.serverPort
-        onTextMessageReceived: {
-            messageBox= message
+    ShaderSource{id:shaderSource}
+
+    WebSocketServer {
+        id: server
+        listen: true
+        onClientConnected: {
+            webSocket.onTextMessageReceived.connect(function(message) {
+                messageBox= message
+            });
+            socket=webSocket;
         }
-        onStatusChanged: if (socket.status == WebSocket.Error) {
-                             console.log("Error: " + socket.errorString)
-                             // Automatically reconnect.
-                             reconnect.running=true
-                         } else if (socket.status == WebSocket.Closed) {
-                             console.log("Close: " + socket.errorString)
-                             messageBox=''
-                             reconnect.running=true
-                         }
-        active:false
     }
 
+    property var socket;
     property string messageBox; //Message holder
 
-    Image {
-        id: texture
-        visible:false
-    }
-
-    Timer {
-        id:reconnect
-        interval: 2000
-        repeat: false
-        running: true
-        onTriggered: {
-            socket.active=false; socket.active=true; 
-            sendConfig=true;
-        }
-    }
+    Image {id: texture;visible:false}
 
     property bool reduceBass:plasmoid.configuration.reduceBass
     onReduceBassChanged:sendConfig=true
@@ -80,53 +62,14 @@ Item{
         repeat: true
         running: true 
         onTriggered: {
-
             texture.source=messageBox  // Trigger 
-
-            // Waiting for a open socket to send configurations.
-            if(sendConfig)if(socket.status == WebSocket.Open){
-                sendConfig=false;
-                socket.sendBinaryMessage(JSON.stringify({
-                    fps:fps,
-                    reduceBass:reduceBass
-                }));
-            }
         }
     }
 
-    function startServer(){
-        if(plasmoid.configuration.startServer){
-            return 'sh '+'"'+Utils.get_scripts_root()+'/run-server.sh'+'" '+plasmoid.configuration.serverPort+' '+plasmoid.configuration.deviceIndex;
-        }else{
-            return "echo do nothing";
-        }
-    }
-    
     PlasmaCore.DataSource {
         engine: 'executable'
-        connectedSources: [startServer()]
+        connectedSources: ['sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '+server.port+' '+plasmoid.configuration.deviceIndex+' '+plasmoid.configuration.fps+' '+(0+plasmoid.configuration.reduceBass)]
     }
     
-    //Shader Source Reader
-    property string src_shader1
-    property string src_shader2
-    property string src_shader3
-    PlasmaCore.DataSource {
-        engine: 'executable'
-        connectedSources: [
-            Utils.read_shader('husl-glsl.fsh'),
-            Utils.read_shader('utils.fsh'),
-            Utils.read_shader(plasmoid.configuration.shader)
-        ]
-
-        onNewData:{
-            if(sourceName==Utils.read_shader('husl-glsl.fsh'))
-                src_shader1=data.stdout
-            else if(sourceName==Utils.read_shader('utils.fsh'))
-                src_shader2=data.stdout
-            else if(sourceName==Utils.read_shader(plasmoid.configuration.shader))
-                src_shader3=data.stdout
-        }
-    }
 }
 
