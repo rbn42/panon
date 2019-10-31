@@ -22,7 +22,9 @@ Drag panon widget to your panel (eg. [latte-dock](https://github.com/psifidotos/
 
 Shaders
 =======
-Shaders are stored in [kde/plasmoid/contents/shaders/](kde/plasmoid/contents/shaders/). You can add your own shader files to this location, or to ~/.local/share/plasma/plasmoids/panon/contents/shaders/, providing panon is installed there. The name of the shader file must end with ".frag". Panon can detect and load new shaders in this folder during runtime.
+Shaders are stored in [kde/plasmoid/contents/shaders/](kde/plasmoid/contents/shaders/). 
+
+Providing panon is installed in your home directory, you can add your own shader files to ```~/.local/share/plasma/plasmoids/panon/contents/shaders/```. The name of the shader file must be ended with ".frag". Panon can detect and load new shaders in this folder during runtime.
 
 Credits
 ======
