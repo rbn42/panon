@@ -7,6 +7,7 @@ import json
 import websockets
 from PIL import Image
 from . import spectrum
+from .decay import Decay
 from .source import Source as Source
 
 import sys
@@ -16,14 +17,13 @@ device_index = int(device_index)
 if device_index < 0:
     device_index = None
 
-spectrum_decay = 0.01
 spectrum_map = {}
 sample_rate = 44100
 spectrum_source = Source(spectrum.NUM_CHANNEL, sample_rate, device_index)
+decay = Decay()
 
 spec = spectrum.Spectrum(
     spectrum_source,
-    spectrum_decay,
 )
 
 
@@ -45,6 +45,7 @@ async def hello(websocket, path):
         if data is None:
             data = ''
         else:
+            data, local_max = decay.process(data)
             data = data / 3.0
             data = np.clip(data, 0, 0.99)
 
