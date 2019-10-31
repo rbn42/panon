@@ -6,11 +6,13 @@ import "utils.js" as Utils
 PlasmaCore.DataSource {
 
     //Shader Source Reader
-    property string src_shader1
-    property string src_shader2
-    property string src_body
-    property string src_glsl_version
-    property string shader_source:src_glsl_version+"\n"+src_shader1+"\n"+src_shader2+"\n"+src_body
+    property string src_shader1:""
+    property string src_shader2:""
+    property string src_body:""
+    property string src_glsl_version:""
+    property string shader_source:src_prepared?src_glsl_version+"\n"+src_shader1+"\n"+src_shader2+"\n"+src_body:""
+    // Prevent generating unnecessary GLSL compiling error before all source files are prepared
+    property bool src_prepared:src_shader1.length*src_shader2.length*src_body.length>0
 
     engine: 'executable'
     connectedSources: [
