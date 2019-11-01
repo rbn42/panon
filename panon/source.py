@@ -44,8 +44,8 @@ class Source:
 if __name__ == '__main__':
     import numpy as np
     import time
-
-    sample = Source(2, 44100)
+    sample = Source(2, 44100,None)
+    print('Make sure you are playing music when run this script')
 
     time.sleep(2)
 
@@ -57,6 +57,6 @@ if __name__ == '__main__':
     _sum = np.sum(data)
     print(_max, _min, _sum)
     if _max > 0:
-        print('success')
+        print('succeeded to catch audio')
     else:
-        print('fail')
+        print('failed to catch audio')
