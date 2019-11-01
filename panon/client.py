@@ -12,7 +12,7 @@ from .source import Source as Source
 
 import sys
 
-server_port, device_index, cfg_fps, reduceBass = sys.argv[1:]
+server_port, device_index, cfg_fps, reduceBass, bassResolution = sys.argv[1:]
 
 server_port = int(server_port)
 device_index = int(device_index)
@@ -20,6 +20,7 @@ if device_index < 0:
     device_index = None
 cfg_fps = int(cfg_fps)
 reduceBass = bool(int(reduceBass))
+bassResolution = bool(int(bassResolution))
 
 spectrum_decay = 0.01
 sample_rate = 44100
@@ -39,7 +40,7 @@ async def hello():
         while True:
             expected_buffer_size = sample_rate // cfg_fps
             hist = spec.updateHistory(expected_buffer_size)
-            data = spec.getData(hist, fps=cfg_fps, reduceBass=reduceBass)
+            data = spec.getData(hist, fps=cfg_fps, bassResolution=bassResolution, reduceBass=reduceBass)
 
             if data is None:
                 data = ''

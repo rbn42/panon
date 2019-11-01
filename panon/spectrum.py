@@ -81,25 +81,29 @@ class Spectrum:
     def getData(
             self,
             data_history,
+            bassResolution,
             reduceBass=False,
             **args,
     ):
         if np.max(data_history) == 0:
             return None
 
-        # higher resolution and latency for lower frequency
-        fft_freq = [
-        #self.fun(data_history, 250, 4000, 0.25),    # 25px
-        #self.fun(data_history, 200, 250, 0.5),    # 25px
-        #self.fun(data_history, 150, 200, 1),    # 50px
-            self.fun(data_history, 110, 150, 2),    # 80px
-            self.fun(data_history, 80, 110, 3),    # 90px
-            self.fun(data_history, 50, 80, 4),    #120px
-            self.fun(data_history, 30, 50, 5, reduceBass, 1 / 1.2, 1),    #100px
-            self.fun(data_history, 10, 30, 6, reduceBass, 1 / 1.5, 1 / 1.2),    #120px
-            self.fun(data_history, 0, 10, 8, reduceBass, 1 / 3, 1 / 1.5),    # 80px
-        ]
-        fft_freq.reverse()
+        if bassResolution:
+            # higher resolution and latency for lower frequency
+            fft_freq = [
+            #self.fun(data_history, 250, 4000, 0.25),    # 25px
+            #self.fun(data_history, 200, 250, 0.5),    # 25px
+            #self.fun(data_history, 150, 200, 1),    # 50px
+                self.fun(data_history, 110, 150, 2),    # 80px
+                self.fun(data_history, 80, 110, 3),    # 90px
+                self.fun(data_history, 50, 80, 4),    #120px
+                self.fun(data_history, 30, 50, 5, reduceBass, 1 / 1.2, 1),    #100px
+                self.fun(data_history, 10, 30, 6, reduceBass, 1 / 1.5, 1 / 1.2),    #120px
+                self.fun(data_history, 0, 10, 8, reduceBass, 1 / 3, 1 / 1.5),    # 80px
+            ]
+            fft_freq.reverse()
+            fft = np.concatenate(fft_freq, axis=1)
+        else:
+            fft = np.absolute(np.fft.rfft(data_history[:, -self.fft_size:], n=self.fft_size))
 
-        fft = np.concatenate(fft_freq, axis=1)
         return fft

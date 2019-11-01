@@ -22,9 +22,7 @@ sample_rate = 44100
 spectrum_source = Source(spectrum.NUM_CHANNEL, sample_rate, device_index)
 decay = Decay()
 
-spec = spectrum.Spectrum(
-    spectrum_source,
-)
+spec = spectrum.Spectrum(spectrum_source, )
 
 
 async def hello(websocket, path):
@@ -40,7 +38,7 @@ async def hello(websocket, path):
         fps = config['fps']
         expect_buffer_size = sample_rate // fps
         hist = spec.updateHistory(expect_buffer_size)
-        data = spec.getData(hist, **config)
+        data = spec.getData(hist, bassResolution=True, **config)
 
         if data is None:
             data = ''

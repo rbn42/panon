@@ -73,7 +73,7 @@ Item{
 
     PlasmaCore.DataSource {
         engine: 'executable'
-        connectedSources: ['sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '+server.port+' '+plasmoid.configuration.deviceIndex+' '+plasmoid.configuration.fps+' '+(0+plasmoid.configuration.reduceBass)]
+        connectedSources: ['sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '+server.port+' '+plasmoid.configuration.deviceIndex+' '+plasmoid.configuration.fps+' '+(0+plasmoid.configuration.reduceBass)+' '+(0+plasmoid.configuration.bassResolution)]
     }
     
 }
