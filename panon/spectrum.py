@@ -1,7 +1,7 @@
 import numpy as np
 
 NUM_CHANNEL = 2
-HISTORY_LENGTH = 8
+HISTORY_LENGTH = 32
 
 
 class Spectrum:
@@ -81,29 +81,36 @@ class Spectrum:
     def getData(
             self,
             data_history,
-            bassResolution,
+            bassResolutionLevel,
             reduceBass=False,
             **args,
     ):
         if np.max(data_history) == 0:
             return None
 
-        if bassResolution:
+        if bassResolutionLevel == 0:
+            fft = np.absolute(np.fft.rfft(data_history[:, -self.fft_size:], n=self.fft_size))
+            return fft
+        elif bassResolutionLevel == 1:
             # higher resolution and latency for lower frequency
             fft_freq = [
             #self.fun(data_history, 250, 4000, 0.25),    # 25px
             #self.fun(data_history, 200, 250, 0.5),    # 25px
             #self.fun(data_history, 150, 200, 1),    # 50px
-                self.fun(data_history, 110, 150, 2),    # 80px
-                self.fun(data_history, 80, 110, 3),    # 90px
-                self.fun(data_history, 50, 80, 4),    #120px
-                self.fun(data_history, 30, 50, 5, reduceBass, 1 / 1.2, 1),    #100px
-                self.fun(data_history, 10, 30, 6, reduceBass, 1 / 1.5, 1 / 1.2),    #120px
-                self.fun(data_history, 0, 10, 8, reduceBass, 1 / 3, 1 / 1.5),    # 80px
+                self.fun(data_history, 110, 150, 2),    #   6600-9000Hz 80px
+                self.fun(data_history, 80, 110, 3),    #   4800-6600Hz 90px
+                self.fun(data_history, 50, 80, 4),    #   3000-4800Hz 120px
+                self.fun(data_history, 30, 50, 5, reduceBass, 1 / 1.2, 1),    #   1800-3000Hz 100px
+                self.fun(data_history, 10, 30, 6, reduceBass, 1 / 1.5, 1 / 1.2),    #   600-1800Hz  120px  
+                self.fun(data_history, 0, 10, 8, reduceBass, 1 / 3, 1 / 1.5),    #   0-600Hz     80px 
             ]
-            fft_freq.reverse()
-            fft = np.concatenate(fft_freq, axis=1)
-        else:
-            fft = np.absolute(np.fft.rfft(data_history[:, -self.fft_size:], n=self.fft_size))
+        elif bassResolutionLevel == 2:
+            fft_freq = [
+                self.fun(data_history, 10, 30, 12, reduceBass, 1 / 1.5, 1 / 1.2),    #   600-1800Hz  120px
+                self.fun(data_history, 0, 10, 16, reduceBass, 1 / 3, 1 / 1.5),    #   0-600Hz     80px
+            ]
+
+        fft_freq.reverse()
+        fft = np.concatenate(fft_freq, axis=1)
 
         return fft

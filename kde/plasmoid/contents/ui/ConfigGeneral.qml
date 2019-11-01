@@ -16,7 +16,7 @@ Kirigami.FormLayout {
     readonly property bool vertical: plasmoid.formFactor == PlasmaCore.Types.Vertical || (plasmoid.formFactor == PlasmaCore.Types.Planar && plasmoid.height > plasmoid.width)
 
     property alias cfg_reduceBass: reduceBass.checked
-    property alias cfg_bassResolution: bassResolution.checked
+    property alias cfg_bassResolutionLevel: bassResolutionLevel.currentIndex
     property alias cfg_fps: fps.value
 
     property int cfg_deviceIndex
@@ -53,14 +53,19 @@ Kirigami.FormLayout {
         }
     }
 
-    QQC2.CheckBox {
-        id: reduceBass
-        text: i18nc("@option:check", "Reduce the weight of bass")
+    RowLayout {
+        Kirigami.FormData.label: "Range"
+        Layout.fillWidth: true
+
+        QQC2.ComboBox {
+            id:bassResolutionLevel
+            model:  ['0 to 44,100Hz','0 to 9,000Hz','0 to 1,800kHz']
+        }
     }
 
     QQC2.CheckBox {
-        id: bassResolution
-        text: i18nc("@option:check", "Improve bass resolution (consumes cpu)")
+        id: reduceBass
+        text: i18nc("@option:check", "Reduce the weight of bass")
     }
 
     QQC2.SpinBox {

@@ -38,7 +38,7 @@ async def hello(websocket, path):
         fps = config['fps']
         expect_buffer_size = sample_rate // fps
         hist = spec.updateHistory(expect_buffer_size)
-        data = spec.getData(hist, bassResolution=True, **config)
+        data = spec.getData(hist, bassResolutionLevel=2, **config)
 
         if data is None:
             data = ''
@@ -50,9 +50,9 @@ async def hello(websocket, path):
             #转换到datauri,这样可以直接作为texture被opengl处理
             #比起http直接传输png来说,这个应该相对还是有些优势,至少少了重复的http握手
             if img_data is None:
-                img_data = np.zeros((8, data.shape[1], 4), dtype='uint8')
-            img_data[0:2, :, 0] = data[0] / 3 * 256
-            img_data[0:2, :, 1] = data[1] / 3 * 256
+                img_data = np.zeros((8, data.shape[1], 3), dtype='uint8')
+            img_data[:, :, 0] = data[0]  * 256
+            img_data[:, :, 1] = data[1]  * 256
 
             #头部一些奇怪的数据去掉
             image = Image.fromarray(img_data[:, 1:, :])
