@@ -5,8 +5,16 @@ out vec4 out_Color;
 
 void main()
 {
+    // A list of available data channels
     // Spectrum data
-    vec4 sample1= texture(tex1, vec2(qt_TexCoord0.x,0.5)) ;
+    vec4 sample1= texture(tex1, vec2(qt_TexCoord0.x,1/8.)) ;
+    // Maximum spectrum data in recent history
+    // vec4 sample2= texture(tex1, vec2(qt_TexCoord0.x,3/8.)) ;
+    // Reserved data channel
+    // vec4 sample3= texture(tex1, vec2(qt_TexCoord0.x,5/8.)) ;
+    // Reserved data channel
+    // vec4 sample4= texture(tex1, vec2(qt_TexCoord0.x,7/8.)) ;
+   
     // Color defined by user configuration
     vec3 rgb=getRGB(qt_TexCoord0.x);
 

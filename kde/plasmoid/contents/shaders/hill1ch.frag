@@ -29,7 +29,7 @@ void main()
         float x=qt_TexCoord0.x+i*px_step;
         x=int(x*2000)/2000.0;
 
-        vec4 raw=texture(tex1, vec2(x,0.5));
+        vec4 raw=texture(tex1, vec2(x,1/8.));
         float raw_max=(raw.g+raw.r)/2.;
 
         if(h <=height(distanc,raw_max))

@@ -28,7 +28,7 @@ void main()
         float distanc=abs(i)/1.0/max_distance;
         float x=int(qt_TexCoord0.x/px_step+i)*px_step;
 
-        vec4 raw=texture(tex1, vec2(x,0.5));
+        vec4 raw=texture(tex1, vec2(x,1/8.));
         float raw_max=gr?raw.g:raw.r;
         float h_target=height(distanc,raw_max);
         if(h_target-.03<=h && h<=h_target) {

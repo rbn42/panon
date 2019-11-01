@@ -51,11 +51,18 @@ async def hello():
                 local_max = np.clip(local_max / 3.0, 0, 0.99)
 
                 if img_data is None:
-                    img_data = np.zeros((3, data.shape[1], 4), dtype='uint8')
-                img_data[:, :, 0] = data[0] * 256
-                img_data[:, :, 1] = data[1] * 256
-                img_data[:, :, 2] = local_max[0] * 256
-                img_data[:, :, 3] = local_max[1] * 256
+                    img_data = np.zeros((4, data.shape[1], 3), dtype='uint8')
+                    # img_data[:, :, 3] =  255
+
+                # texture(tex1, vec2(qt_TexCoord0.x,1/8.)) ;
+                img_data[0, :, :2] = np.rollaxis(data, 1, 0) * 256
+                # texture(tex1, vec2(qt_TexCoord0.x,3/8.)) ;
+                img_data[1, :, :2] = np.rollaxis(local_max, 1, 0) * 256
+                # Reserved data channels
+                # texture(tex1, vec2(qt_TexCoord0.x,5/8.)) ;
+                # img_data[2, :, :2]
+                # texture(tex1, vec2(qt_TexCoord0.x,7/8.)) ;
+                # img_data[3, :, :2]
 
                 #头部一些奇怪的数据去掉
                 image = Image.fromarray(img_data[:, 1:, :])

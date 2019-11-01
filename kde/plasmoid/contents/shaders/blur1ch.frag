@@ -9,7 +9,7 @@ void main()
     out_Color.rgba=vec4(0,0,0,0);
     for(int i=-5; i<5; i++) {
         float x=qt_TexCoord0.x+i*px_step;
-        vec4 sample1= texture(tex1, vec2(x,0.5)) ;
+        vec4 sample1= texture(tex1, vec2(x,1/8.)) ;
         vec3 rgb=getRGB(x+i*px_step);
 
         float max_=sample1.g*.5+sample1.r*.5;

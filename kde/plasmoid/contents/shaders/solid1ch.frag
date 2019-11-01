@@ -5,7 +5,7 @@ out vec4 out_Color;
 
 void main()
 {
-    vec4 sample1= texture(tex1, vec2(qt_TexCoord0.x,0.5)) ;
+    vec4 sample1= texture(tex1, vec2(qt_TexCoord0.x,1/8.)) ;
     float h=qt_TexCoord0.y;
     vec3 rgb=getRGB(qt_TexCoord0.x);
 

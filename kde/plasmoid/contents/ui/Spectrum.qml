@@ -31,6 +31,8 @@ Item{
         property variant tex1:texture
 
         property double random_seed
+        property int canvas_width:se.width
+        property int canvas_height:se.height
 
         anchors.fill: parent
         blending: true
