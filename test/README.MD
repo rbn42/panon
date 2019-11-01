@@ -1,9 +1,5 @@
 ### Debugging tools
 
-#### dependency.sh
+`dependency.sh` Test dependencies
 
-Test dependencies
-
-#### test1.sh
-
-Test pyaudio
+`test1.sh` Test pyaudio
