@@ -38,6 +38,8 @@ Item{
         property double random_seed
         property int canvas_width:se.width
         property int canvas_height:se.height
+        property int spectrum_width:texture.width
+        property int spectrum_height:texture.height
 
         anchors.fill: parent
         blending: true
@@ -84,7 +86,7 @@ Item{
     }
 
     Behavior on animatedMinimumWidth {
-        enabled: true //slideAnimationEnabled && plasmoid.formFactor===PlasmaCore.Types.Horizontal
+        enabled:plasmoid.configuration.animateAutoHiding
         NumberAnimation {
             duration: 250
             easing.type: Easing.InCubic

@@ -25,6 +25,7 @@ Kirigami.FormLayout {
     property alias cfg_preferredWidth: preferredWidth.value
     property alias cfg_autoExtend: autoExtend.checked
     property alias cfg_autoHide: autoHideBtn.checked
+    property alias cfg_animateAutoHiding: animateAutoHiding.checked
 
     property alias cfg_colorSpaceHSL: colorSpaceHSL.checked
     property alias cfg_colorSpaceHSLuv: colorSpaceHSLuv.checked
@@ -88,6 +89,12 @@ Kirigami.FormLayout {
         onCheckedChanged:{
             autoExtend.checked=autoHideBtn.checked?false:autoExtend.checked
         }
+    }
+
+    QQC2.CheckBox {
+        id:animateAutoHiding
+        enabled:autoHideBtn.checked
+        text: i18nc("@option:radio", "Animate auto-hiding")
     }
 
     QQC2.SpinBox {

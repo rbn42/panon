@@ -22,6 +22,9 @@
     <entry name="autoHide" type="Bool">
       <default>false</default>
     </entry>
+    <entry name="animateAutoHiding" type="Bool">
+      <default>true</default>
+    </entry>
     <entry name="autoExtend" type="Bool">
       <default>true</default>
     </entry>
