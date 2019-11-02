@@ -42,10 +42,20 @@ async def hello():
             hist = spec.updateHistory(expected_buffer_size)
             data = spec.getData(hist, fps=cfg_fps, bassResolutionLevel=bassResolutionLevel, reduceBass=reduceBass)
 
+            data, local_max = decay.process(data)
+
             if data is None:
-                data = ''
-            else:
-                data, local_max = decay.process(data)
+                if local_max is None:
+                    # Sending empty string means stop rendering
+                    message = ''
+                elif np.max(local_max) > 0.3:
+                    # Don't stop rendering until local_max fall below 0.3
+                    data = np.zeros(local_max.shape)
+                else:
+                    # Sending empty string means stop rendering
+                    message = ''
+
+            if data is not None:
 
                 data = np.clip(data / 3.0, 0, 0.99)
                 local_max = np.clip(local_max / 3.0, 0, 0.99)
@@ -69,9 +79,9 @@ async def hello():
                 #converts PIL image to datauri
                 data = io.BytesIO()
                 image.save(data, "png")
-                data = 'data:img/png;base64,' + base64.b64encode(data.getvalue()).decode()
+                message = 'data:img/png;base64,' + base64.b64encode(data.getvalue()).decode()
 
-            await websocket.send(data)
+            await websocket.send(message)
 
             new_timestamp = time.time()
             time_sleep = max(0, 1 / cfg_fps - (new_timestamp - old_timestamp))
