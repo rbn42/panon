@@ -89,7 +89,7 @@ class Spectrum:
             return None
 
         if bassResolutionLevel == 0:
-            fft = np.absolute(np.fft.rfft(data_history[:, -self.fft_size:], n=self.fft_size))
+            fft = np.absolute(np.fft.rfft(data_history[:, -self.fft_size:], n=self.fft_size)) #   0-22050Hz
             return fft
         elif bassResolutionLevel == 1:
             # higher resolution and latency for lower frequency
