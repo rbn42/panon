@@ -19,6 +19,9 @@
       <default>-1</default>
     </entry>
 
+    <entry name="autoHide" type="Bool">
+      <default>false</default>
+    </entry>
     <entry name="autoExtend" type="Bool">
       <default>true</default>
     </entry>

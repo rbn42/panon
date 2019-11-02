@@ -11,8 +11,13 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import "utils.js" as Utils
 
 Item{
-    Layout.preferredWidth: plasmoid.configuration.preferredWidth
-    Layout.fillWidth:plasmoid.configuration.autoExtend 
+    // Layout.minimumWidth:  plasmoid.configuration.autoHide ? animatedMinimumWidth : -1
+    Layout.preferredWidth: animatedMinimumWidth 
+    Layout.maximumWidth: plasmoid.configuration.autoHide?Layout.preferredWidth:-1
+
+    property int animatedMinimumWidth:(!plasmoid.configuration.autoHide) || messageBox.length>0 ? plasmoid.configuration.preferredWidth:0 
+
+    Layout.fillWidth: plasmoid.configuration.autoExtend 
 
     ShaderEffect {
         id:se
@@ -53,7 +58,7 @@ Item{
     }
 
     property var socket;
-    property string messageBox; //Message holder
+    property string messageBox:""; //Message holder
 
     Image {id: texture;visible:false}
 
@@ -77,6 +82,13 @@ Item{
         engine: 'executable'
         connectedSources: ['sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '+server.port+' '+plasmoid.configuration.deviceIndex+' '+plasmoid.configuration.fps+' '+(0+plasmoid.configuration.reduceBass)+' '+plasmoid.configuration.bassResolutionLevel]
     }
-    
+
+    Behavior on animatedMinimumWidth {
+        enabled: true //slideAnimationEnabled && plasmoid.formFactor===PlasmaCore.Types.Horizontal
+        NumberAnimation {
+            duration: 250
+            easing.type: Easing.InCubic
+        }
+    }
 }
 

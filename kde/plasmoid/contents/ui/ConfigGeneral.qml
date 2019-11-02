@@ -24,6 +24,7 @@ Kirigami.FormLayout {
 
     property alias cfg_preferredWidth: preferredWidth.value
     property alias cfg_autoExtend: autoExtend.checked
+    property alias cfg_autoHide: autoHideBtn.checked
 
     property alias cfg_colorSpaceHSL: colorSpaceHSL.checked
     property alias cfg_colorSpaceHSLuv: colorSpaceHSLuv.checked
@@ -81,6 +82,14 @@ Kirigami.FormLayout {
         Kirigami.FormData.isSection: true
     }
 
+    QQC2.CheckBox {
+        id:autoHideBtn
+        text: i18nc("@option:radio", "Auto hide")
+        onCheckedChanged:{
+            autoExtend.checked=autoHideBtn.checked?false:autoExtend.checked
+        }
+    }
+
     QQC2.SpinBox {
         id: preferredWidth
 
@@ -94,7 +103,8 @@ Kirigami.FormLayout {
 
     QQC2.CheckBox {
         id: autoExtend
-        text: i18nc("@option:check", "Fill width")
+        enabled:!autoHideBtn.checked
+        text: i18nc("@option:check", "Fill width (don't work with Auto hide)")
     }
 
     Item {
@@ -114,15 +124,19 @@ Kirigami.FormLayout {
         }
     }
 
+    QQC2.ButtonGroup { id: radioGroup2 }
+
     QQC2.RadioButton {
         id:colorSpaceHSL
         Kirigami.FormData.label: i18nc("@label", "Color space:")
         text: i18nc("@option:radio", "HSL")
+        QQC2.ButtonGroup.group: radioGroup2
     }
 
     QQC2.RadioButton {
         id:colorSpaceHSLuv
         text: i18nc("@option:radio", "HSLuv")
+        QQC2.ButtonGroup.group: radioGroup2
     }
 
     QQC2.SpinBox {
