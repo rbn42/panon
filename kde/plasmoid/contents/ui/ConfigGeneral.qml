@@ -61,7 +61,7 @@ Kirigami.FormLayout {
 
         QQC2.ComboBox {
             id:bassResolutionLevel
-            model:  ['0 to 44,100Hz','0 to 9,000Hz','0 to 1,800kHz']
+            model:  ['0 to 22,050Hz','0 to 9,000Hz','0 to 1,800kHz']
         }
     }
 
