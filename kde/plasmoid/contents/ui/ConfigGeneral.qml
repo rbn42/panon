@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.0 as QQC2
 
-import org.kde.kirigami 2.8 as Kirigami
+import org.kde.kirigami 2.3 as Kirigami
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 import "utils.js" as Utils
