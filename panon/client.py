@@ -8,10 +8,10 @@ Usage:
 Options:
   -h --help                     Show this screen.
   --device-index=I              Device index.
-  --fps=F                       Fps
-  --reduce-bass
-  --bass-resolution-level=L
-  --backend=(fifo|pyaudio)
+  --fps=F                       Fps [default: 30]
+  --reduce-bass                 
+  --bass-resolution-level=L     [default: 1]
+  --backend=(fifo|pyaudio)      
   --fifo-path=P
   --debug                       Debug
 """
@@ -25,7 +25,7 @@ import websockets
 from PIL import Image
 from . import spectrum
 from .decay import Decay
-from .source import Source as Source
+from . import source
 
 import sys
 
@@ -36,11 +36,16 @@ server_port = int(arguments['<port>'])
 cfg_fps = int(arguments['--fps'])
 bassResolutionLevel = int(arguments['--bass-resolution-level'])
 reduceBass = arguments['--reduce-bass'] is not None
-device_index = None if arguments['--device-index'] is None else int(arguments['--device-index'])
 
+import time
 spectrum_decay = 0.01
 sample_rate = 44100
-spectrum_source = Source(spectrum.NUM_CHANNEL, sample_rate, device_index)
+if arguments['--backend'] == 'pyaudio':
+    spectrum_source = source.PyaudioSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'])
+elif arguments['--backend'] == 'fifo':
+    spectrum_source = source.FifoSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--fifo-path'], cfg_fps)
+else:
+    assert False
 
 spec = spectrum.Spectrum(spectrum_source, )
 decay = Decay()

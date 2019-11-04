@@ -18,6 +18,12 @@
     <entry name="deviceIndex" type="Int">
       <default>-1</default>
     </entry>
+    <entry name="backend" type="String">
+      <default>pyaudio</default>
+    </entry>
+    <entry name="fifoPath" type="String">
+      <default>/tmp/mpd.fifo</default>
+    </entry>
 
     <entry name="autoHide" type="Bool">
       <default>false</default>

@@ -1,11 +1,10 @@
-import pyaudio
-
-
-class Source:
+class PyaudioSource:
     def __init__(self, channel_count, sample_rate, device_index, chunk=1024):
         self.channel_count = channel_count
         self.sample_rate = sample_rate
         self.chunk = chunk
+        if device_index is not None:
+            device_index = int(device_index)
         self.device_index = device_index
 
         self.start()
@@ -30,6 +29,7 @@ class Source:
         self.stream.close()
 
     def start(self):
+        import pyaudio
         p = pyaudio.PyAudio()
         self.stream = p.open(
             format=pyaudio.paInt16,
@@ -41,10 +41,36 @@ class Source:
         )
 
 
+class FifoSource:
+    def __init__(self, channel_count, sample_rate, fifo_path, fps):
+        self.channel_count = channel_count
+        self.sample_rate = sample_rate
+        self.fps = fps
+        self.fifo_path = fifo_path
+
+        self.start()
+
+    def readlatest(self, expect_size, max_size=1000000):
+        return self.stream.read(self.sample_rate // self.fps * self.channel_count)
+
+    def stop(self):
+        self.stream.close()
+
+    def start(self):
+        import fcntl
+        import os
+        self.stream = open(self.fifo_path, 'rb')
+        # nonblock
+        fd = self.stream.fileno()
+        flag = fcntl.fcntl(fd, fcntl.F_GETFL)
+        fcntl.fcntl(fd, fcntl.F_SETFL, flag | os.O_NONBLOCK)
+        flag = fcntl.fcntl(fd, fcntl.F_GETFL)
+
+
 if __name__ == '__main__':
     import numpy as np
     import time
-    sample = Source(2, 44100,None)
+    sample = Source(2, 44100, None)
     print('Make sure you are playing music when run this script')
 
     time.sleep(2)

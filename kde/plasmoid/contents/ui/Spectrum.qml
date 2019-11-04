@@ -89,6 +89,10 @@ Item{
         if(plasmoid.configuration.reduceBass)
             cmd+=' --reduce-bass'
         cmd+=' --bass-resolution-level='+plasmoid.configuration.bassResolutionLevel
+        cmd+=' --backend='+plasmoid.configuration.backend
+        if(plasmoid.configuration.backend=='fifo')
+            cmd+=' --fifo-path='+plasmoid.configuration.fifoPath
+        return cmd
     }
 
     PlasmaCore.DataSource {

@@ -19,6 +19,9 @@ Kirigami.FormLayout {
     property alias cfg_bassResolutionLevel: bassResolutionLevel.currentIndex
     property alias cfg_fps: fps.value
 
+    property alias cfg_fifoPath: fifoPath.text
+    property alias cfg_backend: backend.currentText
+
     property int cfg_deviceIndex
     property string cfg_shader
 
@@ -42,6 +45,17 @@ Kirigami.FormLayout {
     property string str_options: ''
 
     RowLayout {
+        Kirigami.FormData.label: "Back end:"
+        Layout.fillWidth: true
+
+        QQC2.ComboBox {
+            id:backend
+            model:  ['pyaudio','fifo']
+        }
+    }
+
+    RowLayout {
+        visible:backend.currentText=='pyaudio'
         Kirigami.FormData.label: "Input device"
         Layout.fillWidth: true
 
@@ -52,6 +66,16 @@ Kirigami.FormLayout {
             }
             textRole:'name'
             onCurrentIndexChanged:cfg_deviceIndex= cbItems.get(currentIndex).d_index
+        }
+    }
+
+    RowLayout {
+        visible:backend.currentText=='fifo'
+        Kirigami.FormData.label: "Fifo path"
+        Layout.fillWidth: true
+
+        QQC2.TextField {
+            id:fifoPath
         }
     }
 
@@ -93,7 +117,7 @@ Kirigami.FormLayout {
 
     QQC2.CheckBox {
         id:animateAutoHiding
-        enabled:autoHideBtn.checked
+        visible:autoHideBtn.checked
         text: i18nc("@option:radio", "Animate auto-hiding")
     }
 
@@ -131,19 +155,19 @@ Kirigami.FormLayout {
         }
     }
 
-    QQC2.ButtonGroup { id: radioGroup2 }
+    QQC2.ButtonGroup { id: colorGroup }
 
     QQC2.RadioButton {
         id:colorSpaceHSL
         Kirigami.FormData.label: i18nc("@label", "Color space:")
         text: i18nc("@option:radio", "HSL")
-        QQC2.ButtonGroup.group: radioGroup2
+        QQC2.ButtonGroup.group: colorGroup
     }
 
     QQC2.RadioButton {
         id:colorSpaceHSLuv
         text: i18nc("@option:radio", "HSLuv")
-        QQC2.ButtonGroup.group: radioGroup2
+        QQC2.ButtonGroup.group: colorGroup
     }
 
     QQC2.SpinBox {
