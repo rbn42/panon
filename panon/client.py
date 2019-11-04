@@ -1,3 +1,20 @@
+"""
+panon client
+
+Usage:
+  freetile [options] <port> 
+  freetile -h | --help
+
+Options:
+  -h --help                     Show this screen.
+  --device-index=I              Device index.
+  --fps=F                       Fps
+  --reduce-bass
+  --bass-resolution-level=L
+  --backend=(fifo|pyaudio)
+  --fifo-path=P
+  --debug                       Debug
+"""
 import asyncio
 import time
 import base64
@@ -12,15 +29,14 @@ from .source import Source as Source
 
 import sys
 
-server_port, device_index, cfg_fps, reduceBass, bassResolutionLevel = sys.argv[1:]
+from docopt import docopt
+arguments = docopt(__doc__)
 
-server_port = int(server_port)
-device_index = int(device_index)
-if device_index < 0:
-    device_index = None
-cfg_fps = int(cfg_fps)
-reduceBass = bool(int(reduceBass))
-bassResolutionLevel = int(bassResolutionLevel)
+server_port = int(arguments['<port>'])
+cfg_fps = int(arguments['--fps'])
+bassResolutionLevel = int(arguments['--bass-resolution-level'])
+reduceBass = arguments['--reduce-bass'] is not None
+device_index = None if arguments['--device-index'] is None else int(arguments['--device-index'])
 
 spectrum_decay = 0.01
 sample_rate = 44100

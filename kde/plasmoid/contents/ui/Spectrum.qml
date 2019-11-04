@@ -80,9 +80,20 @@ Item{
         }
     }
 
+    readonly property string startBackEnd:{
+        var cmd='sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '
+        cmd+=server.port
+        if(plasmoid.configuration.deviceIndex>=0)
+            cmd+=' --device-index='+plasmoid.configuration.deviceIndex
+        cmd+=' --fps='+plasmoid.configuration.fps
+        if(plasmoid.configuration.reduceBass)
+            cmd+=' --reduce-bass'
+        cmd+=' --bass-resolution-level='+plasmoid.configuration.bassResolutionLevel
+    }
+
     PlasmaCore.DataSource {
         engine: 'executable'
-        connectedSources: ['sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '+server.port+' '+plasmoid.configuration.deviceIndex+' '+plasmoid.configuration.fps+' '+(0+plasmoid.configuration.reduceBass)+' '+plasmoid.configuration.bassResolutionLevel]
+        connectedSources: [startBackEnd]
     }
 
     Behavior on animatedMinimumWidth {

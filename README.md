@@ -10,14 +10,14 @@ A Different Audio Spectrum Analyzer
 #### Arch Linux
 
 ```bash
-sudo pacman -S python-numpy python-pillow python-pyaudio python-websockets qt5-websockets qt5-3d 
+sudo pacman -S python-docopt python-numpy python-pillow python-pyaudio python-websockets qt5-websockets qt5-3d 
 ```
 
 #### Ubuntu
 
 ```bash
 sudo apt-get install qml-module-qt3d qml-module-qt-websockets \
-    python3-numpy python3-pyaudio python3-websockets python3-pil 
+    python3-docopt python3-numpy python3-pyaudio python3-websockets python3-pil 
 ```
 
 ## Installation
