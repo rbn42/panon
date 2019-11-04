@@ -1,22 +1,21 @@
 #version 130
 uniform sampler2D tex1;
-in mediump vec2 qt_TexCoord0;
 out vec4 out_Color;
 uniform int canvas_width;
 uniform int canvas_height;
 
 void main()
 {
-    int pixel_x=int(qt_TexCoord0.x*canvas_width);
+    int pixel_x=int(getCoord().x*canvas_width);
 
     int pixel_fill=5;
     int pixel_empty=2;
 
-    float h=1-qt_TexCoord0.y;
+    float h=1-getCoord().y;
     int pixel_y=int(h*canvas_height);
 
     out_Color=vec4(0,0,0,0);
-    if(pixel_x%(pixel_fill+pixel_empty)<pixel_fill){
+    if(pixel_x%(pixel_fill+pixel_empty)<pixel_fill) {
         float x=pixel_x/(pixel_fill+pixel_empty) /1.0/canvas_width*(pixel_fill+pixel_empty) ;
         vec3 rgb=getRGB(x);
 

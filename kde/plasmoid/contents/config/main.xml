@@ -18,8 +18,13 @@
     <entry name="deviceIndex" type="Int">
       <default>-1</default>
     </entry>
+    <!--
     <entry name="backend" type="String">
       <default>pyaudio</default>
+    </entry>
+    -->
+    <entry name="backendIndex" type="Int">
+      <default>0</default>
     </entry>
     <entry name="fifoPath" type="String">
       <default>/tmp/mpd.fifo</default>
@@ -36,6 +41,9 @@
     </entry>
     <entry name="preferredWidth" type="Int">
       <default>700</default>
+    </entry>
+    <entry name="gravity" type="Int">
+      <default>0</default>
     </entry>
 
     <entry name="colorSpaceHSL" type="Bool">

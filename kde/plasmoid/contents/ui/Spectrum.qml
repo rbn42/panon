@@ -11,13 +11,37 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import "utils.js" as Utils
 
 Item{
-    // Layout.minimumWidth:  plasmoid.configuration.autoHide ? animatedMinimumWidth : -1
-    Layout.preferredWidth: animatedMinimumWidth 
-    Layout.maximumWidth: plasmoid.configuration.autoHide?Layout.preferredWidth:-1
+    id:root
 
-    property int animatedMinimumWidth:(!plasmoid.configuration.autoHide) || messageBox.length>0 ? plasmoid.configuration.preferredWidth:0 
+    property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
 
-    Layout.fillWidth: plasmoid.configuration.autoExtend 
+    // Layout.minimumWidth:  plasmoid.configuration.autoHide ? animatedMinimum: -1
+    Layout.preferredWidth: vertical ?-1: animatedMinimum
+    Layout.preferredHeight: vertical ?  animatedMinimum:-1
+    Layout.maximumWidth:plasmoid.configuration.autoHide?Layout.preferredWidth:-1
+    Layout.maximumHeight:plasmoid.configuration.autoHide?Layout.preferredHeight:-1 
+
+    // gravity property: Center(0), North (1), West (4), East (3), South (2)
+    readonly property int gravity:{
+        if(plasmoid.configuration.gravity>0)
+            return plasmoid.configuration.gravity
+        switch(plasmoid.location){
+            case PlasmaCore.Types.TopEdge:
+            return 2
+            case PlasmaCore.Types.BottomEdge:
+            return 1
+            case PlasmaCore.Types.RightEdge:
+            return 3
+            case PlasmaCore.Types.LeftEdge:
+            return 4
+        }
+        return 1
+    }
+
+    property int animatedMinimum:(!plasmoid.configuration.autoHide) || messageBox.length>0 ? plasmoid.configuration.preferredWidth:0 
+
+    Layout.fillWidth: vertical? false:plasmoid.configuration.autoExtend 
+    Layout.fillHeight: vertical? plasmoid.configuration.autoExtend :false
 
     ShaderEffect {
         id:se
@@ -36,8 +60,9 @@ Item{
         property variant tex1:texture
 
         property double random_seed
-        property int canvas_width:se.width
-        property int canvas_height:se.height
+        property int canvas_width:root.gravity<=2?se.width:se.height
+        property int canvas_height:root.gravity<=2?se.height:se.width
+        property int gravity:root.gravity
         property int spectrum_width:texture.width
         property int spectrum_height:texture.height
 
@@ -83,15 +108,17 @@ Item{
     readonly property string startBackEnd:{
         var cmd='sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '
         cmd+=server.port
-        if(plasmoid.configuration.deviceIndex>=0)
-            cmd+=' --device-index='+plasmoid.configuration.deviceIndex
+        var be=['pyaudio','fifo'][plasmoid.configuration.backendIndex]
+        cmd+=' --backend='+be
+        if(be=='pyaudio')
+            if(plasmoid.configuration.deviceIndex>=0)
+                cmd+=' --device-index='+plasmoid.configuration.deviceIndex
+        if(be=='fifo')
+            cmd+=' --fifo-path='+plasmoid.configuration.fifoPath
         cmd+=' --fps='+plasmoid.configuration.fps
         if(plasmoid.configuration.reduceBass)
             cmd+=' --reduce-bass'
         cmd+=' --bass-resolution-level='+plasmoid.configuration.bassResolutionLevel
-        cmd+=' --backend='+plasmoid.configuration.backend
-        if(plasmoid.configuration.backend=='fifo')
-            cmd+=' --fifo-path='+plasmoid.configuration.fifoPath
         return cmd
     }
 
@@ -100,7 +127,7 @@ Item{
         connectedSources: [startBackEnd]
     }
 
-    Behavior on animatedMinimumWidth {
+    Behavior on animatedMinimum{
         enabled:plasmoid.configuration.animateAutoHiding
         NumberAnimation {
             duration: 250

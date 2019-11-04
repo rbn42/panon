@@ -19,8 +19,9 @@ Kirigami.FormLayout {
     property alias cfg_bassResolutionLevel: bassResolutionLevel.currentIndex
     property alias cfg_fps: fps.value
 
+    property alias cfg_backendIndex:backend.currentIndex
+
     property alias cfg_fifoPath: fifoPath.text
-    property alias cfg_backend: backend.currentText
 
     property int cfg_deviceIndex
     property string cfg_shader
@@ -29,6 +30,8 @@ Kirigami.FormLayout {
     property alias cfg_autoExtend: autoExtend.checked
     property alias cfg_autoHide: autoHideBtn.checked
     property alias cfg_animateAutoHiding: animateAutoHiding.checked
+
+    property alias cfg_gravity:gravity.currentIndex
 
     property alias cfg_colorSpaceHSL: colorSpaceHSL.checked
     property alias cfg_colorSpaceHSLuv: colorSpaceHSLuv.checked
@@ -56,7 +59,7 @@ Kirigami.FormLayout {
 
     RowLayout {
         visible:backend.currentText=='pyaudio'
-        Kirigami.FormData.label: "Input device"
+        Kirigami.FormData.label: "Input device:"
         Layout.fillWidth: true
 
         QQC2.ComboBox {
@@ -71,7 +74,7 @@ Kirigami.FormLayout {
 
     RowLayout {
         visible:backend.currentText=='fifo'
-        Kirigami.FormData.label: "Fifo path"
+        Kirigami.FormData.label: "Fifo path:"
         Layout.fillWidth: true
 
         QQC2.TextField {
@@ -80,7 +83,7 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: "Range"
+        Kirigami.FormData.label: "Range:"
         Layout.fillWidth: true
 
         QQC2.ComboBox {
@@ -96,7 +99,7 @@ Kirigami.FormLayout {
 
     QQC2.SpinBox {
         id:fps
-        Kirigami.FormData.label:i18nc("@label:spinbox","Fps")
+        Kirigami.FormData.label:i18nc("@label:spinbox","Fps:")
         editable:true
         stepSize:1
         from:1
@@ -135,7 +138,7 @@ Kirigami.FormLayout {
     QQC2.CheckBox {
         id: autoExtend
         enabled:!autoHideBtn.checked
-        text: i18nc("@option:check", "Fill width (don't work with Auto hide)")
+        text: vertical?i18nc("@option:check", "Fill height (don't work with Auto hide)"):i18nc("@option:check", "Fill width (don't work with Auto hide)")
     }
 
     Item {
@@ -143,7 +146,17 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: "Shader"
+        Kirigami.FormData.label: "Gravity:"
+        Layout.fillWidth: true
+
+        QQC2.ComboBox {
+            id:gravity
+            model:  ['Center','North','South','East','West']
+        }
+    }
+
+    RowLayout {
+        Kirigami.FormData.label: "Shader:"
         Layout.fillWidth: true
 
         QQC2.ComboBox {
