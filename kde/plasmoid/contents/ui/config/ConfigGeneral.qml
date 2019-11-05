@@ -39,13 +39,13 @@ Kirigami.FormLayout {
                 id: shaderOptions
             }
             onCurrentIndexChanged:cfg_shader= shaderOptions.get(currentIndex).text
+            enabled:!randomShader.checked
         }
     }
 
     QQC2.CheckBox {
         id: randomShader
-        visible:false
-        text: i18nc("@option:check", "Random shader")
+        text: i18nc("@option:check", "Random shader (on startup)")
     }
 
     QQC2.SpinBox {
