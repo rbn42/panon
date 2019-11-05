@@ -63,7 +63,7 @@ Kirigami.FormLayout {
 
     QQC2.CheckBox {
         id:autoHideBtn
-        text: i18nc("@option:radio", "Auto-hide")
+        text: i18nc("@option:radio", "Auto-hide (when audio is gone)")
         onCheckedChanged:{
             autoExtend.checked=autoHideBtn.checked?false:autoExtend.checked
         }

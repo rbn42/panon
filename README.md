@@ -1,5 +1,5 @@
 
-A Different Audio Spectrum Analyzer
+A Different Audio Spectrum Analyzer for KDE Plasma
 
 ![](../../wiki/plasmoid/preview.png)
 

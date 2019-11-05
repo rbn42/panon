@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Panon
 Comment=A Different Audio Spectrum Analyzer
-Icon=music
+Icon=applications-multimedia
 
 Type=Service
 X-KDE-ServiceTypes=Plasma/Applet

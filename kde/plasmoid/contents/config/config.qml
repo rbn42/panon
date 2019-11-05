@@ -4,17 +4,17 @@ import org.kde.plasma.configuration 2.0
 ConfigModel {
     ConfigCategory {
          name: i18nc("@title", "General")
-         icon: "music"
+         icon: "applications-multimedia"
          source: "config/ConfigGeneral.qml"
     }
     ConfigCategory {
          name: i18n('Backend')
-         icon: 'server'
+         icon: 'preferences-desktop-sound'
          source: 'config/ConfigBackend.qml'
     }
     ConfigCategory {
          name: i18n('Colors')
-         icon: 'colors'
+         icon: 'preferences-desktop-color'
          source: 'config/ConfigColors.qml'
     }
 }
