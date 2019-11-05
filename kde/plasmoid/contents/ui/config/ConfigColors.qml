@@ -35,12 +35,14 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18nc("@label", "Color space:")
         text: i18nc("@option:radio", "HSL")
         QQC2.ButtonGroup.group: colorGroup
+        enabled:!randomColor.checked
     }
 
     QQC2.RadioButton {
         id:colorSpaceHSLuv
         text: i18nc("@option:radio", "HSLuv")
         QQC2.ButtonGroup.group: colorGroup
+        enabled:!randomColor.checked
     }
 
     QQC2.SpinBox {

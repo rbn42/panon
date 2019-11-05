@@ -46,8 +46,8 @@ Item{
 
     ShaderEffect {
         id:se
-        readonly property bool colorSpaceHSL:cfg.colorSpaceHSL
-        readonly property bool colorSpaceHSLuv:cfg.colorSpaceHSLuv
+        readonly property bool colorSpaceHSL:cfg.randomColor?false: cfg.colorSpaceHSL
+        readonly property bool colorSpaceHSLuv:cfg.randomColor?true:cfg.colorSpaceHSLuv
 
         readonly property int hueFrom    :{
             if(cfg.randomColor)
@@ -59,23 +59,31 @@ Item{
         }
         readonly property int hueTo    :{
             if(cfg.randomColor)
-                return 360*Math.random()
+                return 1080*Math.random()-360
             if(cfg.colorSpaceHSL)
                 return cfg.hslHueTo
             else if(cfg.colorSpaceHSLuv)
                 return cfg.hsluvHueTo
         }
         readonly property int saturation  :{
-            if(cfg.randomColor)
-                return 80+20*Math.random()
+            if(cfg.randomColor){
+                if(Math.abs(hueTo-hueFrom)>100)
+                    return 80+20*Math.random()
+                else
+                    return 80+20*Math.random()
+            }
             if(cfg.colorSpaceHSL)
                 return cfg.hslSaturation
             else if(cfg.colorSpaceHSLuv)
                 return cfg.hsluvSaturation
         }
         readonly property int lightness   :{
-            if(cfg.randomColor)
-                return 50+50*Math.random()
+            if(cfg.randomColor){
+                if(Math.abs(hueTo-hueFrom)>100)
+                    return 60+20*Math.random()
+                else
+                    return 5+50*Math.random()
+            }
             if(cfg.colorSpaceHSL)
                 return cfg.hslLightness
             else if(cfg.colorSpaceHSLuv)
