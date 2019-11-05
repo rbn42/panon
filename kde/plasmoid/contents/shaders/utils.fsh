@@ -1,14 +1,10 @@
 // vim: set ft=glsl:
 uniform bool colorSpaceHSL;
 uniform bool colorSpaceHSLuv;
-uniform int hslHueFrom;
-uniform int hslHueTo;
-uniform int hsluvHueFrom;
-uniform int hsluvHueTo;
-uniform int hslSaturation;
-uniform int hslLightness;
-uniform int hsluvSaturation;
-uniform int hsluvLightness;
+uniform int hueFrom;
+uniform int hueTo;
+uniform int saturation;
+uniform int lightness;
 
 in mediump vec2 qt_TexCoord0;
 
@@ -23,9 +19,9 @@ vec3 hsv2rgb(vec3 c) {
 
 vec3 getRGB(float x){
     if(colorSpaceHSL){
-        return hsv2rgb(vec3(x*(hslHueTo-hslHueFrom)/360.0+hslHueFrom/360.0,hslSaturation/100.0,hslLightness/100.0));
+        return hsv2rgb(vec3(x*(hueTo-hueFrom)/360.0+hueFrom/360.0,saturation/100.0,lightness/100.0));
     }else if(colorSpaceHSLuv){
-        return huslToRgb(vec3(x*(hsluvHueTo-hsluvHueFrom)+hsluvHueFrom,hsluvSaturation,hsluvLightness));
+        return huslToRgb(vec3(x*(hueTo-hueFrom)+hueFrom,saturation,lightness));
     }
 }
 

@@ -12,19 +12,20 @@ import "utils.js" as Utils
 
 Item{
     id:root
+    readonly property var cfg:plasmoid.configuration
 
     property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
 
-    // Layout.minimumWidth:  plasmoid.configuration.autoHide ? animatedMinimum: -1
+    // Layout.minimumWidth:  cfg.autoHide ? animatedMinimum: -1
     Layout.preferredWidth: vertical ?-1: animatedMinimum
     Layout.preferredHeight: vertical ?  animatedMinimum:-1
-    Layout.maximumWidth:plasmoid.configuration.autoHide?Layout.preferredWidth:-1
-    Layout.maximumHeight:plasmoid.configuration.autoHide?Layout.preferredHeight:-1 
+    Layout.maximumWidth:cfg.autoHide?Layout.preferredWidth:-1
+    Layout.maximumHeight:cfg.autoHide?Layout.preferredHeight:-1 
 
     // gravity property: Center(0), North (1), West (4), East (3), South (2)
     readonly property int gravity:{
-        if(plasmoid.configuration.gravity>0)
-            return plasmoid.configuration.gravity
+        if(cfg.gravity>0)
+            return cfg.gravity
         switch(plasmoid.location){
             case PlasmaCore.Types.TopEdge:
             return 2
@@ -38,24 +39,48 @@ Item{
         return 1
     }
 
-    property int animatedMinimum:(!plasmoid.configuration.autoHide) || messageBox.length>0 ? plasmoid.configuration.preferredWidth:0 
+    property int animatedMinimum:(!cfg.autoHide) || messageBox.length>0 ? cfg.preferredWidth:0 
 
-    Layout.fillWidth: vertical? false:plasmoid.configuration.autoExtend 
-    Layout.fillHeight: vertical? plasmoid.configuration.autoExtend :false
+    Layout.fillWidth: vertical? false:cfg.autoExtend 
+    Layout.fillHeight: vertical? cfg.autoExtend :false
 
     ShaderEffect {
         id:se
-        readonly property bool colorSpaceHSL:plasmoid.configuration.colorSpaceHSL
-        readonly property bool colorSpaceHSLuv:plasmoid.configuration.colorSpaceHSLuv
+        readonly property bool colorSpaceHSL:cfg.colorSpaceHSL
+        readonly property bool colorSpaceHSLuv:cfg.colorSpaceHSLuv
 
-        readonly property int hslHueFrom    :plasmoid.configuration.hslHueFrom
-        readonly property int hslHueTo    :plasmoid.configuration.hslHueTo
-        readonly property int hsluvHueFrom  :plasmoid.configuration.hsluvHueFrom
-        readonly property int hsluvHueTo  :plasmoid.configuration.hsluvHueTo
-        readonly property int hslSaturation  :plasmoid.configuration.hslSaturation
-        readonly property int hslLightness   :plasmoid.configuration.hslLightness
-        readonly property int hsluvSaturation:plasmoid.configuration.hsluvSaturation
-        readonly property int hsluvLightness :plasmoid.configuration.hsluvLightness
+        readonly property int hueFrom    :{
+            if(cfg.randomColor)
+                return 360*Math.random()
+            if(cfg.colorSpaceHSL)
+                return cfg.hslHueFrom
+            else if(cfg.colorSpaceHSLuv)
+                return cfg.hsluvHueFrom
+        }
+        readonly property int hueTo    :{
+            if(cfg.randomColor)
+                return 360*Math.random()
+            if(cfg.colorSpaceHSL)
+                return cfg.hslHueTo
+            else if(cfg.colorSpaceHSLuv)
+                return cfg.hsluvHueTo
+        }
+        readonly property int saturation  :{
+            if(cfg.randomColor)
+                return 80+20*Math.random()
+            if(cfg.colorSpaceHSL)
+                return cfg.hslSaturation
+            else if(cfg.colorSpaceHSLuv)
+                return cfg.hsluvSaturation
+        }
+        readonly property int lightness   :{
+            if(cfg.randomColor)
+                return 50+50*Math.random()
+            if(cfg.colorSpaceHSL)
+                return cfg.hslLightness
+            else if(cfg.colorSpaceHSLuv)
+                return cfg.hsluvLightness
+        }
 
         property variant tex1:texture
 
@@ -89,9 +114,9 @@ Item{
 
     Image {id: texture;visible:false}
 
-    property bool reduceBass:plasmoid.configuration.reduceBass
+    property bool reduceBass:cfg.reduceBass
     onReduceBassChanged:sendConfig=true
-    property int fps:plasmoid.configuration.fps
+    property int fps:cfg.fps
     onFpsChanged:sendConfig=true
     property bool sendConfig:false;
 
@@ -108,17 +133,17 @@ Item{
     readonly property string startBackEnd:{
         var cmd='sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '
         cmd+=server.port
-        var be=['pyaudio','fifo'][plasmoid.configuration.backendIndex]
+        var be=['pyaudio','fifo'][cfg.backendIndex]
         cmd+=' --backend='+be
         if(be=='pyaudio')
-            if(plasmoid.configuration.deviceIndex>=0)
-                cmd+=' --device-index='+plasmoid.configuration.deviceIndex
+            if(cfg.deviceIndex>=0)
+                cmd+=' --device-index='+cfg.deviceIndex
         if(be=='fifo')
-            cmd+=' --fifo-path='+plasmoid.configuration.fifoPath
-        cmd+=' --fps='+plasmoid.configuration.fps
-        if(plasmoid.configuration.reduceBass)
+            cmd+=' --fifo-path='+cfg.fifoPath
+        cmd+=' --fps='+cfg.fps
+        if(cfg.reduceBass)
             cmd+=' --reduce-bass'
-        cmd+=' --bass-resolution-level='+plasmoid.configuration.bassResolutionLevel
+        cmd+=' --bass-resolution-level='+cfg.bassResolutionLevel
         return cmd
     }
 
@@ -128,7 +153,7 @@ Item{
     }
 
     Behavior on animatedMinimum{
-        enabled:plasmoid.configuration.animateAutoHiding
+        enabled:cfg.animateAutoHiding
         NumberAnimation {
             duration: 250
             easing.type: Easing.InCubic

@@ -5,13 +5,16 @@ ConfigModel {
     ConfigCategory {
          name: i18nc("@title", "General")
          icon: "music"
-         source: "ConfigGeneral.qml"
+         source: "config/ConfigGeneral.qml"
     }
-    /*
     ConfigCategory {
          name: i18n('Backend')
-         icon: 'music'
+         icon: 'server'
          source: 'config/ConfigBackend.qml'
     }
-    */
+    ConfigCategory {
+         name: i18n('Colors')
+         icon: 'colors'
+         source: 'config/ConfigColors.qml'
+    }
 }
