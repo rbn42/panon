@@ -50,7 +50,7 @@ Kirigami.FormLayout {
     }
     QQC2.Label {
         visible:randomShader.checked
-        text:"If there is any random shader you dislike, <br/>you can remove it from <a href='file:///"+Utils.get_root()+"/shaders/' >here</a>."
+        text:"Unwanted shaders can be removed <br/>from <a href='file:///"+Utils.get_root()+"/shaders/' >here</a>."
         onLinkActivated: Qt.openUrlExternally(link)
     }
 

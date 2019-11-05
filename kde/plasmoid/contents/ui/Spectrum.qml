@@ -22,7 +22,7 @@ Item{
     Layout.maximumWidth:cfg.autoHide?Layout.preferredWidth:-1
     Layout.maximumHeight:cfg.autoHide?Layout.preferredHeight:-1 
 
-    // gravity property: Center(0), North (1), West (4), East (3), South (2)
+    // Gravity property: Center(0), North (1), West (4), East (3), South (2)
     readonly property int gravity:{
         if(cfg.gravity>0)
             return cfg.gravity
@@ -52,7 +52,7 @@ Item{
         readonly property int hueFrom    :{
             if(cfg.randomColor)
                 return 360*Math.random()
-            if(cfg.colorSpaceHSL)
+            else if(cfg.colorSpaceHSL)
                 return cfg.hslHueFrom
             else if(cfg.colorSpaceHSLuv)
                 return cfg.hsluvHueFrom
@@ -60,31 +60,29 @@ Item{
         readonly property int hueTo    :{
             if(cfg.randomColor)
                 return 1080*Math.random()-360
-            if(cfg.colorSpaceHSL)
+            else if(cfg.colorSpaceHSL)
                 return cfg.hslHueTo
             else if(cfg.colorSpaceHSLuv)
                 return cfg.hsluvHueTo
         }
         readonly property int saturation  :{
-            if(cfg.randomColor){
+            if(cfg.randomColor)
                 if(Math.abs(hueTo-hueFrom)>100)
                     return 80+20*Math.random()
                 else
                     return 80+20*Math.random()
-            }
-            if(cfg.colorSpaceHSL)
+            else if(cfg.colorSpaceHSL)
                 return cfg.hslSaturation
             else if(cfg.colorSpaceHSLuv)
                 return cfg.hsluvSaturation
         }
         readonly property int lightness   :{
-            if(cfg.randomColor){
+            if(cfg.randomColor)
                 if(Math.abs(hueTo-hueFrom)>100)
                     return 60+20*Math.random()
                 else
-                    return 5+50*Math.random()
-            }
-            if(cfg.colorSpaceHSL)
+                    return 100*Math.random()
+            else if(cfg.colorSpaceHSL)
                 return cfg.hslLightness
             else if(cfg.colorSpaceHSLuv)
                 return cfg.hsluvLightness
@@ -113,23 +111,15 @@ Item{
             webSocket.onTextMessageReceived.connect(function(message) {
                 messageBox= message
             });
-            socket=webSocket;
         }
     }
 
-    property var socket;
     property string messageBox:""; //Message holder
 
     Image {id: texture;visible:false}
 
-    property bool reduceBass:cfg.reduceBass
-    onReduceBassChanged:sendConfig=true
-    property int fps:cfg.fps
-    onFpsChanged:sendConfig=true
-    property bool sendConfig:false;
-
     Timer {
-        interval: 1000/fps
+        interval: 1000/cfg.fps
         repeat: true
         running: true 
         onTriggered: {
