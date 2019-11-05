@@ -9,7 +9,7 @@ A Different Audio Spectrum Analyzer for KDE Plasma
 
 |               |Minimal version required   |
 |      :-:      |        :-:                |
-|OpenGL/GLSL    |3.0/1.30                   |
+|OpenGL / GLSL    |3.0 / 1.30                   |
 |QtQuick        | 2.0                       |
 
 ## Install the required dependencies
@@ -17,7 +17,8 @@ A Different Audio Spectrum Analyzer for KDE Plasma
 #### Arch Linux
 
 ```bash
-sudo pacman -S python-docopt python-numpy python-pillow python-pyaudio python-websockets qt5-websockets qt5-3d 
+sudo pacman -S qt5-websockets qt5-3d \
+    python-docopt python-numpy python-pillow python-pyaudio python-websockets
 ```
 
 #### Ubuntu
