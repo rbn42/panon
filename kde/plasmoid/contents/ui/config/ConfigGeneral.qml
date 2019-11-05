@@ -8,6 +8,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import "utils.js" as Utils
 
 Kirigami.FormLayout {
+    id:root
 
     anchors.right: parent.right
     anchors.left: parent.left
@@ -46,6 +47,11 @@ Kirigami.FormLayout {
     QQC2.CheckBox {
         id: randomShader
         text: i18nc("@option:check", "Random shader (on startup)")
+    }
+    QQC2.Label {
+        visible:randomShader.checked
+        text:"If there is any random shader you dislike, <br/>you can remove it from <a href='file:///"+Utils.get_root()+"/shaders/' >here</a>."
+        onLinkActivated: Qt.openUrlExternally(link)
     }
 
     QQC2.SpinBox {
