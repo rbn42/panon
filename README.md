@@ -5,7 +5,14 @@ A Different Audio Spectrum Analyzer for KDE Plasma
 
 [Previews](../../wiki/Previews).
 
-## Dependencies
+## Requirements
+
+|               |Minimal version required   |
+|      :-:      |        :-:                |
+|OpenGL/GLSL    |3.0/1.30                   |
+|QtQuick        | 2.0                       |
+
+## Install the required dependencies
 
 #### Arch Linux
 

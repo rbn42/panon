@@ -56,7 +56,7 @@ Kirigami.FormLayout {
 
     QQC2.SpinBox {
         id:fps
-        Kirigami.FormData.label:i18nc("@label:spinbox","Fps:")
+        Kirigami.FormData.label:i18nc("@label:spinbox","Maximum fps:")
         editable:true
         stepSize:1
         from:1
