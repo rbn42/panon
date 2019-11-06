@@ -1,0 +1,98 @@
+A Different Audio Spectrum Analyzer for KDE Plasma
+
+[[../../wiki/Previews][file:../../wiki/plasmoid/preview.png]] 
+
+** Contents                                                        :noexport:
+:PROPERTIES:
+:TOC:      this
+:END:
+  - [[#requirements][Requirements]]
+  -  [[#install-the-required-dependencies][Install the required dependencies]]
+    -  [[#arch-Linux][Arch Linux]]
+    -  [[#ubuntu][Ubuntu]]
+  -  [[#installation][Installation]]
+    -  [[#via-kde-store][Via KDE Store]]
+    -  [[#via-command-line][Via Command Line]]
+    -  [[#via-aur][Via AUR]]
+    -  [[#drag-panon-widget-to-your-panel-eg-latte-dock][Drag panon widget to your panel]]
+  -  [[#shaders][Shaders]]
+    -  [[#debugging-shaders][Debugging Shaders]]
+  -  [[#troubleshooting][Troubleshooting]]
+  -  [[#credits][Credits]]
+
+** Requirements
+
+|             | Minimal version required |
+|-------------+--------------------------|
+| OpenGL/GLSL | 3.0/1.30                 |
+| QtQuick     | 2.0                      |
+
+** Install the required dependencies
+   
+*** Arch Linux
+
+#+BEGIN_SRC sh
+sudo pacman -S qt5-websockets qt5-3d \
+    python-docopt python-numpy python-pillow python-pyaudio python-websockets 
+#+END_SRC
+
+*** Ubuntu
+
+#+BEGIN_SRC sh
+sudo apt-get install qml-module-qt3d qml-module-qt-websockets \
+    python3-docopt python3-numpy python3-pyaudio python3-websockets python3-pil 
+#+END_SRC
+
+** Installation
+
+*** Via KDE Store
+
+1. Open the "Add Widgets" dialog of your desktop
+2. Go to "Get New Widgets" in the bottom
+3. Click "Download New Plasma Widgets"
+4. Search for "panon"
+5. Click "Install"
+
+*** Via Command Line
+
+#+BEGIN_SRC sh
+git clone https://github.com/rbn42/panon.git
+cd panon/kde
+kpackagetool5 -t Plasma/Applet --install plasmoid
+#+END_SRC
+
+*** Via AUR
+[[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] and [[https://aur.archlinux.org/packages/plasma5-applets-panon-git/][plasma5-applets-panon-git]] are available for ArchLinux. 
+
+If you want to modify shaders, installing panon as a system package is not a preferred solution right now, because then the modification will require write permission in =/usr/share/plasma/plasmoids/panon=.
+
+*** Drag panon widget to your panel (eg. [[https://github.com/psifidotos/Latte-Dock][latte-dock]]).
+[[file:../../wiki/plasmoid/step1.png]]
+[[file:../../wiki/plasmoid/step2.png]]
+
+** Shaders
+
+Shaders are stored in [[kde/plasmoid/contents/shaders/]]. If you want to modify the shaders, you can start with [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]].
+
+Providing panon is installed in your home directory, you can add your own shader files to =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. Panon can detect and load new shaders in this folder during runtime. The name of a shader file must be ended with =.frag=.
+
+*** Debugging Shaders
+
+Neither KDE Panel nor Latte-Dock shows the errors caused by the shaders. To catch the error messages, =plasma-sdk= is required. To debug your shader, you must put your shader file in [[kde/plasmoid/contents/shaders/]], and then start plasmoidviewer in a console. 
+
+#+BEGIN_SRC sh
+cd ./kde/
+#Providing plasma-sdk is installed
+plasmoidviewer --applet ./plasmoid/
+#+END_SRC
+In plasmoidviewer, go to the configuration window and pick your own shader. 
+Then plasmoidviewer will run your shader and show the errors, if exist, in the console.
+
+** Troubleshooting
+*** Panon shows nothing when you are playing music 
+    1. Please make sure your OpenGL version satisfies the minimum requirement.
+    2. If you are using pyaudio as panon's backend, please execute =python3 ./test/test_pyaudio.py= The script will tell you if pyaudio works or not. If the script failed, this issue can be reported to [[https://people.csail.mit.edu/hubert/pyaudio/][pyaudio]]. Alternatively, you may choose to execute =./test/test_python-sounddevice.py= and =./test/test_QtMultimedia.py= and if one of them works for you, I can add it to panon as another backend choice.
+
+** Credits
+
+[[file:panon/source.py]] and [[file:panon/spectrum.py]] are adapted from [[https://github.com/ajalt/PyVisualizer][PyVisualizer]].

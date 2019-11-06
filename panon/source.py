@@ -70,7 +70,7 @@ class FifoSource:
 if __name__ == '__main__':
     import numpy as np
     import time
-    sample = Source(2, 44100, None)
+    sample = PyaudioSource(2, 44100, None)
     print('Make sure you are playing music when run this script')
 
     time.sleep(2)
