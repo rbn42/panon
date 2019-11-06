@@ -74,7 +74,7 @@ If you want to modify shaders, installing panon as a system package is not a pre
 
 Shaders are stored in [[kde/plasmoid/contents/shaders/]]. If you want to modify the shaders, you can start with [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]].
 
-Providing panon is installed in your home directory, you can add your own shader files to =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. Panon can detect and load new shaders in this folder during runtime. The name of a shader file must be ended with =.frag=.
+Providing panon is installed in your home directory, you can add your own shader files to =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. Panon can detect and load shaders in this folder. The name of a shader file must be ended with =.frag=.
 
 *** Debugging Shaders
 
@@ -95,8 +95,6 @@ Then plasmoidviewer will run your shader and show the errors, if exist, in the c
 
 ** Credits
 
-[[file:panon/source.py][source.py]] and [[file:panon/spectrum.py][spectrum.py]] were adapted from [[https://github.com/ajalt/PyVisualizer][PyVisualizer]].
-
-[[file:kde/plasmoid/contents/shaders/husl-glsl.fsh][husl-glsl.fsh]] was copied from [[https://github.com/williammalo/hsluv-glsl][hsluv-glsl]].
-
-=hsv2rgb= in [[file:kde/plasmoid/contents/shaders/utils.fsh][utils.fsh]] was copied from [[https://gist.github.com/patriciogonzalezvivo/114c1653de9e3da6e1e3][GLSL-color.md]].
+- [[file:panon/source.py][source.py]] and [[file:panon/spectrum.py][spectrum.py]] were adapted from [[https://github.com/ajalt/PyVisualizer][PyVisualizer]].
+- [[file:kde/plasmoid/contents/shaders/husl-glsl.fsh][husl-glsl.fsh]] was copied from [[https://github.com/williammalo/hsluv-glsl][hsluv-glsl]].
+- =hsv2rgb= in [[file:kde/plasmoid/contents/shaders/utils.fsh][utils.fsh]] was copied from [[https://gist.github.com/patriciogonzalezvivo/114c1653de9e3da6e1e3][GLSL-color.md]].

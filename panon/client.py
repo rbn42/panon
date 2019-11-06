@@ -11,7 +11,7 @@ Options:
   --fps=F                       Fps [default: 30]
   --reduce-bass                 
   --bass-resolution-level=L     [default: 1]
-  --backend=(fifo|pyaudio)      
+  --backend=(fifo|pyaudio)      [default: pyaudio]
   --fifo-path=P
   --debug                       Debug
 """

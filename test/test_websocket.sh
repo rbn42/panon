@@ -2,17 +2,10 @@
 echo Make sure you are playing music when run this script.
 echo You are expected to see a colorful image.
 
+port=26532
+python3 ./test_websocket_server.py $port  &
 cd ../
-python3 -m panon.server 8765 -1 &
-
-sleep 2
-cd -
-python3 ./test1.py &
-
-sleep 2
-wid=$(pgrep -a python | grep panon.server | cut -d" " -f1)
-echo $wid
-kill $wid
+python3 -m panon.client $port 
 
 echo Make sure you are playing music when run this script.
 echo You are expected to see a colorful image.
