@@ -1,10 +1,13 @@
-from python_qt_binding import QT_BINDING
-if QT_BINDING == 'pyside':
+try:
   from PySide2 import QtMultimedia
-elif QT_BINDING == 'pyqt':
-  from PyQt5 import QtMultimedia
-else:
-  raise ImportError('Qt binding name "%s" is unknown.' % QT_BINDING)
+  QT_BINDING='pyside'
+except:
+  try:
+    from PyQt5 import QtMultimedia
+    QT_BINDING='pyqt'
+  except:
+    QT_BINDING='pyside, pyqt'
+    raise ImportError('Qt bindings "(%s)" not found.' % QT_BINDING)
 
 import numpy as np
 import time
