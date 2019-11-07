@@ -1,4 +1,11 @@
-from PySide2 import QtMultimedia
+from python_qt_binding import QT_BINDING
+if QT_BINDING == 'pyside':
+  from PySide2 import QtMultimedia
+elif QT_BINDING == 'pyqt':
+  from PyQt5 import QtMultimedia
+else:
+  raise ImportError('Qt binding name "%s" is unknown.' % QT_BINDING)
+
 import numpy as np
 import time
 
@@ -8,7 +15,7 @@ SAMPLE_RATE = 44100 # [Hz]
 NYQUIST = SAMPLE_RATE / 2
 SAMPLE_SIZE = 16 # [bit]
 CHANNEL_COUNT = 1
-BUFFER_SIZE = 5000 
+BUFFER_SIZE = 5000
 
 info = QtMultimedia.QAudioDeviceInfo.defaultInputDevice()
 format = info.preferredFormat()
