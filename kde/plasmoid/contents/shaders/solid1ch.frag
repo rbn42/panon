@@ -1,15 +1,13 @@
 #version 130
-uniform sampler2D tex1;
-out vec4 out_Color;
 
-void main()
-{
-    vec4 sample1= texture(tex1, vec2(getCoord().x,1/8.)) ;
-    float h=getCoord().y;
-    vec3 rgb=getRGB(getCoord().x);
+void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
+    fragCoord=fragCoord/iResolution.xy;
+    vec4 sample1= texture(iChannel1, vec2(fragCoord.x,1/8.)) ;
+    float h=fragCoord.y;
+    vec3 rgb=getRGB(fragCoord.x);
 
-    out_Color=vec4(0.001,0.001,0.001,0.001);
+    fragColor=vec4(0.001,0.001,0.001,0.001);
     float max_=sample1.g*.5+sample1.r*.5;
-    if(1.-max_<=h && h <=1.)
-        out_Color=vec4(rgb*1.,1.);
+    if(max_>h )
+        fragColor=vec4(rgb*1.,1.);
 }

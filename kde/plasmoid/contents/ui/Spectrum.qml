@@ -89,8 +89,16 @@ Item{
         }
 
         property variant tex1:texture
-
         property double random_seed
+
+        property double iTime
+        property double iTimeDelta
+        property variant iResolution:Qt.vector3d(canvas_width,canvas_height,0)
+        property double iFrame:0
+        property variant iMouse:Qt.vector4d(0,0,0,0)
+        property variant iChannel0:texture
+        property variant iChannel1:texture
+
         property int canvas_width:root.gravity<=2?se.width:se.height
         property int canvas_height:root.gravity<=2?se.height:se.width
         property int gravity:root.gravity
@@ -118,13 +126,23 @@ Item{
 
     Image {id: texture;visible:false}
 
+    property double time_first_frame:Date.now()
+    property double time_prev_frame:Date.now()
     Timer {
         interval: 1000/cfg.fps
         repeat: true
         running: true 
         onTriggered: {
             se.random_seed=Math.random()
+
+            var time_current_frame=Date.now()
+            se.iTime=(time_current_frame-time_first_frame) /1000.0
+            se.iTimeDelta=(time_current_frame-time_prev_frame)/1000.0
+            se.iFrame+=1
+
             texture.source=messageBox  // Trigger 
+
+            time_prev_frame=time_current_frame
         }
     }
 
