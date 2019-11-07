@@ -58,7 +58,10 @@ sudo apt-get install qml-module-qt3d qml-module-qt-websockets \
 #+BEGIN_SRC sh
 git clone https://github.com/rbn42/panon.git
 cd panon/kde
+# To install
 kpackagetool5 -t Plasma/Applet --install plasmoid
+# To upgrade
+kpackagetool5 -t Plasma/Applet --upgrade plasmoid
 #+END_SRC
 
 *** Via AUR
