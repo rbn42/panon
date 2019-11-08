@@ -33,14 +33,16 @@ A Different Audio Spectrum Analyzer for KDE Plasma
 
 #+BEGIN_SRC sh
 sudo pacman -S qt5-websockets qt5-3d \
-    python-docopt python-numpy python-pillow python-pyaudio python-websockets 
+    python-docopt python-numpy python-pillow \
+    python-sounddevice python-pyaudio python-websockets 
 #+END_SRC
 
 *** Ubuntu
 
 #+BEGIN_SRC sh
 sudo apt-get install qml-module-qt3d qml-module-qt-websockets \
-    python3-docopt python3-numpy python3-pyaudio python3-websockets python3-pil 
+    python3-docopt python3-numpy python3-pyaudio \
+    python3-sounddevice python3-websockets python3-pil 
 #+END_SRC
 
 ** Installation

@@ -14,6 +14,8 @@ Kirigami.FormLayout {
 
 
     property alias cfg_reduceBass: reduceBass.checked
+    property alias cfg_debugBackend: debugBackend.checked
+
     property alias cfg_bassResolutionLevel: bassResolutionLevel.currentIndex
 
     property alias cfg_backendIndex:backend.currentIndex
@@ -29,7 +31,7 @@ Kirigami.FormLayout {
 
         QQC2.ComboBox {
             id:backend
-            model:  ['pyaudio','fifo']
+            model:  ['pyaudio','fifo','python-sounddevice']
         }
     }
 
@@ -71,6 +73,11 @@ Kirigami.FormLayout {
     QQC2.CheckBox {
         id: reduceBass
         text: i18nc("@option:check", "Reduce the weight of bass")
+    }
+
+    QQC2.CheckBox {
+        id: debugBackend
+        text: i18nc("@option:check", "Debug")
     }
 
     readonly property string sh_get_devices:'sh '+'"'+Utils.get_scripts_root()+'/get-devices.sh'+'" '

@@ -16,23 +16,22 @@ class Spectrum:
         self.history = np.zeros((NUM_CHANNEL, self.fft_size * HISTORY_LENGTH), dtype='int16')
         self.history_index = 0
 
-    def updateHistory(self, expect_buffer_size):
+    def get_max_wave_size(self):
+        len_history = self.history.shape[1]
+        num_channel = self.history.shape[0]
+        return len_history * num_channel
+
+    def updateHistory(self, data):
 
         len_history = self.history.shape[1]
         num_channel = self.history.shape[0]
 
-        data = self.sample.readlatest(expect_buffer_size, len_history * num_channel)
-
-        if data is not None:
-            data = np.frombuffer(data, 'int16')
-
-            len_data = len(data) // num_channel
+        if data is not None and data.shape[0] > 0:
+            data = np.rollaxis(data, 1)
+            _, len_data = data.shape
 
             index = self.history_index
             #assert len_data < len_history
-
-            data = data.reshape((len_data, num_channel))
-            data = np.rollaxis(data, 1)
 
             if index + len_data > len_history:
                 self.history[:, index:] = data[:, :len_history - index]
@@ -89,7 +88,7 @@ class Spectrum:
             return None
 
         if bassResolutionLevel == 0:
-            fft = np.absolute(np.fft.rfft(data_history[:, -self.fft_size:], n=self.fft_size)) #   0-22050Hz
+            fft = np.absolute(np.fft.rfft(data_history[:, -self.fft_size:], n=self.fft_size))    #   0-22050Hz
             return fft
         elif bassResolutionLevel == 1:
             # higher resolution and latency for lower frequency

@@ -1,3 +1,13 @@
+import numpy as np
+
+
+def binary2numpy(data, num_channel):
+    data = np.frombuffer(data, 'int16')
+    len_data = len(data) // num_channel
+    data = data.reshape((len_data, num_channel))
+    return data
+
+
 class PyaudioSource:
     def __init__(self, channel_count, sample_rate, device_index, chunk=1024):
         self.channel_count = channel_count
@@ -23,7 +33,7 @@ class PyaudioSource:
                 result += self.stream.read(size)
                 result = result[-max_size:]
                 size = self.stream.get_read_available()
-        return result
+        return binary2numpy(result, self.channel_count)
 
     def stop(self):
         self.stream.close()
@@ -51,7 +61,8 @@ class FifoSource:
         self.start()
 
     def readlatest(self, expect_size, max_size=1000000):
-        return self.stream.read(self.sample_rate // self.fps * self.channel_count)
+        data = self.stream.read(self.sample_rate // self.fps * self.channel_count)
+        return binary2numpy(data, self.channel_count)
 
     def stop(self):
         self.stream.close()
@@ -65,6 +76,36 @@ class FifoSource:
         flag = fcntl.fcntl(fd, fcntl.F_GETFL)
         fcntl.fcntl(fd, fcntl.F_SETFL, flag | os.O_NONBLOCK)
         flag = fcntl.fcntl(fd, fcntl.F_GETFL)
+
+
+class SounddeviceSource:
+    def __init__(self, channel_count, sample_rate, device_index):
+        self.channel_count = channel_count
+        self.sample_rate = sample_rate
+        if device_index is not None:
+            device_index = int(device_index)
+        self.device_index = device_index
+
+        self.start()
+
+    def readlatest(self, expect_size, max_size=1000000):
+        size = self.stream.read_available
+        data, _ = self.stream.read(size)
+        return data
+
+    def stop(self):
+        self.stream.close()
+
+    def start(self):
+        import sounddevice as sd
+        self.stream = sd.InputStream(
+            latency='low',
+            samplerate=self.sample_rate,
+            device=self.device_index,
+            channels=self.channel_count,
+            dtype='int16',
+        )
+        self.stream.start()
 
 
 if __name__ == '__main__':

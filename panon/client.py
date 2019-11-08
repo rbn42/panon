@@ -11,7 +11,7 @@ Options:
   --fps=F                       Fps [default: 30]
   --reduce-bass                 
   --bass-resolution-level=L     [default: 1]
-  --backend=(fifo|pyaudio)      [default: pyaudio]
+  --backend=B                   [default: pyaudio]
   --fifo-path=P
   --debug                       Debug
 """
@@ -31,6 +31,9 @@ import sys
 
 from docopt import docopt
 arguments = docopt(__doc__)
+if arguments['--debug']:
+    import time
+    time.sleep(30)
 
 server_port = int(arguments['<port>'])
 cfg_fps = int(arguments['--fps'])
@@ -44,6 +47,8 @@ if arguments['--backend'] == 'pyaudio':
     spectrum_source = source.PyaudioSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'])
 elif arguments['--backend'] == 'fifo':
     spectrum_source = source.FifoSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--fifo-path'], cfg_fps)
+elif arguments['--backend'] == 'sounddevice':
+    spectrum_source = source.SounddeviceSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'])
 else:
     assert False
 
@@ -60,7 +65,8 @@ async def hello():
 
         while True:
             expected_buffer_size = sample_rate // cfg_fps
-            hist = spec.updateHistory(expected_buffer_size)
+            latest_wave_data = spectrum_source.readlatest(expected_buffer_size, spec.get_max_wave_size())
+            hist = spec.updateHistory(latest_wave_data)
             data = spec.getData(hist, fps=cfg_fps, bassResolutionLevel=bassResolutionLevel, reduceBass=reduceBass)
 
             data, local_max = decay.process(data)

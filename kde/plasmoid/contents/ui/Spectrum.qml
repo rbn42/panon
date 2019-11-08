@@ -149,7 +149,7 @@ Item{
     readonly property string startBackEnd:{
         var cmd='sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '
         cmd+=server.port
-        var be=['pyaudio','fifo'][cfg.backendIndex]
+        var be=['pyaudio','fifo','sounddevice'][cfg.backendIndex]
         cmd+=' --backend='+be
         if(be=='pyaudio')
             if(cfg.deviceIndex>=0)
@@ -159,6 +159,8 @@ Item{
         cmd+=' --fps='+cfg.fps
         if(cfg.reduceBass)
             cmd+=' --reduce-bass'
+        if(cfg.debugBackend)
+            cmd+=' --debug'
         cmd+=' --bass-resolution-level='+cfg.bassResolutionLevel
         return cmd
     }
