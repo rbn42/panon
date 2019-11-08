@@ -2,6 +2,7 @@
 Requires https://github.com/bastibe/SoundCard
 """
 import soundcard as sc
+import numpy as np
 
 default_mic = sc.default_microphone()
 print('Make sure you are playing music when run this script')
