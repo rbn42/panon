@@ -149,7 +149,7 @@ Item{
     readonly property string startBackEnd:{
         var cmd='sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '
         cmd+=server.port
-        var be=['pyaudio','fifo','sounddevice'][cfg.backendIndex]
+        var be=['pyaudio','fifo'][cfg.backendIndex]
         cmd+=' --backend='+be
         if(be=='pyaudio')
             if(cfg.deviceIndex>=0)

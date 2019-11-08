@@ -31,7 +31,8 @@ Kirigami.FormLayout {
 
         QQC2.ComboBox {
             id:backend
-            model:  ['pyaudio','fifo','python-sounddevice']
+            //model:  ['pyaudio (requires python3 package pyaudio)','fifo','sounddevice (requires python3 package sounddevice']
+            model:  ['pyaudio','fifo']
         }
     }
 
