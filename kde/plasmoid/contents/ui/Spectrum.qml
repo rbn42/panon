@@ -95,7 +95,7 @@ Item{
         property double iTimeDelta
         property variant iResolution:Qt.vector3d(canvas_width,canvas_height,0)
         property double iFrame:0
-        property variant iMouse:Qt.vector4d(0,0,0,0)
+        property variant iMouse:Qt.vector4d(iMouseArea.mouseX,canvas_height- iMouseArea.mouseY ,0,0)
         property variant iChannel0:texture
         property variant iChannel1:texture
 
@@ -108,6 +108,12 @@ Item{
         anchors.fill: parent
         blending: true
         fragmentShader:shaderSource.shader_source
+    }
+
+    MouseArea {
+        id:iMouseArea
+     hoverEnabled :true
+        anchors.fill: parent
     }
 
     ShaderSource{id:shaderSource}
