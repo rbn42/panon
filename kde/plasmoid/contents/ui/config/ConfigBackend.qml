@@ -23,6 +23,7 @@ Kirigami.FormLayout {
     property alias cfg_fifoPath: fifoPath.text
 
     property int cfg_deviceIndex
+    property string cfg_pulseaudioDevice
 
 
     RowLayout {
@@ -32,12 +33,12 @@ Kirigami.FormLayout {
         QQC2.ComboBox {
             id:backend
             //model:  ['pyaudio (requires python3 package pyaudio)','fifo','sounddevice (requires python3 package sounddevice']
-            model:  ['pyaudio','fifo']
+            model:  ['PortAudio','PulseAudio','fifo']
         }
     }
 
     RowLayout {
-        visible:backend.currentText=='pyaudio'
+        visible:false // backend.currentText=='portaudio'
         Kirigami.FormData.label: "Input device:"
         Layout.fillWidth: true
 
@@ -48,6 +49,20 @@ Kirigami.FormLayout {
             }
             textRole:'name'
             onCurrentIndexChanged:cfg_deviceIndex= cbItems.get(currentIndex).d_index
+        }
+    }
+
+    RowLayout {
+        visible:backend.currentText=='PulseAudio'
+        Kirigami.FormData.label: "Input device:"
+        Layout.fillWidth: true
+
+        QQC2.ComboBox {
+            id:pulseaudioDevice
+            onCurrentIndexChanged:{
+                if(currentText.length>0)
+                    cfg_pulseaudioDevice= pulseaudioDevice.model[currentIndex]
+            }
         }
     }
 
@@ -83,15 +98,25 @@ Kirigami.FormLayout {
 
     readonly property string sh_get_devices:'sh '+'"'+Utils.get_scripts_root()+'/get-devices.sh'+'" '
     readonly property string sh_get_styles:'sh '+'"'+Utils.get_scripts_root()+'/get-shaders.sh'+'" '
+    readonly property string sh_get_pa_devices:'sh '+'"'+Utils.get_scripts_root()+'/get-pa-devices.sh'+'" '
 
     PlasmaCore.DataSource {
         //id: getOptionsDS
         engine: 'executable'
         connectedSources: [
-            sh_get_devices
+            sh_get_pa_devices
         ]
         onNewData: {
-            if(sourceName==sh_get_devices){
+
+            if(sourceName==sh_get_pa_devices){
+                var lst=JSON.parse(data.stdout)
+                lst.unshift('auto')
+                pulseaudioDevice.model=lst
+                for(var i=0;i<lst.length;i++)
+                    if(lst[i]==cfg_pulseaudioDevice)
+                        pulseaudioDevice.currentIndex=i;
+            }else if(sourceName==sh_get_styles){
+            }else if(sourceName==sh_get_devices){
                 var lst=JSON.parse(data.stdout)
                 cbItems.append({name:'auto',d_index:-1})
                 for(var i in lst)

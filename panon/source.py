@@ -108,6 +108,41 @@ class SounddeviceSource:
         self.stream.start()
 
 
+class SoundCardSource:
+    def __init__(self, channel_count, sample_rate, device_id, blocksize):
+        self.channel_count = channel_count
+        self.sample_rate = sample_rate
+        self.device_id = device_id
+        self.blocksize = blocksize
+
+        self.start()
+
+    def readlatest(self, expect_size, max_size=1000000):
+        data = self.stream.record(expect_size)
+        data = np.asarray(data * (2**16), dtype='int16')
+        return data
+
+    def stop(self):
+        self.stream.close()
+
+    def start(self):
+        from . import pulseaudio as sc
+        if self.device_id is None:
+            mic = sc.default_microphone()
+        else:
+            mic = sc.get_microphone(
+                self.device_id,
+                include_loopback=False,
+                exclude_monitors=False,
+            )
+        self.stream = mic.recorder(
+            self.sample_rate,
+            self.channel_count,
+            self.blocksize,
+        )
+        self.stream.__enter__()
+
+
 if __name__ == '__main__':
     import numpy as np
     import time

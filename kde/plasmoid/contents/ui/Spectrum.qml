@@ -155,11 +155,11 @@ Item{
     readonly property string startBackEnd:{
         var cmd='sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '
         cmd+=server.port
-        var be=['pyaudio','fifo'][cfg.backendIndex]
+        var be=['pyaudio','soundcard','fifo'][cfg.backendIndex]
         cmd+=' --backend='+be
-        if(be=='pyaudio')
-            if(cfg.deviceIndex>=0)
-                cmd+=' --device-index='+cfg.deviceIndex
+        if(be=='soundcard')
+            if(!('auto'==cfg.pulseaudioDevice))
+                cmd+=' --device-index="'+cfg.pulseaudioDevice+'"'
         if(be=='fifo')
             cmd+=' --fifo-path='+cfg.fifoPath
         cmd+=' --fps='+cfg.fps

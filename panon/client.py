@@ -43,12 +43,16 @@ reduceBass = arguments['--reduce-bass'] is not None
 import time
 spectrum_decay = 0.01
 sample_rate = 44100
+expected_buffer_size = sample_rate // cfg_fps
+
 if arguments['--backend'] == 'pyaudio':
     spectrum_source = source.PyaudioSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'])
 elif arguments['--backend'] == 'fifo':
     spectrum_source = source.FifoSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--fifo-path'], cfg_fps)
 elif arguments['--backend'] == 'sounddevice':
     spectrum_source = source.SounddeviceSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'])
+elif arguments['--backend'] == 'soundcard':
+    spectrum_source = source.SoundCardSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'], expected_buffer_size)
 else:
     assert False
 
@@ -64,7 +68,6 @@ async def hello():
         img_data = None
 
         while True:
-            expected_buffer_size = sample_rate // cfg_fps
             latest_wave_data = spectrum_source.readlatest(expected_buffer_size, spec.get_max_wave_size())
             hist = spec.updateHistory(latest_wave_data)
             data = spec.getData(hist, fps=cfg_fps, bassResolutionLevel=bassResolutionLevel, reduceBass=reduceBass)

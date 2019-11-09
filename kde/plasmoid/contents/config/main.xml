@@ -21,6 +21,9 @@
     <entry name="deviceIndex" type="Int">
       <default>-1</default>
     </entry>
+    <entry name="pulseaudioDevice" type="String">
+      <default>auto</default>
+    </entry>
     <!--
     <entry name="backend" type="String">
       <default>pyaudio</default>
