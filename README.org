@@ -78,18 +78,19 @@ Shaders are stored in [[kde/plasmoid/contents/shaders/]]. If you want to modify 
 
 Providing panon is installed in your home directory, you can add your own shader files to =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. Panon can detect and load shaders in this folder. The name of a shader file must be ended with =.frag=.
 
-*** Shadertoy.com
+*** Shader API and Shadertoy.com
 Shadertoy.com is a cross-browser online community and tool for creating and sharing shaders through WebGL, from where you can find many wonderful works shared by kind people. And by default, these works are licensed under [[https://www.shadertoy.com/terms][a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License]].
 
-Panon's shader API is designed to be similar to shadertoy.com. Many of the works can be copied directly to panon, providing you add =#version 130= to the shader file's first line. But all these works were designed to show in browsers, so they won't look good in tiny space like a panel. [[file:kde/plasmoid/contents/shaders/example-shadertoy.frag][example-shadertoy.frag]] is such an example. Its animation is based on the time, not based on the audio.
+Panon's shader API is designed to be similar to shadertoy.com. Many of the works can be copied directly to panon, providing you add =#version 130= to the shader file's first line. But all these works were designed to show in browsers, so they won't look good in tiny space like a panel. [[file:kde/plasmoid/contents/shaders/example-shadertoy.frag][example-shadertoy.frag]] is such an example.
 
-Currently, available uniforms include
-| iResolution |
-| iTime       |
-| iTimeDelta  |
-| iFrame      |
-| iMouse      |
-| iChannel0   |
+Currently, these shadertoy-like uniforms are provided,
+| iResolution | width and heigh of the applet | available   |
+| iTime       |                               | available   |
+| iTimeDelta  |                               | available   |
+| iFrame      |                               | available   |
+| iMouse      | mouse position                | available   |
+| iChannel0   | fixed wave data               | coming soon |
+| iChannel1   | fixed spectrum data           | available   |
 
 *** Debugging Shaders
 
