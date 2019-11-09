@@ -105,10 +105,6 @@ In plasmoidviewer, go to the configuration window and pick your own shader.
 Then plasmoidviewer will run your shader and show the errors, if exist, in the console.
 
 ** Troubleshooting
-*** Panon shows nothing when you are playing music 
-    1. Please make sure your OpenGL version satisfies the minimum requirement.
-    2. If you are using pyaudio as panon's backend, please execute =python3 ./test/test_pyaudio.py= The script will tell you if pyaudio works or not. If the script failed, this issue can be reported to [[https://people.csail.mit.edu/hubert/pyaudio/][pyaudio]]. Alternatively, you may choose to execute =./test/test_python-sounddevice.py= and =./test/test_QtMultimedia.py= and if one of them works for you, I can add it to panon as another backend choice.
-
 ** Credits
 |                                                                                                 |                                                                                                  | LICENSE                                              |
 |-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------|
