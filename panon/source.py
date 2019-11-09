@@ -61,7 +61,7 @@ class FifoSource:
         self.start()
 
     def readlatest(self, expect_size, max_size=1000000):
-        data = self.stream.read(self.sample_rate // self.fps * self.channel_count)
+        data = self.stream.read(self.sample_rate // self.fps * self.channel_count * 2)    #int16 requires 2 bytes
         if data is None:
             return None
         return binary2numpy(data, self.channel_count)
