@@ -22,7 +22,7 @@
       <default>-1</default>
     </entry>
     <entry name="pulseaudioDevice" type="String">
-      <default>auto</default>
+      <default>default</default>
     </entry>
     <!--
     <entry name="backend" type="String">

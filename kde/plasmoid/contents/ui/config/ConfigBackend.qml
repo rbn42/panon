@@ -110,7 +110,8 @@ Kirigami.FormLayout {
 
             if(sourceName==sh_get_pa_devices){
                 var lst=JSON.parse(data.stdout)
-                lst.unshift('auto')
+                lst.unshift('default')
+                lst.push('all')
                 pulseaudioDevice.model=lst
                 for(var i=0;i<lst.length;i++)
                     if(lst[i]==cfg_pulseaudioDevice)

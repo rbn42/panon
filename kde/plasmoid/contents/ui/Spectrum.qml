@@ -158,8 +158,7 @@ Item{
         var be=['pyaudio','soundcard','fifo'][cfg.backendIndex]
         cmd+=' --backend='+be
         if(be=='soundcard')
-            if(!('auto'==cfg.pulseaudioDevice))
-                cmd+=' --device-index="'+cfg.pulseaudioDevice+'"'
+            cmd+=' --device-index="'+cfg.pulseaudioDevice+'"'
         if(be=='fifo')
             cmd+=' --fifo-path='+cfg.fifoPath
         cmd+=' --fps='+cfg.fps

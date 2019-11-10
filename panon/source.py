@@ -120,29 +120,47 @@ class SoundCardSource:
         self.start()
 
     def readlatest(self, expect_size, max_size=1000000):
-        data = self.stream.record(expect_size)
-        data = np.asarray(data * (2**16), dtype='int16')
-        return data
+        if self.device_id == 'all':
+            data = [stream.record(expect_size) for stream in self.streams]
+            data = sum(data)
+            data = np.asarray(data * (2**16), dtype='int16')
+            return data
+        else:
+            data = self.stream.record(expect_size)
+            data = np.asarray(data * (2**16), dtype='int16')
+            return data
 
     def stop(self):
         self.stream.close()
 
     def start(self):
         from . import pulseaudio as sc
-        if self.device_id is None:
-            mic = sc.default_microphone()
+        if self.device_id == 'all':
+            mics = sc.all_microphones(exclude_monitors=False)
+            self.streams = []
+            for mic in mics:
+                stream = mic.recorder(
+                    self.sample_rate,
+                    self.channel_count,
+                    self.blocksize,
+                )
+                stream.__enter__()
+                self.streams.append(stream)
         else:
-            mic = sc.get_microphone(
-                self.device_id,
-                include_loopback=False,
-                exclude_monitors=False,
+            if self.device_id == 'default':
+                mic = sc.default_microphone()
+            else:
+                mic = sc.get_microphone(
+                    self.device_id,
+                    include_loopback=False,
+                    exclude_monitors=False,
+                )
+            self.stream = mic.recorder(
+                self.sample_rate,
+                self.channel_count,
+                self.blocksize,
             )
-        self.stream = mic.recorder(
-            self.sample_rate,
-            self.channel_count,
-            self.blocksize,
-        )
-        self.stream.__enter__()
+            self.stream.__enter__()
 
 
 if __name__ == '__main__':
