@@ -122,13 +122,11 @@ class SoundCardSource:
     def readlatest(self, expect_size, max_size=1000000):
         if self.device_id == 'all':
             data = [stream.record(expect_size) for stream in self.streams]
-            data = sum(data)
-            data = np.asarray(data * (2**16), dtype='int16')
-            return data
+            data = sum(data) / len(data)
         else:
             data = self.stream.record(expect_size)
-            data = np.asarray(data * (2**16), dtype='int16')
-            return data
+        data = np.asarray(data * (2**16), dtype='int16')
+        return data
 
     def stop(self):
         self.stream.close()
