@@ -59,9 +59,13 @@ Kirigami.FormLayout {
 
         QQC2.ComboBox {
             id:pulseaudioDevice
+            model: ListModel {
+                id: pdItems
+            }
+            textRole:'name'
             onCurrentIndexChanged:{
                 if(currentText.length>0)
-                    cfg_pulseaudioDevice= pulseaudioDevice.model[currentIndex]
+                    cfg_pulseaudioDevice= pdItems.get(currentIndex).id
             }
         }
     }
@@ -109,12 +113,16 @@ Kirigami.FormLayout {
         onNewData: {
 
             if(sourceName==sh_get_pa_devices){
+                pdItems.append({name:'default',id:'default'})
                 var lst=JSON.parse(data.stdout)
-                lst.unshift('default')
-                lst.push('all')
-                pulseaudioDevice.model=lst
-                for(var i=0;i<lst.length;i++)
-                    if(lst[i]==cfg_pulseaudioDevice)
+                for(var i in lst)
+                    pdItems.append(lst[i])
+                if(lst.length>1){
+                    pdItems.append({name:"Mixing All Microphones and Speakers",id:'all'})
+                }
+
+                for(var i=0;i<pulseaudioDevice.count;i++)
+                    if(pdItems.get(i).id==cfg_pulseaudioDevice)
                         pulseaudioDevice.currentIndex=i;
             }else if(sourceName==sh_get_styles){
             }else if(sourceName==sh_get_devices){
