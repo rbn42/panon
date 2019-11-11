@@ -88,9 +88,6 @@ Item{
                 return cfg.hsluvLightness
         }
 
-        property variant tex1:texture
-        property double random_seed
-
         property double iTime
         property double iTimeDelta
         property variant iResolution:Qt.vector3d(canvas_width,canvas_height,0)
@@ -139,7 +136,6 @@ Item{
         repeat: true
         running: true 
         onTriggered: {
-            se.random_seed=Math.random()
 
             var time_current_frame=Date.now()
             se.iTime=(time_current_frame-time_first_frame) /1000.0
