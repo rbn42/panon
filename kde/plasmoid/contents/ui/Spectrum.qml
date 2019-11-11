@@ -105,8 +105,10 @@ Item{
         property double iTimeDelta
         property variant iResolution:root.gravity<=2?Qt.vector3d(se.width,se.height,0):Qt.vector3d(se.height,se.width,0)
         property double iFrame:0
-        property variant iChannel0:texture
-        property variant iChannel1:texture
+        property variant iChannel0:Image{visible:false}
+        property variant iChannel1:Image{visible:false}
+        property variant iChannel2:Image{visible:false}
+        property variant iChannel3:Image{visible:false}
 
         property int gravity:root.gravity
         property int spectrum_width:texture.width
@@ -152,7 +154,16 @@ Item{
             se.iTimeDelta=(time_current_frame-time_prev_frame)/1000.0
             se.iFrame+=1
 
-            texture.source=messageBox  // Trigger 
+            if(messageBox.length>0){
+                var obj = JSON.parse(messageBox)
+                se.iChannel0.source=obj.wave
+                se.iChannel1.source=obj.spectrum 
+                se.iChannel2.source=obj.max_spectrum 
+            }else{
+                se.iChannel0.source=''
+                se.iChannel1.source=''
+                se.iChannel2.source=''
+            }
 
             time_prev_frame=time_current_frame
         }

@@ -6,7 +6,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     fragColor.rgba=vec4(0,0,0,0);
     for(int i=-5; i<5; i++) {
         float x=fragCoord.x+i*px_step;
-        vec4 sample1= texture(iChannel1, vec2(x,1/8.)) ;
+        vec4 sample1= texture(iChannel1, vec2(x,0)) ;
         vec3 rgb=getRGB(x+i*px_step);
 
         float max_=sample1.g*.5+sample1.r*.5;

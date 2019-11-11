@@ -17,12 +17,9 @@ Options:
 """
 import asyncio
 import time
-import base64
-import io
 import numpy as np
 import json
 import websockets
-from PIL import Image
 from . import spectrum
 from .decay import Decay
 from . import source
@@ -58,6 +55,10 @@ else:
 
 spec = spectrum.Spectrum(spectrum_source, )
 decay = Decay()
+decay_wave = Decay()
+
+from .convertor import Numpy2Str
+n2s = Numpy2Str()
 
 
 async def hello():
@@ -69,49 +70,33 @@ async def hello():
 
         while True:
             latest_wave_data = spectrum_source.readlatest(expected_buffer_size, spec.get_max_wave_size())
-            hist = spec.updateHistory(latest_wave_data)
-            data = spec.getData(hist, fps=cfg_fps, bassResolutionLevel=bassResolutionLevel, reduceBass=reduceBass)
+            wave_hist = spec.updateHistory(latest_wave_data)
+            data = spec.computeSpectrum(wave_hist, fps=cfg_fps, bassResolutionLevel=bassResolutionLevel, reduceBass=reduceBass)
 
-            data, local_max = decay.process(data)
-
-            if data is None:
-                if local_max is None:
-                    # Sending empty string means stop rendering
-                    message = ''
-                elif np.max(local_max) > 0.3:
-                    # Don't stop rendering until local_max fall below 0.3
-                    data = np.zeros(local_max.shape)
+            spectrum_data, local_max = decay.process(data, wave=False)
+            if spectrum_data is None and (local_max is None or np.max(local_max) < 0.3):
+                await websocket.send('')
+            else:
+                if spectrum_data is not None:
+                    spectrum_data = np.clip(spectrum_data[1:] / 3.0, 0, 0.99) * 256
+                    wave_data = wave_hist[-spectrum_data.shape[0]:]
+                    wave_max = np.max(np.abs(wave_data))
+                    wave_data = (wave_data + wave_max) / wave_max / 2 * 256
                 else:
-                    # Sending empty string means stop rendering
-                    message = ''
+                    wave_data = None
+                if local_max is not None:
+                    local_max = np.clip(local_max[1:] / 3.0, 0, 0.99) * 256
+                spectrum_data_m = n2s.convert(spectrum_data)
+                spectrum_max_m = n2s.convert(local_max)
+                wave_data_m = n2s.convert(wave_data)
+                data = None
+                local_max = None
 
-            if data is not None:
-
-                data = np.clip(data / 3.0, 0, 0.99)
-                local_max = np.clip(local_max / 3.0, 0, 0.99)
-
-                if img_data is None:
-                    img_data = np.zeros((4, data.shape[1], 3), dtype='uint8')
-                    # img_data[:, :, 3] =  255
-
-                # texture(tex1, vec2(qt_TexCoord0.x,1/8.)) ;
-                img_data[0, :, :2] = np.rollaxis(data, 1, 0) * 256
-                # texture(tex1, vec2(qt_TexCoord0.x,3/8.)) ;
-                img_data[1, :, :2] = np.rollaxis(local_max, 1, 0) * 256
-                # Reserved data channels
-                # texture(tex1, vec2(qt_TexCoord0.x,5/8.)) ;
-                # img_data[2, :, :2]
-                # texture(tex1, vec2(qt_TexCoord0.x,7/8.)) ;
-                # img_data[3, :, :2]
-
-                #头部一些奇怪的数据去掉
-                image = Image.fromarray(img_data[:, 1:, :])
-                #converts PIL image to datauri
-                data = io.BytesIO()
-                image.save(data, "png")
-                message = 'data:img/png;base64,' + base64.b64encode(data.getvalue()).decode()
-
-            await websocket.send(message)
+                await websocket.send(json.dumps({
+                    'spectrum': spectrum_data_m,
+                    'max_spectrum': spectrum_max_m,
+                    'wave': wave_data_m,
+                }))
 
             new_timestamp = time.time()
             time_sleep = max(0, 1 / cfg_fps - (new_timestamp - old_timestamp))

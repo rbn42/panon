@@ -84,13 +84,14 @@ Shadertoy.com is a cross-browser online community and tool for creating and shar
 Panon's shader API is designed to be similar to shadertoy.com. Many of the works can be copied directly to panon, providing you add =#version 130= to the shader file's first line. But all these works were designed to show in browsers, so they won't look good in tiny space like a panel. [[file:kde/plasmoid/contents/shaders/example-shadertoy.frag][example-shadertoy.frag]] is such an example.
 
 Currently, these shadertoy-like uniforms are provided,
-| iResolution | width and heigh of the applet | available   |
-| iTime       |                               | available   |
-| iTimeDelta  |                               | available   |
-| iFrame      |                               | available   |
-| iMouse      | mouse position                | available   |
-| iChannel0   | fixed wave data               | coming soon |
-| iChannel1   | fixed spectrum data           | available   |
+| iResolution | width and heigh of the applet |
+| iTime       |                               |
+| iTimeDelta  |                               |
+| iFrame      |                               |
+| iMouse      | mouse position                |
+| iChannel0   | wave                          |
+| iChannel1   | spectrum                      |
+| iChannel2   | recent maximum spectrum       |
 
 *** Debugging Shaders
 

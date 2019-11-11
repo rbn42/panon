@@ -1,17 +1,16 @@
 #version 130
-out vec4 fragColor;
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     fragCoord=fragCoord/iResolution.xy;
     // A list of available data channels
     // Spectrum data
-    vec4 sample1= texture(iChannel1, vec2(fragCoord.x,1/8.)) ;
+    vec4 sample1= texture(iChannel1, vec2(fragCoord.x,0)) ;
     // Maximum spectrum data in recent history
-    // vec4 sample2= texture(iChannel1, vec2(fragCoord.x,3/8.)) ;
+    // vec4 sample2= texture(iChannel2, vec2(fragCoord.x,0)) ;
+    // Wave data channel
+    // vec4 sample3= texture(iChannel0, vec2(fragCoord.x,0)) ;
     // Reserved data channel
-    // vec4 sample3= texture(iChannel1, vec2(fragCoord.x,5/8.)) ;
-    // Reserved data channel
-    // vec4 sample4= texture(iChannel1, vec2(fragCoord.x,7/8.)) ;
+    // vec4 sample4= texture(iChannel3, vec2(fragCoord.x,0)) ;
 
     // Color defined by user configuration
     vec3 rgb=getRGB(fragCoord.x);

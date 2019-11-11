@@ -11,13 +11,15 @@ class Decay:
 
         self.local_max = None
 
-    def process(self, fft):
+    def process(self, fft, wave):
         exp = 2
         retain = (1 - self.global_decay)**exp
         global_decay = 1 - retain
         global_max = self.max_sample**(1 / exp)
 
         if fft is None:
+            if wave:
+                return None
             if self.local_max is None:
                 return None, None
             else:
@@ -26,6 +28,9 @@ class Decay:
 
         vol = self.min_sample + np.mean(fft**exp)
         self.max_sample = self.max_sample * retain + vol * global_decay
+
+        if wave:
+            return fft / global_max
 
         if self.local_max is None:
             self.local_max = fft

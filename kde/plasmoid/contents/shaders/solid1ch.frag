@@ -2,7 +2,7 @@
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     fragCoord=fragCoord/iResolution.xy;
-    vec4 sample1= texture(iChannel1, vec2(fragCoord.x,1/8.)) ;
+    vec4 sample1= texture(iChannel1, vec2(fragCoord.x,0)) ;
     float h=fragCoord.y;
     vec3 rgb=getRGB(fragCoord.x);
 

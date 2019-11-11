@@ -8,7 +8,7 @@ uniform int       iFrame;                // shader playback frame
 uniform vec4      iMouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
 uniform sampler2D iChannel0;          // input channel. XX = 2D/Cube
 uniform sampler2D iChannel1;          // input channel. XX = 2D/Cube
-//uniform sampler2D iChannel2;          // input channel. XX = 2D/Cube
+uniform sampler2D iChannel2;          // input channel. XX = 2D/Cube
 //uniform sampler2D iChannel3;          // input channel. XX = 2D/Cube
 //uniform vec4      iDate;                 // (year, month, day, time in seconds)
 //uniform float     iSampleRate;           // sound sample rate (i.e., 44100)

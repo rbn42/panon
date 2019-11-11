@@ -13,38 +13,34 @@ class Spectrum:
         self.sample = source
         self.fft_size = fft_size
 
-        self.history = np.zeros((NUM_CHANNEL, self.fft_size * HISTORY_LENGTH), dtype='int16')
+        self.history = np.zeros((self.fft_size * HISTORY_LENGTH, NUM_CHANNEL), dtype='int16')
         self.history_index = 0
 
     def get_max_wave_size(self):
-        len_history = self.history.shape[1]
-        num_channel = self.history.shape[0]
+        len_history, num_channel = self.history.shape
         return len_history * num_channel
 
     def updateHistory(self, data):
-
-        len_history = self.history.shape[1]
-        num_channel = self.history.shape[0]
+        len_history, num_channel = self.history.shape
 
         if data is not None and data.shape[0] > 0:
-            data = np.rollaxis(data, 1)
-            _, len_data = data.shape
+            len_data, _ = data.shape
 
             index = self.history_index
             #assert len_data < len_history
 
             if index + len_data > len_history:
-                self.history[:, index:] = data[:, :len_history - index]
-                self.history[:, :index + len_data - len_history] = data[:, len_history - index:]
+                self.history[index:] = data[:len_history - index]
+                self.history[:index + len_data - len_history] = data[len_history - index:]
                 self.history_index -= len_history
             else:
-                self.history[:, index:index + len_data] = data
+                self.history[index:index + len_data] = data
             self.history_index += len_data
 
         data_history = np.concatenate([
-            self.history[:, self.history_index:],
-            self.history[:, :self.history_index],
-        ], axis=1)
+            self.history[self.history_index:],
+            self.history[:self.history_index],
+        ], axis=0)
 
         return data_history
 
@@ -62,22 +58,21 @@ class Spectrum:
         freq_from = int(freq_from * latency)
         freq_to = int(freq_to * latency)
         size = int(size * latency)
-        d = data_history[:, -size:]
 
-        fft = np.absolute(np.fft.rfft(d, n=size))
-        result = fft[:, freq_from:freq_to]
+        fft = np.absolute(np.fft.rfft(data_history[-size:], axis=0))
+        result = fft[freq_from:freq_to]
         if reduceBass and weight_from:
-            size_output = result.shape[1]
-            result = result * np.arange(weight_from, weight_to, (weight_to - weight_from) / size_output)[:size_output]
+            size_output, _ = result.shape
+            result = result * np.arange(weight_from, weight_to, (weight_to - weight_from) / size_output)[:size_output, np.newaxis]
         debug = False
         if debug:
             #add splitters
-            result = np.concatenate([result, np.zeros((2, 8))], axis=1)
+            result = np.concatenate([result, np.zeros((8, 2))], axis=0)
             return result
         else:
             return result
 
-    def getData(
+    def computeSpectrum(
             self,
             data_history,
             bassResolutionLevel,
@@ -88,7 +83,7 @@ class Spectrum:
             return None
 
         if bassResolutionLevel == 0:
-            fft = np.absolute(np.fft.rfft(data_history[:, -self.fft_size:], n=self.fft_size))    #   0-22050Hz
+            fft = np.absolute(np.fft.rfft(data_history[-self.fft_size:], axis=0))    #   0-22050Hz
             return fft
         elif bassResolutionLevel == 1:
             # higher resolution and latency for lower frequency
@@ -110,6 +105,6 @@ class Spectrum:
             ]
 
         fft_freq.reverse()
-        fft = np.concatenate(fft_freq, axis=1)
+        fft = np.concatenate(fft_freq, axis=0)
 
         return fft

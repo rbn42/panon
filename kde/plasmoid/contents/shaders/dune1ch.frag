@@ -21,7 +21,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
         float distanc=abs(i)/1.0/max_distance;
         float x=int(fragCoord.x/px_step+i)*px_step;
 
-        vec4 raw=texture(iChannel1, vec2(x,1/8.));
+        vec4 raw=texture(iChannel1, vec2(x,0));
         float raw_max=(raw.g+raw.r)/2.;
         float h_target=height(distanc,raw_max);
         if(h_target-.02<=h && h<=h_target) {
