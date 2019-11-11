@@ -88,16 +88,26 @@ Item{
                 return cfg.hsluvLightness
         }
 
+        readonly property variant iMouse:{
+            switch(root.gravity){
+                case 1:
+                return Qt.vector4d(iMouseArea.mouseX,se.height- iMouseArea.mouseY ,0,0)
+                case 2:
+                return Qt.vector4d(iMouseArea.mouseX, iMouseArea.mouseY ,0,0)
+                case 3:
+                return Qt.vector4d(se.height-iMouseArea.mouseY, se.width-iMouseArea.mouseX ,0,0)
+                case 4:
+                return Qt.vector4d(se.height- iMouseArea.mouseY, iMouseArea.mouseX ,0,0)
+            }
+        }
+
         property double iTime
         property double iTimeDelta
-        property variant iResolution:Qt.vector3d(canvas_width,canvas_height,0)
+        property variant iResolution:root.gravity<=2?Qt.vector3d(se.width,se.height,0):Qt.vector3d(se.height,se.width,0)
         property double iFrame:0
-        property variant iMouse:Qt.vector4d(iMouseArea.mouseX,canvas_height- iMouseArea.mouseY ,0,0)
         property variant iChannel0:texture
         property variant iChannel1:texture
 
-        property int canvas_width:root.gravity<=2?se.width:se.height
-        property int canvas_height:root.gravity<=2?se.height:se.width
         property int gravity:root.gravity
         property int spectrum_width:texture.width
         property int spectrum_height:texture.height
