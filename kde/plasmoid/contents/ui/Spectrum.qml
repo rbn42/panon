@@ -1,6 +1,4 @@
-
 import QtQuick 2.0
-import QtWebSockets 1.0
 import Qt3D.Core 2.0
 import Qt3D.Render 2.0
 import QtQuick.Layouts 1.1
@@ -9,8 +7,6 @@ import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 import QtQuick.Controls 2.0 as QQC2
-
-import "utils.js" as Utils
 
 Item{
     id:root
@@ -136,16 +132,23 @@ Item{
 
     ShaderSource{id:shaderSource}
 
-    WebSocketServer {
-        id: server
-        listen: true
-        onClientConnected: {
-            webSocket.onTextMessageReceived.connect(function(message) {
+    WsConnection{id:wsconn}
 
 
+    Timer {
+        interval: 1000/(1+cfg.fps)
+        repeat: true
+        running: true 
+        onTriggered: {
                 var time_current_frame=Date.now()
+                var deltatime=(time_current_frame-time_prev_frame)/1000.0
+
+                if(wsconn.messageBox.length<1)
+                    return
+                var message=wsconn.messageBox.shift()
+
                 se.iTime=(time_current_frame-time_first_frame) /1000.0
-                se.iTimeDelta=(time_current_frame-time_prev_frame)/1000.0
+                se.iTimeDelta=deltatime
                 se.iFrame+=1
                 if(cfg.showFps)
                     if(se.iFrame%30==1){
@@ -165,7 +168,6 @@ Item{
                 }
 
                 time_prev_frame=time_current_frame
-            });
         }
     }
 
@@ -173,30 +175,6 @@ Item{
     property double time_first_frame:Date.now()
     property double time_fps_start:Date.now()
     property double time_prev_frame:Date.now()
-
-    readonly property string startBackEnd:{
-        var cmd='sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '
-        cmd+=server.port
-        var be=['pyaudio','soundcard','fifo'][cfg.backendIndex]
-        cmd+=' --backend='+be
-        if(be=='soundcard')
-            cmd+=' --device-index="'+cfg.pulseaudioDevice+'"'
-        if(be=='fifo')
-            cmd+=' --fifo-path='+cfg.fifoPath
-        cmd+=' --fps='+cfg.fps
-        if(cfg.reduceBass)
-            cmd+=' --reduce-bass'
-        if(cfg.debugBackend)
-            cmd+=' --debug'
-        cmd+=' --bass-resolution-level='+cfg.bassResolutionLevel
-        return cmd
-    }
-
-    PlasmaCore.DataSource {
-        engine: 'executable'
-        connectedSources: [startBackEnd]
-    }
-
     Behavior on animatedMinimum{
         enabled:cfg.animateAutoHiding
         NumberAnimation {
