@@ -38,24 +38,21 @@ bassResolutionLevel = int(arguments['--bass-resolution-level'])
 reduceBass = arguments['--reduce-bass'] is not None
 
 import time
-spectrum_decay = 0.01
 sample_rate = 44100
-expected_buffer_size = sample_rate // cfg_fps
 
 if arguments['--backend'] == 'pyaudio':
-    spectrum_source = source.PyaudioSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'])
+    spectrum_source = source.PyaudioSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'], cfg_fps)
 elif arguments['--backend'] == 'fifo':
     spectrum_source = source.FifoSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--fifo-path'], cfg_fps)
-elif arguments['--backend'] == 'sounddevice':
-    spectrum_source = source.SounddeviceSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'])
+#elif arguments['--backend'] == 'sounddevice':
+#    spectrum_source = source.SounddeviceSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'])
 elif arguments['--backend'] == 'soundcard':
-    spectrum_source = source.SoundCardSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'], expected_buffer_size)
+    spectrum_source = source.SoundCardSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'], cfg_fps)
 else:
     assert False
 
-spec = spectrum.Spectrum(spectrum_source, )
+spec = spectrum.Spectrum()
 decay = Decay()
-decay_wave = Decay()
 
 from .convertor import Numpy2Str
 n2s = Numpy2Str()
@@ -65,13 +62,11 @@ async def hello():
     uri = f"ws://localhost:{server_port}"
     async with websockets.connect(uri) as websocket:
 
-        old_timestamp = time.time()
-        img_data = None
-
         while True:
-            latest_wave_data = spectrum_source.readlatest(expected_buffer_size, spec.get_max_wave_size())
+
+            latest_wave_data = spectrum_source.read()
             wave_hist = spec.updateHistory(latest_wave_data)
-            data = spec.computeSpectrum(wave_hist, fps=cfg_fps, bassResolutionLevel=bassResolutionLevel, reduceBass=reduceBass)
+            data = spec.computeSpectrum(wave_hist, bassResolutionLevel=bassResolutionLevel, reduceBass=reduceBass)
 
             spectrum_data, local_max = decay.process(data, wave=False)
             if spectrum_data is None and (local_max is None or np.max(local_max) < 0.3):
@@ -89,19 +84,12 @@ async def hello():
                 spectrum_data_m = n2s.convert(spectrum_data)
                 spectrum_max_m = n2s.convert(local_max)
                 wave_data_m = n2s.convert(wave_data)
-                data = None
-                local_max = None
 
                 await websocket.send(json.dumps({
                     'spectrum': spectrum_data_m,
                     'max_spectrum': spectrum_max_m,
                     'wave': wave_data_m,
                 }))
-
-            new_timestamp = time.time()
-            time_sleep = max(0, 1 / cfg_fps - (new_timestamp - old_timestamp))
-            old_timestamp = new_timestamp
-            time.sleep(time_sleep)
 
 
 asyncio.get_event_loop().run_until_complete(hello())

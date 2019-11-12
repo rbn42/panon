@@ -8,6 +8,8 @@ import QtQuick.Layouts 1.1
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
+import QtQuick.Controls 2.0 as QQC2
+
 import "utils.js" as Utils
 
 Item{
@@ -39,7 +41,7 @@ Item{
         return 1
     }
 
-    property int animatedMinimum:(!cfg.autoHide) || messageBox.length>0 ? cfg.preferredWidth:0 
+    property int animatedMinimum:(!cfg.autoHide) || se.iChannel2.source.length>0 ? cfg.preferredWidth:0 
 
     Layout.fillWidth: vertical? false:cfg.autoExtend 
     Layout.fillHeight: vertical? cfg.autoExtend :false
@@ -111,17 +113,24 @@ Item{
         property variant iChannel3:Image{visible:false}
 
         property int gravity:root.gravity
-        property int spectrum_width:texture.width
-        property int spectrum_height:texture.height
+        property int spectrum_width:iChannel1.width
+        property int spectrum_height:iChannel1.height
 
         anchors.fill: parent
         blending: true
         fragmentShader:shaderSource.shader_source
     }
 
+
+    QQC2.Label {
+        id:console_output
+        anchors.fill: parent
+        visible:cfg.showFps
+    }
+
     MouseArea {
         id:iMouseArea
-     hoverEnabled :true
+        hoverEnabled :true
         anchors.fill: parent
     }
 
@@ -132,42 +141,38 @@ Item{
         listen: true
         onClientConnected: {
             webSocket.onTextMessageReceived.connect(function(message) {
-                messageBox= message
+
+
+                var time_current_frame=Date.now()
+                se.iTime=(time_current_frame-time_first_frame) /1000.0
+                se.iTimeDelta=(time_current_frame-time_prev_frame)/1000.0
+                se.iFrame+=1
+                if(cfg.showFps)
+                    if(se.iFrame%30==1){
+                        console_output.text='fps:'+(1000*30/(time_current_frame-time_fps_start))
+                        time_fps_start=time_current_frame
+                    }
+
+                if(message.length>0){
+                    var obj = JSON.parse(message)
+                    se.iChannel0.source=obj.wave
+                    se.iChannel1.source=obj.spectrum 
+                    se.iChannel2.source=obj.max_spectrum 
+                }else{
+                    se.iChannel0.source=''
+                    se.iChannel1.source=''
+                    se.iChannel2.source=''
+                }
+
+                time_prev_frame=time_current_frame
             });
         }
     }
 
-    property string messageBox:""; //Message holder
-
-    Image {id: texture;visible:false}
 
     property double time_first_frame:Date.now()
+    property double time_fps_start:Date.now()
     property double time_prev_frame:Date.now()
-    Timer {
-        interval: 1000/cfg.fps
-        repeat: true
-        running: true 
-        onTriggered: {
-
-            var time_current_frame=Date.now()
-            se.iTime=(time_current_frame-time_first_frame) /1000.0
-            se.iTimeDelta=(time_current_frame-time_prev_frame)/1000.0
-            se.iFrame+=1
-
-            if(messageBox.length>0){
-                var obj = JSON.parse(messageBox)
-                se.iChannel0.source=obj.wave
-                se.iChannel1.source=obj.spectrum 
-                se.iChannel2.source=obj.max_spectrum 
-            }else{
-                se.iChannel0.source=''
-                se.iChannel1.source=''
-                se.iChannel2.source=''
-            }
-
-            time_prev_frame=time_current_frame
-        }
-    }
 
     readonly property string startBackEnd:{
         var cmd='sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '

@@ -7,10 +7,8 @@ HISTORY_LENGTH = 32
 class Spectrum:
     def __init__(
             self,
-            source,
             fft_size=44100 // 60,
     ):
-        self.sample = source
         self.fft_size = fft_size
 
         self.history = np.zeros((self.fft_size * HISTORY_LENGTH, NUM_CHANNEL), dtype='int16')
@@ -77,7 +75,6 @@ class Spectrum:
             data_history,
             bassResolutionLevel,
             reduceBass=False,
-            **args,
     ):
         if np.max(data_history) == 0:
             return None

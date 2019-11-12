@@ -17,6 +17,7 @@ Kirigami.FormLayout {
     readonly property bool vertical: plasmoid.formFactor == PlasmaCore.Types.Vertical || (plasmoid.formFactor == PlasmaCore.Types.Planar && plasmoid.height > plasmoid.width)
 
     property alias cfg_fps: fps.value
+    property alias cfg_showFps: showFps.checked
 
     property string cfg_shader
     property alias cfg_randomShader: randomShader.checked
@@ -56,11 +57,16 @@ Kirigami.FormLayout {
 
     QQC2.SpinBox {
         id:fps
-        Kirigami.FormData.label:i18nc("@label:spinbox","Maximum fps:")
+        Kirigami.FormData.label:i18nc("@label:spinbox","Maximum FPS:")
         editable:true
         stepSize:1
         from:1
         to:300
+    }
+
+    QQC2.CheckBox {
+        id:showFps
+        text: i18nc("@option:radio", "Show FPS")
     }
 
     Item {

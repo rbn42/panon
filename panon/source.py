@@ -9,34 +9,19 @@ def binary2numpy(data, num_channel):
 
 
 class PyaudioSource:
-    def __init__(self, channel_count, sample_rate, device_index, chunk=1024):
+    def __init__(self, channel_count, sample_rate, device_index, fps):
         self.channel_count = channel_count
         self.sample_rate = sample_rate
-        self.chunk = chunk
+        self.chunk = self.sample_rate // fps
         if device_index is not None:
             device_index = int(device_index)
         self.device_index = device_index
 
         self.start()
 
-    def readlatest(self, expect_size, max_size=1000000):
-        size = self.stream.get_read_available()
-        #stream.get_read_available() may not work properly in some situations.
-        #https://github.com/rbn42/panon/issues/4
-        if size < 1:
-            #Fall back to normal mode.
-            result = self.stream.read(expect_size)[-max_size:]
-        else:
-            #Read latest data.
-            result = b''
-            while size > 0:
-                result += self.stream.read(size)
-                result = result[-max_size:]
-                size = self.stream.get_read_available()
+    def read(self):
+        result = self.stream.read(self.chunk)
         return binary2numpy(result, self.channel_count)
-
-    def stop(self):
-        self.stream.close()
 
     def start(self):
         import pyaudio
@@ -54,30 +39,20 @@ class PyaudioSource:
 class FifoSource:
     def __init__(self, channel_count, sample_rate, fifo_path, fps):
         self.channel_count = channel_count
-        self.sample_rate = sample_rate
-        self.fps = fps
         self.fifo_path = fifo_path
+        self.blocksize = sample_rate // fps * channel_count * 2    #int16  44100:16:2
 
         self.start()
 
-    def readlatest(self, expect_size, max_size=1000000):
-        data = self.stream.read(self.sample_rate // self.fps * self.channel_count * 2)    #int16 requires 2 bytes
+    def read(self):
+        data = self.stream.read(self.blocksize)
         if data is None:
             return None
         return binary2numpy(data, self.channel_count)
 
-    def stop(self):
-        self.stream.close()
-
     def start(self):
-        import fcntl
         import os
         self.stream = open(self.fifo_path, 'rb')
-        # nonblock
-        fd = self.stream.fileno()
-        flag = fcntl.fcntl(fd, fcntl.F_GETFL)
-        fcntl.fcntl(fd, fcntl.F_SETFL, flag | os.O_NONBLOCK)
-        flag = fcntl.fcntl(fd, fcntl.F_GETFL)
 
 
 class SounddeviceSource:
@@ -111,25 +86,21 @@ class SounddeviceSource:
 
 
 class SoundCardSource:
-    def __init__(self, channel_count, sample_rate, device_id, blocksize):
+    def __init__(self, channel_count, sample_rate, device_id, fps):
         self.channel_count = channel_count
         self.sample_rate = sample_rate
         self.device_id = device_id
-        self.blocksize = blocksize
-
+        self.blocksize = self.sample_rate // fps
         self.start()
 
-    def readlatest(self, expect_size, max_size=1000000):
+    def read(self):
         if self.device_id == 'all':
-            data = [stream.record(expect_size) for stream in self.streams]
+            data = [stream.record(self.blocksize) for stream in self.streams]
             data = sum(data) / len(data)
         else:
-            data = self.stream.record(expect_size)
+            data = self.stream.record(self.blocksize)
         data = np.asarray(data * (2**16), dtype='int16')
         return data
-
-    def stop(self):
-        self.stream.close()
 
     def start(self):
         from . import pulseaudio as sc

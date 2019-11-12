@@ -27,7 +27,7 @@ Kirigami.FormLayout {
 
 
     RowLayout {
-        Kirigami.FormData.label: "Back end:"
+        Kirigami.FormData.label: "Back-end:"
         Layout.fillWidth: true
 
         QQC2.ComboBox {

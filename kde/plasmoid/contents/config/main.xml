@@ -18,6 +18,9 @@
     <entry name="fps" type="Int">
       <default>30</default>
     </entry>
+    <entry name="showFps" type="Bool">
+      <default>false</default>
+    </entry>
     <entry name="deviceIndex" type="Int">
       <default>-1</default>
     </entry>

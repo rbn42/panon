@@ -8,7 +8,7 @@ ConfigModel {
          source: "config/ConfigGeneral.qml"
     }
     ConfigCategory {
-         name: i18n('Backend')
+         name: i18n('Back-end')
          icon: 'preferences-desktop-sound'
          source: 'config/ConfigBackend.qml'
     }
