@@ -57,11 +57,15 @@ Kirigami.FormLayout {
 
     QQC2.SpinBox {
         id:fps
-        Kirigami.FormData.label:i18nc("@label:spinbox","Maximum FPS:")
+        Kirigami.FormData.label:i18nc("@label:spinbox","FPS:")
         editable:true
         stepSize:1
         from:1
         to:300
+    }
+
+    QQC2.Label {
+        text: "Lower FPS saves CPU and battries."
     }
 
     QQC2.CheckBox {
@@ -90,7 +94,7 @@ Kirigami.FormLayout {
     QQC2.SpinBox {
         id: preferredWidth
 
-        Kirigami.FormData.label: vertical ? i18nc("@label:spinbox", "Preferred height:"):i18nc("@label:spinbox", "Preferred width:")
+        Kirigami.FormData.label: vertical ? i18nc("@label:spinbox", "Height:"):i18nc("@label:spinbox", "Width:")
         editable:true
         stepSize:10
 

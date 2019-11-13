@@ -16,7 +16,7 @@
       <default>1</default>
     </entry>
     <entry name="fps" type="Int">
-      <default>30</default>
+      <default>60</default>
     </entry>
     <entry name="showFps" type="Bool">
       <default>false</default>
