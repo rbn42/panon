@@ -3,23 +3,21 @@ import QtWebSockets 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import "utils.js" as Utils
 Item{
+
     readonly property var cfg:plasmoid.configuration
 
-    property variant messageBox:[]
+    property variant queue
 
     WebSocketServer {
         id: server
         listen: true
         onClientConnected: {
             webSocket.onTextMessageReceived.connect(function(message) {
-                if(messageBox.length<5)
-                    messageBox.push(message)
+                queue.push(message)
                 return
             });
         }
     }
-
-
 
     readonly property string startBackEnd:{
         var cmd='sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '
@@ -43,6 +41,5 @@ Item{
         engine: 'executable'
         connectedSources: [startBackEnd]
     }
-
 
 }

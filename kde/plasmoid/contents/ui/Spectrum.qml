@@ -103,10 +103,11 @@ Item{
         property double iTimeDelta
         property variant iResolution:root.gravity<=2?Qt.vector3d(se.width,se.height,0):Qt.vector3d(se.height,se.width,0)
         property double iFrame:0
-        property variant iChannel0:Image{visible:false}
-        property variant iChannel1:Image{visible:false}
-        property variant iChannel2:Image{visible:false}
-        property variant iChannel3:Image{visible:false}
+        property variant iChannel0
+        property variant iChannel1
+        property variant iChannel2
+        property variant iChannel3
+
 
         property int gravity:root.gravity
         property int spectrum_width:iChannel1.width
@@ -132,45 +133,32 @@ Item{
 
     ShaderSource{id:shaderSource}
 
-    WsConnection{id:wsconn}
-
-
-    Timer {
-        interval: 1000/(1+cfg.fps)
-        repeat: true
-        running: true 
-        onTriggered: {
-                var time_current_frame=Date.now()
-                var deltatime=(time_current_frame-time_prev_frame)/1000.0
-
-                if(wsconn.messageBox.length<1)
-                    return
-                var message=wsconn.messageBox.shift()
-
-                se.iTime=(time_current_frame-time_first_frame) /1000.0
-                se.iTimeDelta=deltatime
-                se.iFrame+=1
-                if(cfg.showFps)
-                    if(se.iFrame%30==1){
-                        console_output.text='fps:'+(1000*30/(time_current_frame-time_fps_start))
-                        time_fps_start=time_current_frame
-                    }
-
-                if(message.length>0){
-                    var obj = JSON.parse(message)
-                    se.iChannel0.source=obj.wave
-                    se.iChannel1.source=obj.spectrum 
-                    se.iChannel2.source=obj.max_spectrum 
-                }else{
-                    se.iChannel0.source=''
-                    se.iChannel1.source=''
-                    se.iChannel2.source=''
-                }
-
-                time_prev_frame=time_current_frame
+    WsConnection{
+        queue:MessageQueue{
+            onImgsReadyChanged:{
+                draw_se(imgsReady.w,imgsReady.s,imgsReady.m)
+            }
         }
     }
 
+    function draw_se(w,s,m){
+        var time_current_frame=Date.now()
+        var deltatime=(time_current_frame-time_prev_frame)/1000.0
+        se.iTime=(time_current_frame-time_first_frame) /1000.0
+        se.iTimeDelta=deltatime
+        se.iFrame+=1
+        if(cfg.showFps)
+            if(se.iFrame%30==1){
+                console_output.text='fps:'+(1000*30/(time_current_frame-time_fps_start))
+                time_fps_start=time_current_frame
+            }
+
+        se.iChannel0=w
+        se.iChannel1=s
+        se.iChannel2=m
+
+        time_prev_frame=time_current_frame
+    }
 
     property double time_first_frame:Date.now()
     property double time_fps_start:Date.now()
