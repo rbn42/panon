@@ -13,3 +13,8 @@ function read_shader(name) {
     var path = get_root() + '/shaders/' + name
     return 'cat "' + path + '"'
 }
+
+function random(seed) {
+    var x = Math.sin(seed*1000) * 10000;
+    return x - Math.floor(x);
+}

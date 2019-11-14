@@ -5,7 +5,7 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name=""/>
 
-  <group name="General">
+  <group name="Backend">
     <entry name="reduceBass" type="Bool">
       <default>true</default>
     </entry>
@@ -14,12 +14,6 @@
     </entry>
     <entry name="bassResolutionLevel" type="Int">
       <default>1</default>
-    </entry>
-    <entry name="fps" type="Int">
-      <default>60</default>
-    </entry>
-    <entry name="showFps" type="Bool">
-      <default>false</default>
     </entry>
     <entry name="deviceIndex" type="Int">
       <default>-1</default>
@@ -39,6 +33,15 @@
       <default>/tmp/mpd.fifo</default>
     </entry>
 
+  </group>
+  <group name="General">
+
+    <entry name="fps" type="Int">
+      <default>60</default>
+    </entry>
+    <entry name="showFps" type="Bool">
+      <default>false</default>
+    </entry>
     <entry name="autoHide" type="Bool">
       <default>false</default>
     </entry>
@@ -55,11 +58,19 @@
       <default>0</default>
     </entry>
 
-    <entry name="randomColor" type="Bool">
+    <entry name="shader" type="String">
+      <default>default.frag</default>
+    </entry>
+
+
+    <entry name="randomShader" type="Bool">
       <default>false</default>
     </entry>
 
-    <entry name="randomShader" type="Bool">
+  </group>
+  <group name="Colors">
+
+    <entry name="randomColor" type="Bool">
       <default>false</default>
     </entry>
 
@@ -68,10 +79,6 @@
     </entry>
     <entry name="colorSpaceHSLuv" type="Bool">
       <default>false</default>
-    </entry>
-
-    <entry name="shader" type="String">
-      <default>default.frag</default>
     </entry>
 
     <entry name="hslHueFrom" type="Int">

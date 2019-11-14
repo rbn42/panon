@@ -26,7 +26,7 @@ Kirigami.FormLayout {
 
     QQC2.CheckBox {
         id: randomColor
-        text: i18nc("@option:check", "Randomize colors (on startup)")
+        text: i18nc("@option:check", "Randomize colors (on clicked)")
     }
     QQC2.ButtonGroup { id: colorGroup }
 
