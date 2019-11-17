@@ -21,7 +21,7 @@ Item{
 
     }
 
-    PreloadingTextures{id:nt}
+    PreloadingTextures{id:nt;audioAvailable:false}
 
     PreloadingTextures{id:pt0;onReadyChanged:{
         if(ready){

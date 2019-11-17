@@ -39,7 +39,7 @@ Item{
         return 1
     }
 
-    property int animatedMinimum:(!cfg.autoHide) || se.iChannel2.source.length>0 ? cfg.preferredWidth:0 
+    property int animatedMinimum:(!cfg.autoHide) || audioAvailable? cfg.preferredWidth:0 
 
     Layout.fillWidth: vertical? false:cfg.autoExtend 
     Layout.fillHeight: vertical? cfg.autoExtend :false
@@ -146,12 +146,13 @@ Item{
     WsConnection{
         queue:MessageQueue{
             onImgsReadyChanged:{
-                draw_se(imgsReady.w,imgsReady.s,imgsReady.m)
+                draw_se(imgsReady.w,imgsReady.s,imgsReady.m,imgsReady.audioAvailable)
             }
         }
     }
 
-    function draw_se(w,s,m){
+    function draw_se(w,s,m,avail){
+        audioAvailable=avail
         var time_current_frame=Date.now()
         var deltatime=(time_current_frame-time_prev_frame)/1000.0
         se.iTime=(time_current_frame-time_first_frame) /1000.0
@@ -169,6 +170,8 @@ Item{
 
         time_prev_frame=time_current_frame
     }
+
+    property bool audioAvailable
 
     property double time_first_frame:Date.now()
     property double time_fps_start:Date.now()

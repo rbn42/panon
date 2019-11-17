@@ -8,4 +8,5 @@ Item{
 
     readonly property bool ready: (w.status!=Image.Loading) && (s.status!=Image.Loading) && (m.status!=Image.Loading)
     property bool used:true
+    property bool audioAvailable:true
 }
