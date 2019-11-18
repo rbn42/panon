@@ -20,7 +20,7 @@ Item{
     Layout.preferredWidth: vertical ?-1: animatedMinimum
     Layout.preferredHeight: vertical ?  animatedMinimum:-1
     Layout.maximumWidth:cfg.autoHide?Layout.preferredWidth:-1
-    Layout.maximumHeight:cfg.autoHide?Layout.preferredHeight:-1 
+    Layout.maximumHeight:cfg.autoHide?Layout.preferredHeight:-1
 
     // Gravity property: Center(0), North (1), West (4), East (3), South (2)
     readonly property int gravity:{
@@ -39,9 +39,9 @@ Item{
         return 1
     }
 
-    property int animatedMinimum:(!cfg.autoHide) || audioAvailable? cfg.preferredWidth:0 
+    property int animatedMinimum:(!cfg.autoHide) || audioAvailable? cfg.preferredWidth:0
 
-    Layout.fillWidth: vertical? false:cfg.autoExtend 
+    Layout.fillWidth: vertical? false:cfg.autoExtend
     Layout.fillHeight: vertical? cfg.autoExtend :false
 
     property double random_seed:Math.random()
@@ -132,6 +132,7 @@ Item{
         id:console_output
         anchors.fill: parent
         visible:cfg.showFps
+        color: theme.textColor
     }
 
     MouseArea {
@@ -160,7 +161,7 @@ Item{
         se.iFrame+=1
         if(cfg.showFps)
             if(se.iFrame%30==1){
-                console_output.text='fps:'+(1000*30/(time_current_frame-time_fps_start))
+                console_output.text='fps:'+ Math.round(1000*30/(time_current_frame-time_fps_start))
                 time_fps_start=time_current_frame
             }
 
