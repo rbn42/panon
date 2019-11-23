@@ -1,19 +1,16 @@
-
 import QtQuick 2.0
-import QtQuick.Layouts 1.1
-
-
 import org.kde.plasma.plasmoid 2.0
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
 
-import org.kde.plasma.components 2.0 as Components
 Item {
-    id: root
 
+    readonly property var cfg:plasmoid.configuration
 
     Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
 
-    Plasmoid.compactRepresentation: Spectrum{
-    }
+    Plasmoid.compactRepresentation: Spectrum{}
+
+    Plasmoid.toolTipItem: cfg.hideTooltip?tooltipitem:null
+
+    Item{id:tooltipitem}
+
 }

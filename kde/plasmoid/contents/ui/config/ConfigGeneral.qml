@@ -18,6 +18,7 @@ Kirigami.FormLayout {
 
     property alias cfg_fps: fps.value
     property alias cfg_showFps: showFps.checked
+    property alias cfg_hideTooltip: hideTooltip.checked
 
     property string cfg_shader
     property alias cfg_randomShader: randomShader.checked
@@ -121,8 +122,10 @@ Kirigami.FormLayout {
             model:  ['Center','North','South','East','West']
         }
     }
-    Item {
-        Kirigami.FormData.isSection: true
+
+    QQC2.CheckBox {
+        id:hideTooltip
+        text: i18nc("@option:check", "Hide tooltip")
     }
 
     QQC2.Label {

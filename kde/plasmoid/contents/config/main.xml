@@ -58,6 +58,10 @@
       <default>0</default>
     </entry>
 
+    <entry name="hideTooltip" type="Bool">
+      <default>true</default>
+    </entry>
+
     <entry name="shader" type="String">
       <default>default.frag</default>
     </entry>
