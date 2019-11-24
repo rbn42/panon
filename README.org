@@ -31,13 +31,13 @@ A Different Audio Spectrum Analyzer for KDE Plasma
    
 *** Arch Linux
 #+BEGIN_SRC sh
-sudo pacman -S qt5-websockets qt5-3d \
+sudo pacman -S qt5-websockets \
     python-docopt python-numpy python-pillow python-pyaudio python-cffi python-websockets 
 #+END_SRC
 
 *** Ubuntu
 #+BEGIN_SRC sh
-sudo apt-get install qml-module-qt3d qml-module-qt-websockets \
+sudo apt-get install qml-module-qt-websockets \
     python3-docopt python3-numpy python3-pyaudio python3-cffi python3-websockets python3-pil 
 #+END_SRC
 

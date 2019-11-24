@@ -30,7 +30,7 @@ from docopt import docopt
 arguments = docopt(__doc__)
 if arguments['--debug']:
     import time
-    time.sleep(30)
+    #time.sleep(30)
 
 server_port = int(arguments['<port>'])
 cfg_fps = int(arguments['--fps'])

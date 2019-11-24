@@ -1,6 +1,4 @@
 import QtQuick 2.0
-import Qt3D.Core 2.0
-import Qt3D.Render 2.0
 import QtQuick.Layouts 1.1
 
 import org.kde.plasma.plasmoid 2.0
