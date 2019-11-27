@@ -19,10 +19,23 @@ md5sums=('SKIP')
 
 package() {
   cd "${srcdir}/${_basename}"
+
+  # Download SoundCard and hsluv-glsl
+  git submodule update --init
+
+  # Remove shader examples
   rm ./kde/plasmoid/contents/shaders/example-*
+
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/${_basename%-*}/LICENSE"
+  install -Dm644 third_party/hsluv-glsl/LICENCE.md "$pkgdir/usr/share/licenses/${_basename%-*}/hsluv-glsl/LICENCE.md"
+  install -Dm644 third_party/SoundCard/LICENSE "$pkgdir/usr/share/licenses/${_basename%-*}/SoundCard/LICENSE"
 
   cd kde
   kpackagetool5 -p "$pkgdir/usr/share/plasma/plasmoids/" -t Plasma/Applet -i plasmoid
-  rm "$pkgdir/usr/share/plasma/plasmoids/kpluginindex.json"
+
+  # If an index is generated, remove it.
+  path_index="$pkgdir/usr/share/plasma/plasmoids/kpluginindex.json"
+  if [ -e "$path_index" ];then
+    rm "$path_index"
+  fi
 }

@@ -31,7 +31,7 @@ PlasmaCore.DataSource {
 
     engine: 'executable'
     connectedSources: [
-        Utils.read_shader('husl-glsl.fsh'),
+        Utils.read_shader('hsluv-glsl.fsh'),
         Utils.read_shader('utils.fsh'),
         Utils.read_shader('shadertoy-api-head.fsh'),
         Utils.read_shader(shader_name),
@@ -42,7 +42,7 @@ PlasmaCore.DataSource {
     onNewData:{
         if(sourceName==sh_get_shader_list){
             shader_list=data.stdout.substr(0,data.stdout.length-1).split('\n')
-        }else if(sourceName==Utils.read_shader('husl-glsl.fsh'))
+        }else if(sourceName==Utils.read_shader('hsluv-glsl.fsh'))
             src_head1=data.stdout
         else if(sourceName==Utils.read_shader('utils.fsh'))
             src_head2=data.stdout

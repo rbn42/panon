@@ -1,3 +1,6 @@
 [submodule "SoundCard"]
-	path = SoundCard
+	path = third_party/SoundCard
 	url = https://github.com/bastibe/SoundCard
+[submodule "hsluv-glsl"]
+	path = third_party/hsluv-glsl
+	url = https://github.com/williammalo/hsluv-glsl

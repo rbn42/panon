@@ -1,1 +1,1 @@
-../SoundCard/soundcard/pulseaudio.py.h
+../third_party/SoundCard/soundcard/pulseaudio.py.h
