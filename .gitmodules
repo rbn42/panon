@@ -1,0 +1,3 @@
+[submodule "SoundCard"]
+	path = SoundCard
+	url = https://github.com/bastibe/SoundCard
