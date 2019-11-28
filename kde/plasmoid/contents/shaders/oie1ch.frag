@@ -17,8 +17,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     fragColor=vec4(0,0,0,0);
 
     bool draw=false;
-    if(p1+1>=fragCoord.y&&fragCoord.y>=p2-1)draw=true;
-    if(p1-1<=fragCoord.y&&fragCoord.y<=p2+1)draw=true;
+    if(p1+2>=fragCoord.y&&fragCoord.y>=p2-0)draw=true;
+    if(p1-0<=fragCoord.y&&fragCoord.y<=p2+2)draw=true;
 
 
     if(draw) {
