@@ -15,9 +15,9 @@ Item{
         imgsLoading.used=false
         var obj = JSON.parse(message)
 
-        imgsLoading.s.source=obj.spectrum
-        imgsLoading.w.source=obj.wave
-        imgsLoading.m.source=obj.max_spectrum
+        imgsLoading.s.source = 'data:' + obj.spectrum
+        imgsLoading.w.source = 'data:' + obj.wave
+        imgsLoading.m.source = 'data:' + obj.max_spectrum
 
     }
 
