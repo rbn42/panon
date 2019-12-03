@@ -107,6 +107,15 @@ plasmoidviewer --applet ./plasmoid/
 In plasmoidviewer, go to the configuration window and pick your own shader. 
 Then plasmoidviewer will run your shader and show the errors, if exist, in the console.
 
+** Background transparency
+To achieve background transparency, after installing panon, go to ~/.local/share/plasma/plasmoids/panon/contents/ui/main.qml in your home directory,
+alter the following part and add the line marked below:
+
+#+BEGIN_SRC sh
+    Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
+ ++ Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
+#+END_SRC
+
 ** Troubleshooting
 ** Credits
 | Files                                                                                                               | Source                                                                                           | Licensed under                                       |
@@ -114,10 +123,3 @@ Then plasmoidviewer will run your shader and show the errors, if exist, in the c
 | =hsv2rgb= in [[file:kde/plasmoid/contents/shaders/utils.fsh][utils.fsh]]                                            | copied from [[https://gist.github.com/patriciogonzalezvivo/114c1653de9e3da6e1e3][GLSL-color.md]] |                                                      |
 | [[file:kde/plasmoid/contents/shaders/example-shadertoy.frag][example-shadertoy.frag]]                               | copied from [[https://www.shadertoy.com/view/lldyDs][shadertoy]]                                 | [[https://www.shadertoy.com/terms][CC BY-NC-SA 3.0]] |
 | [[file:kde/plasmoid/contents/shaders/example-shadertoy-fractal-tiling.frag][example-shadertoy-fractal-tiling.frag]] | copied from [[example-shadertoy-fractal-tiling.frag][shadertoy]]                                 | [[https://www.shadertoy.com/terms][CC BY-NC-SA 3.0]] |
-
-** Background transparency
-To achieve background transparency, after installing panon, go to ~/.local/share/plasma/plasmoids/panon/contents/ui/main.qml in your home directory,
-alter the following part and add the line marked below:
-
-    Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
- ++ Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
