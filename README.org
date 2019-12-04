@@ -107,6 +107,15 @@ plasmoidviewer --applet ./plasmoid/
 In plasmoidviewer, go to the configuration window and pick your own shader. 
 Then plasmoidviewer will run your shader and show the errors, if exist, in the console.
 
+** Background transparency
+To achieve background transparency, after installing panon, go to ~/.local/share/plasma/plasmoids/panon/contents/ui/main.qml in your home directory,
+alter the following part and add the line marked below:
+
+#+BEGIN_SRC sh
+    Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
+ ++ Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
+#+END_SRC
+
 ** Troubleshooting
 ** Credits
 | Files                                                                                                               | Source                                                                                           | Licensed under                                       |
