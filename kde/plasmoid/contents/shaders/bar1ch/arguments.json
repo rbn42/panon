@@ -1,0 +1,15 @@
+[
+    {
+        "name":"bar_width",
+        "default":5,
+        "type":"int"
+    },{
+        "name":"gap_width",
+        "default":2,
+        "type":"int"
+    },{
+        "name":"decay",
+        "default":0.003,
+        "type":"double"
+    }
+]

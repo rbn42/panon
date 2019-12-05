@@ -10,26 +10,40 @@ PlasmaCore.DataSource {
 
     property bool ready:false
 
-    readonly property string image_shader_source:build_source(['hsluv-glsl.fsh','utils.fsh','shadertoy-api-head.fsh',image_shader_name,'shadertoy-api-foot.fsh'],image_shader_name)
-    readonly property string buffer_shader_source:build_source(['shadertoy-api-head.fsh',buffer_shader_name,'shadertoy-api-foot-buffer.fsh'],buffer_shader_name)
+    readonly property string image_shader_source:build_source(['hsluv-glsl.fsh','utils.fsh','shadertoy-api-head.fsh',image_shader_name,'shadertoy-api-foot.fsh'],image_shader_name,arguments_json_name)
+    readonly property string buffer_shader_source:build_source(['shadertoy-api-head.fsh',buffer_shader_name,'shadertoy-api-foot-buffer.fsh'],buffer_shader_name,arguments_json_name)
 
     readonly property string image_shader_name:{
         if(shader_name.endsWith('.frag'))return shader_name
         if(shader_name.endsWith('/'))return shader_name+'image.frag'
         return ''
     }
-    readonly property string buffer_shader_name:{
-        if(shader_name.endsWith('/'))return shader_name+'buffer.frag'
-        return ''
-    }
+    readonly property string buffer_shader_name:shader_name.endsWith("/")?shader_name+"buffer.frag":""
+    readonly property string arguments_json_name:shader_name.endsWith("/")?shader_name+"arguments.json":""
 
-    function build_source(files,main_file){
+    function build_source(files,main_file,arguments_json_file){
         if(!ready)return ""
         if(!(main_file in files_content))return ""
         // Extract GLSL version
         var src_glsl_version=files_content[main_file].substr(0,files_content[main_file].indexOf("\n"))
         var content=files.reduce(function(acc,n){return acc+files_content[n]},"")
         content=content.replace("\n#version","\n////")
+
+        if(arguments_json_file in files_content){
+            var arguments_json=JSON.parse(files_content[arguments_json_file])
+            content=content.split("\n")
+            for(var index=0;index<4;index++)
+                if(arguments_json.length>index)content=content.map(function(s){
+                    var value
+                    if(cfg.randomVisualEffect)
+                        value=arguments_json[index]["default"]
+                    else
+                        value=[cfg.effectArgValue0,cfg.effectArgValue1,cfg.effectArgValue2,cfg.effectArgValue3][index]
+                    return s.startsWith('#define ')?s.replace("$"+arguments_json[index].name,value):s
+                })
+            content=content.join("\n")
+        }
+
         return src_glsl_version+"\n"+content
     }
 

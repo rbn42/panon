@@ -1,13 +1,14 @@
 #version 130
 
+#define pixel_fill $bar_width
+#define pixel_empty $gap_width
+
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     int pixel_x= int( fragCoord.x);
     int pixel_y= int( fragCoord.y);
 
     float h=fragCoord.y/iResolution.y;
 
-    int pixel_fill=5;
-    int pixel_empty=2;
 
     fragColor=vec4(0,0,0,0);
     if(pixel_x%(pixel_fill+pixel_empty)<pixel_fill) {

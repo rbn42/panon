@@ -3,9 +3,14 @@ import org.kde.plasma.configuration 2.0
 
 ConfigModel {
     ConfigCategory {
-         name: i18nc("@title", "General")
+         name: i18nc("@title","General")
          icon: "applications-multimedia"
          source: "config/ConfigGeneral.qml"
+    }
+    ConfigCategory {
+         name: i18nc("@title", "Visual Effects")
+         icon: "applications-graphics"
+         source: "config/ConfigEffect.qml"
     }
     ConfigCategory {
          name: i18n('Back-end')

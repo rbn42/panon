@@ -5,8 +5,6 @@ import QtQuick.Controls 2.0 as QQC2
 import org.kde.kirigami 2.3 as Kirigami
 import org.kde.plasma.core 2.0 as PlasmaCore
 
-import "utils.js" as Utils
-
 Kirigami.FormLayout {
     id:root
 
@@ -20,41 +18,12 @@ Kirigami.FormLayout {
     property alias cfg_showFps: showFps.checked
     property alias cfg_hideTooltip: hideTooltip.checked
 
-    property string cfg_visualEffect
-    property alias cfg_randomVisualEffect: randomShader.checked
-
     property alias cfg_preferredWidth: preferredWidth.value
     property alias cfg_autoExtend: autoExtend.checked
     property alias cfg_autoHide: autoHideBtn.checked
     property alias cfg_animateAutoHiding: animateAutoHiding.checked
 
     property alias cfg_gravity:gravity.currentIndex
-
-    property string str_options: ''
-
-    RowLayout {
-        Kirigami.FormData.label: "Effect:"
-        Layout.fillWidth: true
-
-        QQC2.ComboBox {
-            id:shader
-            model: ListModel {
-                id: shaderOptions
-            }
-            onCurrentIndexChanged:cfg_visualEffect= shaderOptions.get(currentIndex).text
-            enabled:!randomShader.checked
-        }
-    }
-
-    QQC2.CheckBox {
-        id: randomShader
-        text: i18nc("@option:check", "Random effect (on startup)")
-    }
-    QQC2.Label {
-        visible:randomShader.checked
-        text:"Unwanted effects can be removed <br/>from <a href='file:///"+Utils.get_root()+"/shaders/' >here</a>."
-        onLinkActivated: Qt.openUrlExternally(link)
-    }
 
     QQC2.SpinBox {
         id:fps
@@ -128,30 +97,4 @@ Kirigami.FormLayout {
         text: i18nc("@option:check", "Hide tooltip")
     }
 
-    QQC2.Label {
-        id:cons
-        text: str_options
-    }
-
-    readonly property string sh_get_devices:'sh '+'"'+Utils.get_scripts_root()+'/get-devices.sh'+'" '
-    readonly property string sh_get_styles:'sh '+'"'+Utils.get_scripts_root()+'/get-shaders.sh'+'" '
-
-    PlasmaCore.DataSource {
-        //id: getOptionsDS
-        engine: 'executable'
-        connectedSources: [
-            sh_get_styles
-        ]
-        onNewData: {
-            if(sourceName==sh_get_devices){
-            }else if(sourceName==sh_get_styles){
-                var lst=data.stdout.substr(0,data.stdout.length-1).split('\n')
-                for(var i in lst)
-                    shaderOptions.append({text:lst[i]})
-                for(var i=0;i<lst.length;i++)
-                    if(shaderOptions.get(i).text==cfg_visualEffect)
-                        shader.currentIndex=i;
-            }
-        }
-    }
 }

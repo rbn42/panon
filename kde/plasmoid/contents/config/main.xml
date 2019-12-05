@@ -5,7 +5,24 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name=""/>
 
+  <group name="Effect">
+
+    <entry name="visualEffect" type="String">
+      <default>default.frag</default>
+    </entry>
+
+    <entry name="randomVisualEffect" type="Bool">
+      <default>false</default>
+    </entry>
+
+    <entry name="effectArgValue0" type="String"></entry>
+    <entry name="effectArgValue1" type="String"></entry>
+    <entry name="effectArgValue2" type="String"></entry>
+    <entry name="effectArgValue3" type="String"></entry>
+
+  </group>
   <group name="Backend">
+
     <entry name="reduceBass" type="Bool">
       <default>true</default>
     </entry>
@@ -62,14 +79,6 @@
       <default>true</default>
     </entry>
 
-    <entry name="visualEffect" type="String">
-      <default>default.frag</default>
-    </entry>
-
-
-    <entry name="randomVisualEffect" type="Bool">
-      <default>false</default>
-    </entry>
 
   </group>
   <group name="Colors">
