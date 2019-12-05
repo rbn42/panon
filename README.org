@@ -15,7 +15,7 @@ A Different Audio Spectrum Analyzer for KDE Plasma
     -  [[#via-command-line][Via Command Line]]
     -  [[#via-aur][Via AUR]]
     -  [[#drag-panon-widget-to-your-panel-eg-latte-dock][Drag panon widget to your panel]]
-  -  [[#shaders][Shaders]]
+  -  [[#visual-effects][Visual Effects]]
     -  [[#debugging-shaders][Debugging Shaders]]
   -  [[#troubleshooting][Troubleshooting]]
   -  [[#credits][Credits]]
@@ -72,32 +72,32 @@ If you want to modify shaders, installing panon as a system package is not a pre
 [[file:../../wiki/plasmoid/step1.png]]
 [[file:../../wiki/plasmoid/step2.png]]
 
-** Shaders
-   
-[[https://gamedevelopment.tutsplus.com/tutorials/a-beginners-guide-to-coding-graphics-shaders--cms-23313][What is a shader? And a turtorial for beginners.]]
+** Visual Effects
 
-Shaders are stored in [[kde/plasmoid/contents/shaders/]]. If you want to modify the shaders, you can start with [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]].
+Visual effects are stored in [[kde/plasmoid/contents/shaders/]]. Providing panon is installed in your home directory, it is the same directory of =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. You can add your own visual effect to this directory.
 
-Providing panon is installed in your home directory, you can add your own shader files to =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. Panon can detect and load shaders in this folder. A visual effect may consists only a single shader file with its name ended with =.frag=. Or it consists a folder with 2 shader files, =image.frag= and =buffer.frag=, in it.
+A visual effect may consist a single shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or 2 shader files =image.frag= and =buffer.frag=, like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]]. The single shader file, or =image.frag=, is the main shader. It produces the visual effect of the applet. =buffer.frag= produces buffer data =iChannel2=, which is explained below.
 
 *** Shader API and Shadertoy.com
+
+[[https://gamedevelopment.tutsplus.com/tutorials/a-beginners-guide-to-coding-graphics-shaders--cms-23313][What is a shader? And a turtorial for beginners.]]
+
 Shadertoy.com is a cross-browser online community and tool for creating and sharing shaders through WebGL, from where you can find many wonderful works shared by kind people. By default, these works are licensed under [[https://www.shadertoy.com/terms][a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License]]. And [[https://www.shadertoy.com/view/Md23DV][here]] is an interactive tutorial for shadertoy.com.
 
-Panon's shader API is designed to be similar to shadertoy.com. Many of the works can be copied directly to panon, providing you add =#version 130= to the shader file's first line. But all these works were designed to show in browsers, so they won't look good in tiny space like a panel. [[file:kde/plasmoid/contents/shaders/example-shadertoy.frag][example-shadertoy.frag]] is such an example.
+Panon's shader API is designed to be similar to shadertoy.com. Many of the works can be copied directly to panon, providing you add =#version 130= to the shader file's first line. [[file:kde/plasmoid/contents/shaders/example-shadertoy.frag][example-shadertoy.frag]] is such an example. But all these works were designed to show in browsers, so they won't look good in tiny space like a panel.
 
-Currently, these shadertoy-like uniforms are provided,
-| Name        | Description                                                                                                     |
-|-------------+-----------------------------------------------------------------------------------------------------------------|
-| iResolution | Width and heigh of the applet                                                                                   |
-| iTime       |                                                                                                                 |
-| iTimeDelta  |                                                                                                                 |
-| iFrame      |                                                                                                                 |
-| iMouse      | Mouse position                                                                                                  |
-| iChannel0   | Wave data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel.     |
-| iChannel1   | Spectrum data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel. |
-| iChannel2   | Buffer: Output of buffer.frag, has the same width and height of the applet.                                     |
-
-To use =iChannel2=, you need to create a folder in =shaders/= like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]]. Then rename the original shader file =image.frag=. And create another shader file =buffer.frag=, to produce the buffer data. =buffer.frag= can access the uniforms above as =image.frag= can. 
+These shadertoy-like uniforms are provided. 
+| Uniform Name | Description                                                                                                     |
+|--------------+-----------------------------------------------------------------------------------------------------------------|
+| iResolution  | Width and heigh of the applet                                                                                   |
+| iTime        |                                                                                                                 |
+| iTimeDelta   |                                                                                                                 |
+| iFrame       |                                                                                                                 |
+| iMouse       | Mouse position                                                                                                  |
+| iChannel0    | Wave data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel.     |
+| iChannel1    | Spectrum data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel. |
+| iChannel2    | Buffer data: Output of =buffer.frag=, has the same width and height of the applet.                              |
+Both =image.frag= (or the single main shader) and =buffer.frag= can access these uniforms.
 
 *** Debugging Shaders
 

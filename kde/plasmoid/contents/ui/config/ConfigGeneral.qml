@@ -20,8 +20,8 @@ Kirigami.FormLayout {
     property alias cfg_showFps: showFps.checked
     property alias cfg_hideTooltip: hideTooltip.checked
 
-    property string cfg_shader
-    property alias cfg_randomShader: randomShader.checked
+    property string cfg_visualEffect
+    property alias cfg_randomVisualEffect: randomShader.checked
 
     property alias cfg_preferredWidth: preferredWidth.value
     property alias cfg_autoExtend: autoExtend.checked
@@ -33,7 +33,7 @@ Kirigami.FormLayout {
     property string str_options: ''
 
     RowLayout {
-        Kirigami.FormData.label: "Shader:"
+        Kirigami.FormData.label: "Effect:"
         Layout.fillWidth: true
 
         QQC2.ComboBox {
@@ -41,18 +41,18 @@ Kirigami.FormLayout {
             model: ListModel {
                 id: shaderOptions
             }
-            onCurrentIndexChanged:cfg_shader= shaderOptions.get(currentIndex).text
+            onCurrentIndexChanged:cfg_visualEffect= shaderOptions.get(currentIndex).text
             enabled:!randomShader.checked
         }
     }
 
     QQC2.CheckBox {
         id: randomShader
-        text: i18nc("@option:check", "Random shader (on startup)")
+        text: i18nc("@option:check", "Random effect (on startup)")
     }
     QQC2.Label {
         visible:randomShader.checked
-        text:"Unwanted shaders can be removed <br/>from <a href='file:///"+Utils.get_root()+"/shaders/' >here</a>."
+        text:"Unwanted effects can be removed <br/>from <a href='file:///"+Utils.get_root()+"/shaders/' >here</a>."
         onLinkActivated: Qt.openUrlExternally(link)
     }
 
@@ -149,7 +149,7 @@ Kirigami.FormLayout {
                 for(var i in lst)
                     shaderOptions.append({text:lst[i]})
                 for(var i=0;i<lst.length;i++)
-                    if(shaderOptions.get(i).text==cfg_shader)
+                    if(shaderOptions.get(i).text==cfg_visualEffect)
                         shader.currentIndex=i;
             }
         }

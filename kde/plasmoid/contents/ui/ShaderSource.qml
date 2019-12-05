@@ -39,7 +39,7 @@ PlasmaCore.DataSource {
     readonly property var files_content:new Map()
 
     property var shader_list:[]
-    readonly property string shader_name:(shader_list.length>0&&cfg.randomShader)?shader_list[parseInt(Math.random()*shader_list.length)]:cfg.shader
+    readonly property string shader_name:(shader_list.length>0&&cfg.randomVisualEffect)?shader_list[parseInt(Math.random()*shader_list.length)]:cfg.visualEffect
 
     readonly property string sh_get_shader_list:'sh '+'"'+Utils.get_scripts_root()+'/get-shaders.sh'+'" '
     readonly property string sh_get_file_list:'sh '+'"'+Utils.get_scripts_root()+'/get-all-shader-files.sh'+'" '

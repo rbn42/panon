@@ -62,12 +62,12 @@
       <default>true</default>
     </entry>
 
-    <entry name="shader" type="String">
+    <entry name="visualEffect" type="String">
       <default>default.frag</default>
     </entry>
 
 
-    <entry name="randomShader" type="Bool">
+    <entry name="randomVisualEffect" type="Bool">
       <default>false</default>
     </entry>
 
