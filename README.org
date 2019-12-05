@@ -78,22 +78,26 @@ If you want to modify shaders, installing panon as a system package is not a pre
 
 Shaders are stored in [[kde/plasmoid/contents/shaders/]]. If you want to modify the shaders, you can start with [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]].
 
-Providing panon is installed in your home directory, you can add your own shader files to =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. Panon can detect and load shaders in this folder. The name of a shader file must be ended with =.frag=.
+Providing panon is installed in your home directory, you can add your own shader files to =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. Panon can detect and load shaders in this folder. A visual effect may consists only a single shader file with its name ended with =.frag=. Or it consists a folder with 2 shader files, =image.frag= and =buffer.frag=, in it.
 
 *** Shader API and Shadertoy.com
-Shadertoy.com is a cross-browser online community and tool for creating and sharing shaders through WebGL, from where you can find many wonderful works shared by kind people. By default, these works are licensed under [[https://www.shadertoy.com/terms][a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License]]. [[https://www.shadertoy.com/view/Md23DV][This]] is an interactive tutorial for shadertoy.com.
+Shadertoy.com is a cross-browser online community and tool for creating and sharing shaders through WebGL, from where you can find many wonderful works shared by kind people. By default, these works are licensed under [[https://www.shadertoy.com/terms][a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License]]. And [[https://www.shadertoy.com/view/Md23DV][here]] is an interactive tutorial for shadertoy.com.
 
 Panon's shader API is designed to be similar to shadertoy.com. Many of the works can be copied directly to panon, providing you add =#version 130= to the shader file's first line. But all these works were designed to show in browsers, so they won't look good in tiny space like a panel. [[file:kde/plasmoid/contents/shaders/example-shadertoy.frag][example-shadertoy.frag]] is such an example.
 
 Currently, these shadertoy-like uniforms are provided,
-| iResolution | width and heigh of the applet |
-| iTime       |                               |
-| iTimeDelta  |                               |
-| iFrame      |                               |
-| iMouse      | mouse position                |
-| iChannel0   | wave                          |
-| iChannel1   | spectrum                      |
-| iChannel2   | recent maximum spectrum       |
+| Name        | Description                                                                                                     |
+|-------------+-----------------------------------------------------------------------------------------------------------------|
+| iResolution | Width and heigh of the applet                                                                                   |
+| iTime       |                                                                                                                 |
+| iTimeDelta  |                                                                                                                 |
+| iFrame      |                                                                                                                 |
+| iMouse      | Mouse position                                                                                                  |
+| iChannel0   | Wave data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel.     |
+| iChannel1   | Spectrum data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel. |
+| iChannel2   | Buffer: Output of buffer.frag, has the same width and height of the applet.                                     |
+
+To use =iChannel2=, you need to create a folder in =shaders/= like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]]. Then rename the original shader file =image.frag=. And create another shader file =buffer.frag=, to produce the buffer data. =buffer.frag= can access the uniforms above as =image.frag= can. 
 
 *** Debugging Shaders
 
@@ -119,6 +123,7 @@ alter the following part and add the line marked below:
 ** Troubleshooting
 ** Credits
 | Files                                                                                                               | Source                                                                                           | Licensed under                                       |
+|---------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+------------------------------------------------------|
 | [[file:panon/source.py][source.py]] and [[file:panon/spectrum.py][spectrum.py]]                                     | adapted from [[https://github.com/ajalt/PyVisualizer][PyVisualizer]]                             |                                                      |
 | =hsv2rgb= in [[file:kde/plasmoid/contents/shaders/utils.fsh][utils.fsh]]                                            | copied from [[https://gist.github.com/patriciogonzalezvivo/114c1653de9e3da6e1e3][GLSL-color.md]] |                                                      |
 | [[file:kde/plasmoid/contents/shaders/example-shadertoy.frag][example-shadertoy.frag]]                               | copied from [[https://www.shadertoy.com/view/lldyDs][shadertoy]]                                 | [[https://www.shadertoy.com/terms][CC BY-NC-SA 3.0]] |

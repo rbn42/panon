@@ -17,7 +17,15 @@ Item{
 
         imgsLoading.s.source = 'data:' + obj.spectrum
         imgsLoading.w.source = 'data:' + obj.wave
-        imgsLoading.m.source = 'data:' + obj.max_spectrum
+
+        if(imgsLoading.ready){
+            var p
+            if(imgsLoading==pt0)p=pt1
+            if(imgsLoading==pt1)p=pt0
+            imgsReady=imgsLoading
+            p.used=true
+            imgsLoading=p
+        }
 
     }
 

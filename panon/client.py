@@ -68,26 +68,20 @@ async def hello():
             wave_hist = spec.updateHistory(latest_wave_data)
             data = spec.computeSpectrum(wave_hist, bassResolutionLevel=bassResolutionLevel, reduceBass=reduceBass)
 
-            spectrum_data, local_max = decay.process(data, wave=False)
-            if spectrum_data is None and (local_max is None or np.max(local_max) < 0.3):
+            spectrum_data = decay.process(data)
+            if spectrum_data is None:
                 await websocket.send('')
             else:
-                if spectrum_data is not None:
-                    spectrum_data = np.clip(spectrum_data[1:] / 3.0, 0, 0.99) * 256
-                    wave_data = wave_hist[-spectrum_data.shape[0]:]
-                    wave_max = np.max(np.abs(wave_data))
-                    wave_data = (wave_data + wave_max) / wave_max / 2 * 256
-                else:
-                    wave_data = None
-                if local_max is not None:
-                    local_max = np.clip(local_max[1:] / 3.0, 0, 0.99) * 256
+                spectrum_data = np.clip(spectrum_data[1:] / 3.0, 0, 0.99) * 256
+                wave_data = wave_hist[-spectrum_data.shape[0]:]
+                wave_max = np.max(np.abs(wave_data))
+                wave_data = (wave_data + wave_max) / wave_max / 2 * 256
+
                 spectrum_data_m = n2s.convert(spectrum_data)
-                spectrum_max_m = n2s.convert(local_max)
                 wave_data_m = n2s.convert(wave_data)
 
                 await websocket.send(json.dumps({
                     'spectrum': spectrum_data_m,
-                    'max_spectrum': spectrum_max_m,
                     'wave': wave_data_m,
                 }))
 

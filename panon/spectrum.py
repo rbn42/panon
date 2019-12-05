@@ -1,13 +1,13 @@
 import numpy as np
 
 NUM_CHANNEL = 2
-HISTORY_LENGTH = 32
+HISTORY_LENGTH = 32 * 8
 
 
 class Spectrum:
     def __init__(
-            self,
-            fft_size=44100 // 60,
+        self,
+        fft_size=44100 // 60,
     ):
         self.fft_size = fft_size
 
@@ -43,14 +43,14 @@ class Spectrum:
         return data_history
 
     def fun(
-            self,
-            data_history,
-            freq_from,
-            freq_to,
-            latency,
-            reduceBass=False,
-            weight_from=None,
-            weight_to=None,
+        self,
+        data_history,
+        freq_from,
+        freq_to,
+        latency,
+        reduceBass=False,
+        weight_from=None,
+        weight_to=None,
     ):
         size = self.fft_size
         freq_from = int(freq_from * latency)
@@ -71,10 +71,10 @@ class Spectrum:
             return result
 
     def computeSpectrum(
-            self,
-            data_history,
-            bassResolutionLevel,
-            reduceBass=False,
+        self,
+        data_history,
+        bassResolutionLevel,
+        reduceBass=False,
     ):
         if np.max(data_history) == 0:
             return None

@@ -19,7 +19,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
         if(h<=max_)
             fragColor=vec4(rgb*1.,1.);
 
-        vec4 sample2= texture(iChannel2, vec2(x,0)) ;
+        vec4 sample2= texelFetch(iChannel2,ivec2(x*iResolution.x,0) , 0);
         int max_2=int(iResolution.y*(sample2.g+sample2.r)/2);
         if((max_2-1)<pixel_y && pixel_y <max_2+1)
             fragColor=vec4(rgb*1.,1.);

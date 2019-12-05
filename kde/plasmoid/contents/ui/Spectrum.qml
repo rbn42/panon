@@ -112,19 +112,41 @@ Item{
         property double iFrame:0
         property variant iChannel0
         property variant iChannel1
-        property variant iChannel2
+        readonly property variant iChannel2:buffer
         property variant iChannel3
 
 
         property int gravity:root.gravity
-        property int spectrum_width:iChannel1.width
-        property int spectrum_height:iChannel1.height
 
         anchors.fill: parent
         blending: true
-        fragmentShader:shaderSource.shader_source
+        fragmentShader:shaderSource.image_shader_source
     }
 
+    ShaderEffectSource {
+        visible:false
+        id:buffer
+        width: se.iResolution.x
+        height: se.iResolution.y
+        recursive :true
+        live:false
+        sourceItem: ShaderEffect {
+            width: se.iResolution.x
+            height: se.iResolution.y
+
+            readonly property double iTime:se.iTime
+            readonly property double iTimeDelta:se.iTimeDelta
+            readonly property variant iResolution:se.iResolution
+            readonly property double iFrame:se.iFrame
+            readonly property variant iChannel0:se.iChannel0
+            readonly property variant iChannel1:se.iChannel1
+            readonly property variant iChannel2:se.iChannel2
+            readonly property variant iChannel3:se.iChannel3
+            readonly property variant iMouse:se.iMouse
+            readonly property int gravity:se.gravity
+            fragmentShader:shaderSource.buffer_shader_source
+        }
+    }
 
     QQC2.Label {
         id:console_output
@@ -145,12 +167,12 @@ Item{
     WsConnection{
         queue:MessageQueue{
             onImgsReadyChanged:{
-                draw_se(imgsReady.w,imgsReady.s,imgsReady.m,imgsReady.audioAvailable)
+                draw_se(imgsReady.w,imgsReady.s,imgsReady.audioAvailable)
             }
         }
     }
 
-    function draw_se(w,s,m,avail){
+    function draw_se(w,s,avail){
         audioAvailable=avail
         var time_current_frame=Date.now()
         var deltatime=(time_current_frame-time_prev_frame)/1000.0
@@ -165,7 +187,7 @@ Item{
 
         se.iChannel0=w
         se.iChannel1=s
-        se.iChannel2=m
+        buffer.scheduleUpdate()
 
         time_prev_frame=time_current_frame
     }

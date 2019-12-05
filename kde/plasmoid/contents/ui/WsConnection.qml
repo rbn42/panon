@@ -34,8 +34,10 @@ Item{
         if(cfg.debugBackend)
             cmd+=' --debug'
         cmd+=' --bass-resolution-level='+cfg.bassResolutionLevel
-        if(cfg.debugBackend)
+        if(cfg.debugBackend){
             console.log('Executing: '+cmd)
+            cmd='echo do nothing'
+        }
         return cmd
     }
 
