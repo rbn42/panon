@@ -31,14 +31,15 @@ PlasmaCore.DataSource {
 
         if(arguments_json_file in files_content){
             var arguments_json=JSON.parse(files_content[arguments_json_file])
+
             content=content.split("\n")
-            for(var index=0;index<4;index++)
+            for(var index=0;index<cfg.effectArgValues.length;index++)
                 if(arguments_json.length>index)content=content.map(function(s){
                     var value
                     if(cfg.randomVisualEffect)
                         value=arguments_json[index]["default"]
                     else
-                        value=[cfg.effectArgValue0,cfg.effectArgValue1,cfg.effectArgValue2,cfg.effectArgValue3][index]
+                        value=cfg.effectArgValues[index]
                     return s.startsWith('#define ')?s.replace("$"+arguments_json[index].name,value):s
                 })
             content=content.join("\n")

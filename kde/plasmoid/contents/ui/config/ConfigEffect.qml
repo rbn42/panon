@@ -16,10 +16,7 @@ Kirigami.FormLayout {
     property string cfg_visualEffect
     property alias cfg_randomVisualEffect: randomShader.checked
 
-    property alias cfg_effectArgValue0:effectArgValue0.text
-    property alias cfg_effectArgValue1:effectArgValue1.text
-    property alias cfg_effectArgValue2:effectArgValue2.text
-    property alias cfg_effectArgValue3:effectArgValue3.text
+    property var cfg_effectArgValues:[]
 
     QQC2.CheckBox {
         id: randomShader
@@ -62,6 +59,8 @@ Kirigami.FormLayout {
         QQC2.TextField {
             id:effectArgValue0
             enabled:!randomShader.checked
+            text:cfg_effectArgValues[0]?cfg_effectArgValues[0]:""
+            onTextChanged:cfg_effectArgValues[0]=text
         }
     }
     RowLayout {
@@ -70,15 +69,18 @@ Kirigami.FormLayout {
         QQC2.TextField {
             id:effectArgValue1
             enabled:!randomShader.checked
+            text:cfg_effectArgValues[1]?cfg_effectArgValues[1]:""
+            onTextChanged:cfg_effectArgValues[1]=text
         }
     }
-
     RowLayout {
         Kirigami.FormData.label: visible?effect_arguments[2]["name"]+":":""
         visible:effect_arguments.length>2
         QQC2.TextField {
             id:effectArgValue2
             enabled:!randomShader.checked
+            text:cfg_effectArgValues[2]?cfg_effectArgValues[2]:""
+            onTextChanged:cfg_effectArgValues[2]=text
         }
     }
     RowLayout {
@@ -87,6 +89,68 @@ Kirigami.FormLayout {
         QQC2.TextField {
             id:effectArgValue3
             enabled:!randomShader.checked
+            text:cfg_effectArgValues[3]?cfg_effectArgValues[3]:""
+            onTextChanged:cfg_effectArgValues[3]=text
+        }
+    }
+    RowLayout {
+        Kirigami.FormData.label: visible?effect_arguments[4]["name"]+":":""
+        visible:effect_arguments.length>4
+        QQC2.TextField {
+            id:effectArgValue4
+            enabled:!randomShader.checked
+            text:cfg_effectArgValues[4]?cfg_effectArgValues[4]:""
+            onTextChanged:cfg_effectArgValues[4]=text
+        }
+    }
+    RowLayout {
+        Kirigami.FormData.label: visible?effect_arguments[5]["name"]+":":""
+        visible:effect_arguments.length>5
+        QQC2.TextField {
+            id:effectArgValue5
+            enabled:!randomShader.checked
+            text:cfg_effectArgValues[5]?cfg_effectArgValues[5]:""
+            onTextChanged:cfg_effectArgValues[5]=text
+        }
+    }
+    RowLayout {
+        Kirigami.FormData.label: visible?effect_arguments[6]["name"]+":":""
+        visible:effect_arguments.length>6
+        QQC2.TextField {
+            id:effectArgValue6
+            enabled:!randomShader.checked
+            text:cfg_effectArgValues[6]?cfg_effectArgValues[6]:""
+            onTextChanged:cfg_effectArgValues[6]=text
+        }
+    }
+    RowLayout {
+        Kirigami.FormData.label: visible?effect_arguments[7]["name"]+":":""
+        visible:effect_arguments.length>7
+        QQC2.TextField {
+            id:effectArgValue7
+            enabled:!randomShader.checked
+            text:cfg_effectArgValues[7]?cfg_effectArgValues[7]:""
+            onTextChanged:cfg_effectArgValues[7]=text
+        }
+    }
+    RowLayout {
+        Kirigami.FormData.label: visible?effect_arguments[8]["name"]+":":""
+        visible:effect_arguments.length>8
+        QQC2.TextField {
+            id:effectArgValue8
+            enabled:!randomShader.checked
+            text:cfg_effectArgValues[8]?cfg_effectArgValues[8]:""
+            onTextChanged:cfg_effectArgValues[8]=text
+        }
+    }
+    RowLayout {
+        Kirigami.FormData.label: visible?effect_arguments[9]["name"]+":":""
+        visible:effect_arguments.length>9
+        QQC2.TextField {
+            id:effectArgValue9
+            enabled:!randomShader.checked
+            text:cfg_effectArgValues[9]?cfg_effectArgValues[9]:""
+            onTextChanged:cfg_effectArgValues[9]=text
         }
     }
 
@@ -124,10 +188,14 @@ Kirigami.FormLayout {
             }else if(sourceName==sh_read_effect_args){
                 if(data.stdout.length>0){
                     effect_arguments=JSON.parse(data.stdout)
-                    for(var index=0;index<4;index++){
+                    var textfieldlst=[
+                        effectArgValue0,effectArgValue1,effectArgValue2,effectArgValue3,effectArgValue4,
+                        effectArgValue5,effectArgValue6,effectArgValue7,effectArgValue8,effectArgValue9
+                    ]
+                    for(var index=0;index<textfieldlst.length;index++){
                         if(index>=effect_arguments.length)break
                         var arg=effect_arguments[index]
-                        var textfield=[effectArgValue0,effectArgValue1,effectArgValue2,effectArgValue3][index]
+                        var textfield=textfieldlst[index]
                         if(!firstTimeLoadArgs)
                             textfield.text=arg["default"]
                         if(textfield.text.length<1)

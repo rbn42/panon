@@ -1,0 +1,19 @@
+[
+    {
+        "name":"unit_radius",
+        "default":15.0,
+        "type":"double"
+    },{
+        "name":"strength",
+        "default":0.125,
+        "type":"double"
+    },{
+        "name":"particle_opacity",
+        "default":0.4,
+        "type":"double"
+    },{
+        "name":"height_ratio",
+        "default":1.0,
+        "type":"double"
+    }
+]

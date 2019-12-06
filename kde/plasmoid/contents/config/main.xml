@@ -8,17 +8,16 @@
   <group name="Effect">
 
     <entry name="visualEffect" type="String">
-      <default>default.frag</default>
+      <default>default/</default>
     </entry>
 
     <entry name="randomVisualEffect" type="Bool">
       <default>false</default>
     </entry>
 
-    <entry name="effectArgValue0" type="String"></entry>
-    <entry name="effectArgValue1" type="String"></entry>
-    <entry name="effectArgValue2" type="String"></entry>
-    <entry name="effectArgValue3" type="String"></entry>
+    <entry name="effectArgValues" type="StringList">
+      <default></default>
+    </entry>
 
   </group>
   <group name="Backend">

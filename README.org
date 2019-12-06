@@ -76,7 +76,7 @@ If you want to modify shaders, installing panon as a system package is not a pre
 
 Visual effects are stored in [[kde/plasmoid/contents/shaders/]]. Providing panon is installed in your home directory, it is the same directory of =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. You can add your own visual effect to this directory.
 
-A visual effect may consist a single shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or 2 shader files =image.frag= and =buffer.frag=, like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]]. The single shader file, or =image.frag=, is the main shader. It produces the visual effect of the applet. =buffer.frag= produces buffer data =iChannel2=, which is explained below.
+A visual effect may consist a single shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or 2 shader files =image.frag= and =buffer.frag=, like [[file:kde/plasmoid/contents/shaders/example-spectrogram][example-spectrogram/]]. The single shader file, or =image.frag=, is the main shader. It produces the visual effect of the applet. =buffer.frag= produces buffer data =iChannel2=, which is explained below.
 
 *** Shader API and Shadertoy.com
 
