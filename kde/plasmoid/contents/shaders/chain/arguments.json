@@ -15,5 +15,9 @@
         "name":"height_ratio",
         "default":1.0,
         "type":"double"
+    },{
+        "name":"density",
+        "default":256,
+        "type":"int"
     }
 ]

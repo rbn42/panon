@@ -18,6 +18,8 @@
     <entry name="effectArgValues" type="StringList">
       <default></default>
     </entry>
+    <!--This is a workaround to active "Apply" button for modifications of effectArgValues -->
+    <entry name="effectArgTrigger" type="Bool"></entry>
 
   </group>
   <group name="Backend">

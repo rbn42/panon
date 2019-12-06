@@ -4,6 +4,7 @@
 #define height_ratio $height_ratio
 #define strength $strength
 #define unit_radius $unit_radius
+#define density $density
 
 
 
@@ -19,7 +20,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     h+=0.01;
 
     fragColor=vec4(0,0,0,0);
-    for(int j=0; j<256; j++) {
+    for(int j=0; j<density; j++) {
         float num=rand(fragCoord/iResolution.xy+vec2(iTime/60/60/24/10,j));
         float distanc=(2*num-1);
         float i=(2*num-1)*unit_radius/sqrt(strength);
