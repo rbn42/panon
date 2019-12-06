@@ -29,20 +29,27 @@ PlasmaCore.DataSource {
         var content=files.reduce(function(acc,n){return acc+files_content[n]},"")
         content=content.replace("\n#version","\n////")
 
+        // Load arguments
         if(arguments_json_file in files_content){
             var arguments_json=JSON.parse(files_content[arguments_json_file])
 
-            content=content.split("\n")
-            for(var index=0;index<cfg.effectArgValues.length;index++)
-                if(arguments_json.length>index)content=content.map(function(s){
-                    var value
-                    if(cfg.randomVisualEffect)
-                        value=arguments_json[index]["default"]
-                    else
-                        value=cfg.effectArgValues[index]
-                    return s.startsWith('#define ')?s.replace("$"+arguments_json[index].name,value):s
-                })
-            content=content.join("\n")
+            var arg_map={}
+            for(var index=0;index<arguments_json.length;index++){
+                var name=arguments_json[index].name
+                var value=arguments_json[index]["default"]
+                if(!cfg.randomVisualEffect)
+                    value=cfg.effectArgValues[index]
+                arg_map["$"+name]=value
+            }
+
+            content=content.split("\n").map(function(line){
+                var lst=line.split(" ")
+                if(lst[0]!='#define')return line
+                if(lst.length<3)return line
+                if(lst[2][0]!="$")return line
+                lst[2]=arg_map[lst[2]]
+                return lst.join(" ")
+            }).join("\n")
         }
 
         return src_glsl_version+"\n"+content
