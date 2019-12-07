@@ -1,7 +1,7 @@
 [
     {
         "name":"shrink_step",
-        "default":9,
+        "default":1,
         "type":"int"
     },{
         "name":"transparent",

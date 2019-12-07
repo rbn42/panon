@@ -76,7 +76,7 @@ If you want to modify shaders, installing panon as a system package is not a pre
 
 Visual effects are stored in [[kde/plasmoid/contents/shaders/]]. Providing panon is installed in your home directory, it is the same directory of =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. You can add your own visual effect to this directory.
 
-A visual effect may consist a single shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or 2 shader files =image.frag= and =buffer.frag=, like [[file:kde/plasmoid/contents/shaders/example-spectrogram][example-spectrogram/]]. The single shader file, or =image.frag=, is the main shader. It produces the visual effect of the applet. =buffer.frag= produces buffer data =iChannel2=, which is explained below.
+A visual effect may consist a single shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or 2 shader files =image.frag= and =buffer.frag=, like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]]. The single shader file, or =image.frag=, is the main shader. It produces the visual effect of the applet. =buffer.frag= produces buffer data =iChannel2=, which is explained below.
 
 *** Shader API and Shadertoy.com
 
@@ -87,16 +87,17 @@ Shadertoy.com is a cross-browser online community and tool for creating and shar
 Panon's shader API is designed to be similar to shadertoy.com. Many of the works can be copied directly to panon, providing you add =#version 130= to the shader file's first line. [[file:kde/plasmoid/contents/shaders/example-shadertoy.frag][example-shadertoy.frag]] is such an example. But all these works were designed to show in browsers, so they won't look good in tiny space like a panel.
 
 These shadertoy-like uniforms are provided. 
-| Uniform Name | Description                                                                                                     |
-|--------------+-----------------------------------------------------------------------------------------------------------------|
-| iResolution  | Width and heigh of the applet                                                                                   |
-| iTime        |                                                                                                                 |
-| iTimeDelta   |                                                                                                                 |
-| iFrame       |                                                                                                                 |
-| iMouse       | Mouse position                                                                                                  |
-| iChannel0    | Wave data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel.     |
-| iChannel1    | Spectrum data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel. |
-| iChannel2    | Buffer data: Output of =buffer.frag=, has the same width and height of the applet.                              |
+| Uniform Name       | Description                                                                                                     |
+|--------------------+-----------------------------------------------------------------------------------------------------------------|
+| iResolution        | Width and heigh of the applet                                                                                   |
+| iTime              |                                                                                                                 |
+| iTimeDelta         |                                                                                                                 |
+| iFrame             |                                                                                                                 |
+| iMouse             | Mouse position                                                                                                  |
+| iChannel0          | Wave data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel.     |
+| iChannel1          | Spectrum data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel. |
+| iChannel2          | Buffer data: Output of =buffer.frag=, has the same width and height of the applet.                              |
+| iChannelResolution | Input channels' width and height                                                                                |
 Both =image.frag= (or the single main shader) and =buffer.frag= can access these uniforms.
 
 *** Debugging Shaders

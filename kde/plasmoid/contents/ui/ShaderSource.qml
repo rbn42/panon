@@ -38,7 +38,8 @@ PlasmaCore.DataSource {
                 var name=arguments_json[index].name
                 var value=arguments_json[index]["default"]
                 if(!cfg.randomVisualEffect)
-                    value=cfg.effectArgValues[index]
+                    if(cfg.effectArgValues.length>index)
+                        value=cfg.effectArgValues[index]
                 arg_map["$"+name]=value
             }
 
