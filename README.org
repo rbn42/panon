@@ -76,7 +76,12 @@ If you want to modify shaders, installing panon as a system package is not a pre
 
 Visual effects are stored in [[kde/plasmoid/contents/shaders/]]. Providing panon is installed in your home directory, it is the same directory of =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. You can add your own visual effect to this directory.
 
-A visual effect may consist a single shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or 2 shader files =image.frag= and =buffer.frag=, like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]]. The single shader file, or =image.frag=, is the main shader. It produces the visual effect of the applet. =buffer.frag= produces buffer data =iChannel2=, which is explained below.
+A visual effect may consist a single main shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or a folder, like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]], with the following struture.
+- effect folder
+  - image.frag,  is the main shader file, must exist.
+  - buffer.frag, draws to the buffer, is optional.
+  - hint.html, shows hints to the user, is optional.
+  - [[#arguments][arguments.json]], declares the arguments for the user, is optional.
 
 *** Shader API and Shadertoy.com
 
@@ -100,6 +105,23 @@ These shadertoy-like uniforms are provided.
 | iChannelResolution | Input channels' width and height                                                                                |
 Both =image.frag= (or the single main shader) and =buffer.frag= can access these uniforms.
 
+*** Arguments
+arguments.json contains a JSON list of elements like this. 
+#+BEGIN_SRC js
+{
+  "name":"arg_name",
+  "default":1,
+  "type":"int"
+}
+#+END_SRC
+"type" can be "int", "double" or "bool". A decalred argument can be used in a shader file's macros, like 
+#+BEGIN_SRC c
+#define NAME $arg_name
+#+END_SRC
+Which will be translated into
+#+BEGIN_SRC c
+#define NAME 1
+#+END_SRC
 *** Debugging Shaders
 
 Neither KDE Panel nor Latte-Dock shows the errors caused by the shaders. To catch the error messages, =plasma-sdk= is required. To debug your shader, you must put your shader file in [[kde/plasmoid/contents/shaders/]], and then start plasmoidviewer in a console. 
