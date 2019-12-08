@@ -51,6 +51,7 @@ Kirigami.FormLayout {
         QQC2.Label {
             id:hint
             text:''
+            onLinkActivated: Qt.openUrlExternally(link)
         }
     }
 

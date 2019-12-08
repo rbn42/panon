@@ -100,6 +100,10 @@ class Spectrum:
                 self.fun(data_history, 10, 30, 12, reduceBass, 1 / 1.5, 1 / 1.2),    #   600-1800Hz  120px
                 self.fun(data_history, 0, 10, 16, reduceBass, 1 / 3, 1 / 1.5),    #   0-600Hz     80px
             ]
+        elif bassResolutionLevel == 3:
+            fft_freq = [
+                self.fun(data_history, 0, 10, 16, reduceBass, 1 / 3, 1 / 1.5),    #   0-600Hz     80px
+            ]
 
         fft_freq.reverse()
         fft = np.concatenate(fft_freq, axis=0)
