@@ -160,7 +160,7 @@ Item{
         id:console_output
         anchors.fill: parent
         visible:cfg.showFps
-        color: theme.textColor
+        color: PlasmaCore.ColorScope.textColor
     }
 
     MouseArea {
