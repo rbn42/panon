@@ -19,6 +19,11 @@ Kirigami.FormLayout {
     property var cfg_effectArgValues:[]
     property bool cfg_effectArgTrigger:false
 
+    QQC2.Label {
+        text:'<a href="https://store.kde.org/search/projectSearchText/panon/f/tags/">Download more effects</a>'
+        onLinkActivated: Qt.openUrlExternally(link)
+    }
+
     QQC2.CheckBox {
         id: randomEffect
         text: i18nc("@option:check", "Random effect (on startup)")
