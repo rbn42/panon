@@ -1,9 +1,0 @@
-[{
-    "name": "shrink_step",
-    "default": 1,
-    "type": "int"
-}, {
-    "name": "opacity",
-    "default": 1,
-    "type": "double"
-}]

@@ -66,22 +66,20 @@ kpackagetool5 -t Plasma/Applet --upgrade plasmoid
 *** Via AUR
 [[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] and [[https://aur.archlinux.org/packages/plasma5-applets-panon-git/][plasma5-applets-panon-git]] are available for ArchLinux. 
 
-If you want to modify shaders, installing panon as a system package is not a preferred solution right now, because then the modification will require write permission in =/usr/share/plasma/plasmoids/panon=.
-
 *** Drag panon widget to your panel (eg. [[https://github.com/psifidotos/Latte-Dock][latte-dock]]).
 [[file:../../wiki/plasmoid/step1.png]]
 [[file:../../wiki/plasmoid/step2.png]]
 
 ** Visual Effects
 
-Visual effects are stored in [[kde/plasmoid/contents/shaders/]]. Providing panon is installed in your home directory, it is the same directory of =~/.local/share/plasma/plasmoids/panon/contents/shaders/=. You can add your own visual effect to this directory.
+Visual effects are stored in [[kde/plasmoid/contents/shaders/]]. You can create your own visual effects in =~/.config/panon/=.
 
-A visual effect may consist a single main shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or a folder, like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]], with the following struture.
+A visual effect consists of a single main shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or a folder, like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]], with the following struture.
 - effect folder
-  - image.frag,  is the main shader file, must exist.
+  - image.frag, is the main shader file, must exist.
   - buffer.frag, draws to the buffer, is optional.
   - hint.html, shows hints to the user, is optional.
-  - [[#arguments][arguments.json]], declares the arguments for the user, is optional.
+  - [[#arguments][meta.json]], declares the arguments for the user, is optional.
 
 *** Shader API and Shadertoy.com
 
@@ -106,12 +104,14 @@ These shadertoy-like uniforms are provided.
 Both =image.frag= (or the single main shader) and =buffer.frag= can access these uniforms.
 
 *** Arguments
-arguments.json contains a JSON list of elements like this. 
+meta.json contains a JSON list like this. 
 #+BEGIN_SRC js
 {
-  "name":"arg_name",
-  "default":1,
-  "type":"int"
+  "arguments":[{
+    "name":"arg_name",
+    "default":1,
+    "type":"int"
+  }]
 }
 #+END_SRC
 "type" can be "int", "double" or "bool". A decalred argument can be used in a shader file's macros, like 
@@ -124,15 +124,15 @@ Which will be translated into
 #+END_SRC
 *** Debugging Shaders
 
-Neither KDE Panel nor Latte-Dock shows the errors caused by the shaders. To catch the error messages, =plasma-sdk= is required. To debug your shader, you must put your shader file in [[kde/plasmoid/contents/shaders/]], and then start plasmoidviewer in a console. 
+Neither KDE Panel nor Latte-Dock shows the errors caused by the shaders. To catch the error messages, you have install =plasma-sdk=,  and start plasmoidviewer in a console. 
 
 #+BEGIN_SRC sh
 cd ./kde/
 #Providing plasma-sdk is installed
 plasmoidviewer --applet ./plasmoid/
 #+END_SRC
-In plasmoidviewer, go to the configuration window and pick your own shader. 
-Then plasmoidviewer will run your shader and show the errors, if exist, in the console.
+In plasmoidviewer, go to the configuration window and choose your own visual effect. 
+Then plasmoidviewer will run your visual effect and show the errors, if exist, in the console.
 
 ** Background transparency
 To achieve background transparency, after installing panon, go to ~/.local/share/plasma/plasmoids/panon/contents/ui/main.qml in your home directory,
@@ -151,4 +151,4 @@ alter the following part and add the line marked below:
 | =hsv2rgb= in [[file:kde/plasmoid/contents/shaders/utils.fsh][utils.fsh]]                                            | copied from [[https://gist.github.com/patriciogonzalezvivo/114c1653de9e3da6e1e3][GLSL-color.md]] |                                                      |
 | [[file:kde/plasmoid/contents/shaders/example-shadertoy.frag][example-shadertoy.frag]]                               | copied from [[https://www.shadertoy.com/view/lldyDs][shadertoy]]                                 | [[https://www.shadertoy.com/terms][CC BY-NC-SA 3.0]] |
 | [[file:kde/plasmoid/contents/shaders/firefly/image.frag][firefly/image.frag]]                                       | adapted from [[https://www.shadertoy.com/view/lldyDs][shadertoy]]                                | [[https://www.shadertoy.com/terms][CC BY-NC-SA 3.0]] |
-| [[file:kde/plasmoid/contents/shaders/example-shadertoy-fractal-tiling.frag][example-shadertoy-fractal-tiling.frag]] | copied from [[example-shadertoy-fractal-tiling.frag][shadertoy]]                                 | [[https://www.shadertoy.com/terms][CC BY-NC-SA 3.0]] |
+| [[file:kde/plasmoid/contents/shaders/example-shadertoy-fractal-tiling.frag][example-shadertoy-fractal-tiling.frag]] | copied from [[https://www.shadertoy.com/view/Ml2GWy][shadertoy]]                                 | [[https://www.shadertoy.com/terms][CC BY-NC-SA 3.0]] |

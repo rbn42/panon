@@ -61,11 +61,10 @@ Kirigami.FormLayout {
     }
 
 
-    readonly property string sh_get_devices:'sh '+'"'+Utils.get_scripts_root()+'/get-devices.sh'+'" '
-    readonly property string sh_get_styles:'sh '+'"'+Utils.get_scripts_root()+'/get-shaders.sh'+'" '
+    readonly property string sh_get_styles:'python3 "'+Utils.get_scripts_root()+'/get_effect_list.py"'
 
-    readonly property string sh_read_effect_hint:Utils.read_shader(cfg_visualEffect+'hint.html')
-    readonly property string sh_read_effect_args:Utils.read_shader(cfg_visualEffect+'arguments.json')
+    readonly property string sh_read_effect_hint:'python3 "'+Utils.get_scripts_root()+'/read_file.py" "'+cfg_visualEffect+'" hint.html'
+    readonly property string sh_read_effect_args:'python3 "'+Utils.get_scripts_root()+'/read_file.py" "'+cfg_visualEffect+'" meta.json'
 
     onCfg_visualEffectChanged:{
         hint.text=''
@@ -81,19 +80,19 @@ Kirigami.FormLayout {
         connectedSources: {
             if(shaderOptions.count<1)return[sh_get_styles]
 
-            if(cfg_visualEffect.endsWith('/'))return[sh_read_effect_hint,sh_read_effect_args]
+            if(cfg_visualEffect.endsWith('/')||cfg_visualEffect.endsWith('/ '))
+                return[sh_read_effect_hint,sh_read_effect_args]
 
             return []
         }
         property var textfieldlst:[]
         
         onNewData: {
-            if(sourceName==sh_get_devices){
-            }else if(sourceName==sh_read_effect_hint){
+            if(sourceName==sh_read_effect_hint){
                 hint.text=(data.stdout)
             }else if(sourceName==sh_read_effect_args){
                 if(data.stdout.length>0){
-                    effect_arguments=JSON.parse(data.stdout)
+                    effect_arguments=JSON.parse(data.stdout)['arguments']
                     //while(textfieldlst.length>0)textfieldlst.pop().destroy() 
                     textfieldlst.map(function(o){o.visible=false})
                     for(var index=0;index<effect_arguments.length;index++){
@@ -122,7 +121,7 @@ Kirigami.FormLayout {
                 }
                 firstTimeLoadArgs=false
             }else if(sourceName==sh_get_styles){
-                var lst=data.stdout.substr(0,data.stdout.length-1).split('\n')
+                var lst=JSON.parse(data.stdout)
                 for(var i in lst)
                     shaderOptions.append({text:lst[i]})
                 for(var i=0;i<lst.length;i++)

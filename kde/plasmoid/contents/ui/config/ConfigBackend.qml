@@ -81,7 +81,7 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: "Range:"
+        Kirigami.FormData.label: "Audio frequency:"
         Layout.fillWidth: true
 
         QQC2.ComboBox {
@@ -101,7 +101,6 @@ Kirigami.FormLayout {
     }
 
     readonly property string sh_get_devices:'sh '+'"'+Utils.get_scripts_root()+'/get-devices.sh'+'" '
-    readonly property string sh_get_styles:'sh '+'"'+Utils.get_scripts_root()+'/get-shaders.sh'+'" '
     readonly property string sh_get_pa_devices:'sh '+'"'+Utils.get_scripts_root()+'/get-pa-devices.sh'+'" '
 
     PlasmaCore.DataSource {
@@ -124,7 +123,6 @@ Kirigami.FormLayout {
                 for(var i=0;i<pulseaudioDevice.count;i++)
                     if(pdItems.get(i).id==cfg_pulseaudioDevice)
                         pulseaudioDevice.currentIndex=i;
-            }else if(sourceName==sh_get_styles){
             }else if(sourceName==sh_get_devices){
                 var lst=JSON.parse(data.stdout)
                 cbItems.append({name:'auto',d_index:-1})
@@ -133,7 +131,6 @@ Kirigami.FormLayout {
                 for(var i=0;i<deviceIndex.count;i++)
                     if(cbItems.get(i).d_index==cfg_deviceIndex)
                         deviceIndex.currentIndex=i;
-            }else if(sourceName==sh_get_styles){
             }
         }
     }

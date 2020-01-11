@@ -1,0 +1,35 @@
+{
+    "arguments": [{
+        "name": "volume_threshold",
+        "default": 0.02,
+        "type": "double"
+    }, {
+        "name": "max_life_time",
+        "default": 100,
+        "type": "int"
+    }, {
+        "name": "depth",
+        "default": 150,
+        "type": "double"
+    }, {
+        "name": "density",
+        "default": 0.0375,
+        "type": "double"
+    }, {
+        "name": "strength",
+        "default": 6,
+        "type": "double"
+    }, {
+        "name": "near_side",
+        "default": 0.1,
+        "type": "double"
+    }, {
+        "name": "rear_side",
+        "default": 1.0,
+        "type": "double"
+    }, {
+        "name": "opacity",
+        "default": 1.0,
+        "type": "double"
+    }]
+}
