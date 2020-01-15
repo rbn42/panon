@@ -1,0 +1,13 @@
+1)
+Copy file po/plasma_applet_panon.pot
+
+2)
+Rename it to plasma_applet_panon_$LANG.po
+- where $LANG is desired language, e.g. "pl" (or locale, e.g. "en_GB")
+
+3)
+In the copied file:
+- change Language accordingly
+- be sure to write your name :-) (as Last-Translator and Language-Team)
+
+Thank You for your translations!

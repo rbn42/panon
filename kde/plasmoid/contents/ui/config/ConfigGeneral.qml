@@ -35,7 +35,7 @@ Kirigami.FormLayout {
     }
 
     QQC2.Label {
-        text: "Lower FPS saves CPU and battries."
+        text: i18n("Lower FPS saves CPU and battries.")
     }
 
     QQC2.CheckBox {
@@ -83,12 +83,12 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: "Gravity:"
+        Kirigami.FormData.label: i18n("Gravity:")
         Layout.fillWidth: true
 
         QQC2.ComboBox {
             id:gravity
-            model:  ['Center','North','South','East','West']
+            model:  [i18n("Center"),i18n("North"),i18n("South"),i18n("East"),i18n("West")]
         }
     }
 

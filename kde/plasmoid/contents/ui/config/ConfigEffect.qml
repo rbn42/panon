@@ -20,7 +20,7 @@ Kirigami.FormLayout {
     property bool cfg_effectArgTrigger:false
 
     QQC2.Label {
-        text:'<a href="https://store.kde.org/search/projectSearchText/panon/f/tags/">Download more effects</a>'
+        text:i18n("<a href='https://store.kde.org/search/projectSearchText/panon/f/tags/'>Download more effects</a>")
         onLinkActivated: Qt.openUrlExternally(link)
     }
 
@@ -31,12 +31,12 @@ Kirigami.FormLayout {
 
     QQC2.Label {
         visible:randomEffect.checked
-        text:"Unwanted effects can be removed <br/>from <a href='file:///"+Utils.get_root()+"/shaders/' >here</a>."
+        text:i18n("Unwanted effects can be removed <br/>from <a href='$link' >here</a>.").replace("$link",('file:///'+Utils.get_root()+'/shaders/').replace('////','///').replace('////','///').replace('////','///'))
         onLinkActivated: Qt.openUrlExternally(link)
     }
 
     RowLayout {
-        Kirigami.FormData.label: "Effect:"
+        Kirigami.FormData.label: i18n("Effect:")
         Layout.fillWidth: true
 
         QQC2.ComboBox {
@@ -50,7 +50,7 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: "Hint:"
+        Kirigami.FormData.label: i18n("Hint:")
         Layout.fillWidth: true
         visible:hint.text.length>0
         QQC2.Label {

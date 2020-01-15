@@ -27,7 +27,7 @@ Kirigami.FormLayout {
 
 
     RowLayout {
-        Kirigami.FormData.label: "Back-end:"
+        Kirigami.FormData.label: i18n("Back-end:")
         Layout.fillWidth: true
 
         QQC2.ComboBox {
@@ -39,7 +39,7 @@ Kirigami.FormLayout {
 
     RowLayout {
         visible:false // backend.currentText=='portaudio'
-        Kirigami.FormData.label: "Input device:"
+        Kirigami.FormData.label: i18n("Input device:")
         Layout.fillWidth: true
 
         QQC2.ComboBox {
@@ -54,7 +54,7 @@ Kirigami.FormLayout {
 
     RowLayout {
         visible:backend.currentText=='PulseAudio'
-        Kirigami.FormData.label: "Input device:"
+        Kirigami.FormData.label: i18n("Input device:")
         Layout.fillWidth: true
 
         QQC2.ComboBox {
@@ -72,7 +72,7 @@ Kirigami.FormLayout {
 
     RowLayout {
         visible:backend.currentText=='fifo'
-        Kirigami.FormData.label: "Fifo path:"
+        Kirigami.FormData.label: i18n("Fifo path:")
         Layout.fillWidth: true
 
         QQC2.TextField {
@@ -81,7 +81,7 @@ Kirigami.FormLayout {
     }
 
     RowLayout {
-        Kirigami.FormData.label: "Audio frequency:"
+        Kirigami.FormData.label: i18n("Audio frequency:")
         Layout.fillWidth: true
 
         QQC2.ComboBox {
@@ -117,7 +117,7 @@ Kirigami.FormLayout {
                 for(var i in lst)
                     pdItems.append(lst[i])
                 if(lst.length>1){
-                    pdItems.append({name:"Mixing All Microphones and Speakers",id:'all'})
+                    pdItems.append({name:i18n("Mixing All Microphones and Speakers"),id:'all'})
                 }
 
                 for(var i=0;i<pulseaudioDevice.count;i++)

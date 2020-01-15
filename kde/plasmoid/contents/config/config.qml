@@ -13,12 +13,12 @@ ConfigModel {
          source: "config/ConfigEffect.qml"
     }
     ConfigCategory {
-         name: i18n('Back-end')
+         name: i18nc("@title","Back-end")
          icon: 'preferences-desktop-sound'
          source: 'config/ConfigBackend.qml'
     }
     ConfigCategory {
-         name: i18n('Colors')
+         name: i18nc("@title","Colors")
          icon: 'preferences-desktop-color'
          source: 'config/ConfigColors.qml'
     }

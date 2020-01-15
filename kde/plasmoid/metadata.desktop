@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Panon
 Comment=A Different Audio Spectrum Analyzer
+Comment[zh_CN]=一个音乐视觉特效插件
 Icon=applications-multimedia
 
 Type=Service
