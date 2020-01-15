@@ -23,9 +23,6 @@ package() {
   # Download SoundCard and hsluv-glsl
   git submodule update --init
 
-  # Remove shader examples
-  rm -r ./kde/plasmoid/contents/shaders/example-* 
-
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/${_basename%-*}/LICENSE"
   install -Dm644 third_party/hsluv-glsl/LICENCE.md "$pkgdir/usr/share/licenses/${_basename%-*}/hsluv-glsl/LICENCE.md"
   install -Dm644 third_party/SoundCard/LICENSE "$pkgdir/usr/share/licenses/${_basename%-*}/SoundCard/LICENSE"
