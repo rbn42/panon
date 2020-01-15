@@ -14,8 +14,8 @@ PlasmaCore.DataSource {
     readonly property string cmd:'python3'
         + ' "'+Utils.get_scripts_root()+'/build_shader_source.py'+'"'
         + (cfg.randomVisualEffect?' --random-effect':'')
-        + ' --effect-name="'+cfg.visualEffect+'"'
-        + ' '+cfg.effectArgValues.map(function(s){return '"'+s+'"'}).join(' ')
+        + ' --effect-name="'+cfg.visualEffect.replace('"','\\"').replace('$','\\$')+'"'
+        + ' '+cfg.effectArgValues.map(function(s){return '"'+s.replace('"','\\"').replace('$','\\$')+'"'}).join(' ')
 
     connectedSources: [cmd]
 
