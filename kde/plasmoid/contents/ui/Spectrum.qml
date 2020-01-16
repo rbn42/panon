@@ -156,11 +156,13 @@ Item{
         }
     }
 
+    property string fps_message:""
+    property string error_message:(shaderSource.image_shader_source.trim().length>0?"":i18n("Error: Failed to load the visual effect. Please choose a new visual effect in the configuration dialog."))
     QQC2.Label {
         id:console_output
         anchors.fill: parent
-        visible:cfg.showFps
         color: PlasmaCore.ColorScope.textColor
+        text:error_message+(cfg.showFps?fps_message:"")
     }
 
     MouseArea {
@@ -189,7 +191,7 @@ Item{
         se.iFrame+=1
         if(cfg.showFps)
             if(se.iFrame%30==1){
-                console_output.text='fps:'+ Math.round(1000*30/(time_current_frame-time_fps_start))
+                fps_message='fps:'+ Math.round(1000*30/(time_current_frame-time_fps_start))
                 time_fps_start=time_current_frame
             }
 
