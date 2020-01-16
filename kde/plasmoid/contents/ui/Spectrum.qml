@@ -156,8 +156,15 @@ Item{
         }
     }
 
+    readonly property bool loadImageShaderSource:   shaderSource.image_shader_source.trim().length>0
+    readonly property bool loadBufferShaderSource:  shaderSource.buffer_shader_source.trim().length>0
+    readonly property bool failCompileImageShader:  loadImageShaderSource && false // (se.status==ShaderEffect.Error)
+    readonly property bool failCompileBufferShader: loadBufferShaderSource && false // (buffer.sourceItem.status==ShaderEffect.Error)
     property string fps_message:""
-    property string error_message:(shaderSource.image_shader_source.trim().length>0?"":i18n("Error: Failed to load the visual effect. Please choose a new visual effect in the configuration dialog."))
+    property string error_message:
+        (loadImageShaderSource ?"":i18n("Error: Failed to load the visual effect. Please choose another visual effect in the configuration dialog."))
+        + (failCompileImageShader?(i18n("Error: Failed to compile image shader.")+se.log):"")
+        + (failCompileBufferShader?(i18n("Error: Failed to compile bufffer shader.")+buffer.sourceItem.log):"")
     QQC2.Label {
         id:console_output
         anchors.fill: parent

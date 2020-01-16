@@ -3,6 +3,7 @@ out vec4 out_Color;
 in mediump vec2 qt_TexCoord0;
 // gravity property: North (1), West (4), East (3), South (2)
 uniform int gravity;
+uniform float qt_Opacity;
 
 vec2 getCoord() {
     switch(gravity) {
