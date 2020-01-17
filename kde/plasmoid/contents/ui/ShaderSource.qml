@@ -10,6 +10,7 @@ PlasmaCore.DataSource {
 
     property string image_shader_source:''
     property string buffer_shader_source:''
+    property string texture_uri:''
 
     readonly property string cmd:'python3'
         + ' "'+Utils.get_scripts_root()+'/build_shader_source.py'+'"'
@@ -27,5 +28,6 @@ PlasmaCore.DataSource {
         var obj=JSON.parse(data.stdout);
         image_shader_source=obj.image_shader
         buffer_shader_source=obj.buffer_shader
+        texture_uri=obj.texture
     }
 }

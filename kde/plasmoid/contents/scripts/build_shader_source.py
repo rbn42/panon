@@ -36,13 +36,14 @@ else:
 
 
 def value2str(value):
-    t=type(value)
-    if t==int:
+    t = type(value)
+    if t == int:
         return str(value)
-    elif t==float:
+    elif t == float:
         return str(value)
-    elif t==bool:
+    elif t == bool:
         return 'true' if value else 'false'
+
 
 def build_source(files, main_file, meta_file=None, effect_arguments=None):
     if not os.path.exists(main_file):
@@ -55,13 +56,13 @@ def build_source(files, main_file, meta_file=None, effect_arguments=None):
             arguments_map = {arg['name']: arg['default'] for arg in meta_arg}
             if len(effect_arguments) > 0:
                 for i in range(len(meta_arg)):
-                    value=effect_arguments[i]
-                    if meta_arg[i]['type']=='double':
-                        value=float(value)
-                    elif meta_arg[i]['type']=='int':
-                        value=int(value)
-                    elif meta_arg[i]['type']=='bool':
-                        value=(value=='true')
+                    value = effect_arguments[i]
+                    if meta_arg[i]['type'] == 'double':
+                        value = float(value)
+                    elif meta_arg[i]['type'] == 'int':
+                        value = int(value)
+                    elif meta_arg[i]['type'] == 'bool':
+                        value = (value == 'true')
                     arguments_map[meta_arg[i]['name']] = value
 
     version = next(read_file_lines(main_file))
@@ -79,6 +80,10 @@ def build_source(files, main_file, meta_file=None, effect_arguments=None):
             source += read_file(path)
     return source
 
+def texture_uri(path):
+    if os.path.exists(path):
+        return os.path.abspath(path)
+    return ''
 
 if effect_name.endswith('.frag'):
     obj = {
@@ -118,5 +123,7 @@ elif effect_name.endswith('/'):
             os.path.join(effect_home, effect_name, 'meta.json'),
             effect_arguments,
         ),
+        'texture':
+        texture_uri(os.path.join(effect_home, effect_name, 'texture.png')),
     }
     json.dump(obj, sys.stdout)

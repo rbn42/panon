@@ -77,9 +77,10 @@ Visual effects are stored in [[kde/plasmoid/contents/shaders/]]. You can create 
 A visual effect consists of a single main shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or a folder, like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]], with the following struture.
 - effect folder
   - image.frag, is the main shader file, must exist.
-  - buffer.frag, draws to the buffer, is optional.
+  - buffer.frag, draws to the buffer(iChannel2), is optional.
   - hint.html, shows hints to the user, is optional.
   - [[#arguments][meta.json]], declares the arguments for the user, is optional.
+  - texture.png, a static image to be used as a texture(iChannel3), is optional.
 
 *** Shader API and Shadertoy.com
 
@@ -90,17 +91,18 @@ Shadertoy.com is a cross-browser online community and tool for creating and shar
 Panon's shader API is designed to be similar to shadertoy.com. Many of the works can be copied directly to panon, providing you add =#version 130= to the shader file's first line. [[https://github.com/rbn42/panon-effects/blob/master/effects/example-shadertoy.frag][example-shadertoy.frag]] is such an example. But all these works were designed to show in browsers, so they won't look good in tiny space like a panel.
 
 These shadertoy-like uniforms are provided. 
-| Uniform Name       | Description                                                                                                     |
-|--------------------+-----------------------------------------------------------------------------------------------------------------|
-| iResolution        | Width and heigh of the applet                                                                                   |
-| iTime              |                                                                                                                 |
-| iTimeDelta         |                                                                                                                 |
-| iFrame             |                                                                                                                 |
-| iMouse             | Mouse position                                                                                                  |
-| iChannel0          | Wave data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel.     |
-| iChannel1          | Spectrum data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel. |
-| iChannel2          | Buffer data: Output of =buffer.frag=, has the same width and height of the applet.                              |
-| iChannelResolution | Input channels' width and height                                                                                |
+| Uniform Name       | Description                                                                                                                                               |
+|--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| iResolution        | Width and heigh of the applet                                                                                                                             |
+| iTime              |                                                                                                                                                           |
+| iTimeDelta         |                                                                                                                                                           |
+| iFrame             |                                                                                                                                                           |
+| iMouse             | Mouse position. [[https://github.com/rbn42/panon-effects/blob/master/effects/example-iMouse.frag][This example]] shows how to use it.                     |
+| iChannel0          | Wave data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel.                                               |
+| iChannel1          | Spectrum data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel.                                           |
+| iChannel2          | Buffer data: Output of =buffer.frag=, has the same width and height of the applet.                                                                        |
+| iChannel3          | The static image texture.png. [[https://github.com/rbn42/panon-effects/blob/master/effects/example-texture-iChannel3][This example]] shows how to use it. |
+| iChannelResolution | Input channels' width and height                                                                                                                          |
 Both =image.frag= (or the single main shader) and =buffer.frag= can access these uniforms.
 
 *** Arguments

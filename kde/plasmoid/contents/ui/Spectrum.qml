@@ -117,7 +117,7 @@ Item{
         property variant iChannel0
         property variant iChannel1
         readonly property variant iChannel2:buffer
-        property variant iChannel3
+        readonly property variant iChannel3:Image{source:'file://'+shaderSource.texture_uri}
 
 
         property int gravity:root.gravity
