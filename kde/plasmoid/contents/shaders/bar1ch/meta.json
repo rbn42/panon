@@ -2,14 +2,18 @@
     "arguments": [{
         "name": "bar_width",
         "default": 5,
-        "type": "int"
+        "type": "int",
+        "min":0
     }, {
         "name": "gap_width",
         "default": 2,
-        "type": "int"
+        "type": "int",
+        "min":0
     }, {
         "name": "decay",
         "default": 0.003,
-        "type": "double"
+        "type": "double",
+        "max":1,
+        "min":0
     }]
 }

@@ -2,22 +2,29 @@
     "arguments": [{
         "name": "unit_radius",
         "default": 15.0,
-        "type": "double"
+        "type": "double",
+        "min":0
     }, {
         "name": "strength",
         "default": 0.125,
-        "type": "double"
+        "type": "double",
+        "min":0
     }, {
         "name": "particle_opacity",
         "default": 0.4,
-        "type": "double"
+        "type": "double",
+        "max":1,
+        "min":0
     }, {
         "name": "height_ratio",
         "default": 1.0,
-        "type": "double"
+        "type": "double",
+        "max":1,
+        "min":0
     }, {
         "name": "density",
         "default": 256,
-        "type": "int"
+        "type": "int",
+        "min":0
     }]
 }

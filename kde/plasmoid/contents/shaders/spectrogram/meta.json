@@ -2,10 +2,13 @@
     "arguments": [{
         "name": "shrink_step",
         "default": 1,
-        "type": "int"
+        "type": "int",
+        "min":0
     }, {
         "name": "opacity",
         "default": 1,
-        "type": "double"
+        "type": "double",
+        "max":1,
+        "min":0
     }]
 }

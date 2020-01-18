@@ -109,7 +109,7 @@ Item{
         property double iTime
         property double iTimeDelta
         property variant iResolution:root.gravity<=2?Qt.vector3d(se.width,se.height,0):Qt.vector3d(se.height,se.width,0)
-        property double iFrame:0
+        property int iFrame:0
         property vector3d iChannelResolution0:iChannel0?Qt.vector3d(iChannel0.width,iChannel0.height,0):Qt.vector3d(0,0,0)
         property vector3d iChannelResolution1:iChannel1?Qt.vector3d(iChannel1.width,iChannel1.height,0):Qt.vector3d(0,0,0)
         property vector3d iChannelResolution2:iChannel2?Qt.vector3d(iChannel2.width,iChannel2.height,0):Qt.vector3d(0,0,0)
@@ -141,7 +141,7 @@ Item{
             readonly property double iTime:se.iTime
             readonly property double iTimeDelta:se.iTimeDelta
             readonly property variant iResolution:se.iResolution
-            readonly property double iFrame:se.iFrame
+            readonly property int iFrame:se.iFrame
             readonly property vector3d iChannelResolution0:se.iChannelResolution0
             readonly property vector3d iChannelResolution1:se.iChannelResolution1
             readonly property vector3d iChannelResolution2:se.iChannelResolution2
