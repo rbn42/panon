@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-01-16 10:52+0800\n"
+"POT-Creation-Date: 2020-01-19 12:43+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,26 +112,26 @@ msgctxt "@label:spinbox"
 msgid "Lightness"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:30
+#: contents/ui/config/ConfigEffect.qml:23
 msgid ""
 "<a href='https://store.kde.org/search/projectSearchText/panon/f/"
 "tags/'>Download more effects</a>"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:36
+#: contents/ui/config/ConfigEffect.qml:29
 msgctxt "@option:check"
 msgid "Random effect (on startup)"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:41
+#: contents/ui/config/ConfigEffect.qml:34
 msgid "Unwanted effects can be removed <br/>from <a href='$link' >here</a>."
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:46
+#: contents/ui/config/ConfigEffect.qml:39
 msgid "Effect:"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:60
+#: contents/ui/config/ConfigEffect.qml:53
 msgid "Hint:"
 msgstr ""
 
@@ -208,8 +208,20 @@ msgctxt "@option:check"
 msgid "Hide tooltip"
 msgstr ""
 
-#: contents/ui/Spectrum.qml:160
+#: contents/ui/ShaderSource.qml:32
+msgid "Error: Find undeclared arguments."
+msgstr ""
+
+#: contents/ui/Spectrum.qml:166
 msgid ""
-"Error: Failed to load the visual effect. Please choose a new visual effect "
+"Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
+msgstr ""
+
+#: contents/ui/Spectrum.qml:167
+msgid "Error: Failed to compile image shader."
+msgstr ""
+
+#: contents/ui/Spectrum.qml:168
+msgid "Error: Failed to compile bufffer shader."
 msgstr ""

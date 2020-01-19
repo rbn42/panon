@@ -73,7 +73,11 @@ def build_source(files, main_file, meta_file=None, effect_arguments=None):
                 lst = line.split()
                 if len(lst) >= 3:
                     if lst[2].startswith('$'):
-                        lst[2] = value2str(arguments_map[lst[2][1:]])
+                        key =lst[2][1:]
+                        if key not in arguments_map:
+                            json.dump({"error_code":1}, sys.stdout)
+                            sys.exit()
+                        lst[2] = value2str(arguments_map[key])
                         line = ' '.join(lst) + '\n'
                 source += line
         else:

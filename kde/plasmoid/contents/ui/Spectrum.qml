@@ -162,7 +162,8 @@ Item{
     readonly property bool failCompileBufferShader: loadBufferShaderSource && false // (buffer.sourceItem.status==ShaderEffect.Error)
     property string fps_message:""
     property string error_message:
-        (loadImageShaderSource ?"":i18n("Error: Failed to load the visual effect. Please choose another visual effect in the configuration dialog."))
+        shaderSource.error_message
+        + (loadImageShaderSource ?"":i18n("Error: Failed to load the visual effect. Please choose another visual effect in the configuration dialog."))
         + (failCompileImageShader?(i18n("Error: Failed to compile image shader.")+se.log):"")
         + (failCompileBufferShader?(i18n("Error: Failed to compile bufffer shader.")+buffer.sourceItem.log):"")
     QQC2.Label {
