@@ -1,4 +1,4 @@
-from . import pulseaudio as sc
+from soundcard import pulseaudio as sc
 import json
 
 l = []

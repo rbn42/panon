@@ -103,7 +103,7 @@ class SoundCardSource:
         return data
 
     def start(self):
-        from . import pulseaudio as sc
+        from soundcard import pulseaudio as sc
         if self.device_id == 'all':
             mics = sc.all_microphones(exclude_monitors=False)
             self.streams = []
