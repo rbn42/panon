@@ -63,6 +63,15 @@ kpackagetool5 -t Plasma/Applet --install plasmoid
 kpackagetool5 -t Plasma/Applet --upgrade plasmoid
 #+END_SRC
 
+**** Install Translations
+#+BEGIN_SRC sh
+cd panon/kde/translations/
+mkdir build
+cd build 
+cmake ..
+make install DESTDIR=~/.local/share/locale/
+#+END_SRC
+
 *** Via AUR
 [[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] and [[https://aur.archlinux.org/packages/plasma5-applets-panon-git/][plasma5-applets-panon-git]] are available for ArchLinux. 
 
