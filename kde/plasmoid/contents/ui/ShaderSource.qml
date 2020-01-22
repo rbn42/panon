@@ -26,7 +26,18 @@ PlasmaCore.DataSource {
             console.log(cmd)
             console.log(data.stderr)
         }
-        var obj=JSON.parse(data.stdout);
+        var obj;
+        try{
+            obj=JSON.parse(data.stdout);
+        }catch(e){
+            console.log("JSON parse error")
+            console.log("Executed command:")
+            console.log(cmd)
+            console.log("JSON content:")
+            console.log(data.stdout)
+            console.log(data.stderr)
+            return
+        }
         if('error_code' in obj){
             error_message={
                 1:i18n("Error: Find undeclared arguments.")
