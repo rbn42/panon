@@ -57,7 +57,7 @@ msgstr "Audio Frequenz"
 #: contents/ui/config/ConfigBackend.qml:95
 msgctxt "@option:check"
 msgid "Reduce the weight of bass"
-msgstr "Bass-stärke reduzieren"
+msgstr "Bass-Stärke reduzieren"
 
 #: contents/ui/config/ConfigBackend.qml:100
 msgctxt "@option:check"
@@ -71,7 +71,7 @@ msgstr "Alle Mikrofone und Lautsprecher mischen"
 #: contents/ui/config/ConfigColors.qml:29
 msgctxt "@option:check"
 msgid "Randomize colors (on clicked)"
-msgstr "Zufällige Farben (bei klick)"
+msgstr "Zufällige Farben (bei Klick)"
 
 #: contents/ui/config/ConfigColors.qml:35
 msgctxt "@label"
@@ -130,7 +130,7 @@ msgstr "Unerwünschte Effekte können <br/><a href='$link' >hier</a> entfernt we
 
 #: contents/ui/config/ConfigEffect.qml:39
 msgid "Effect:"
-msgstr "Effekte:"
+msgstr "Effekt:"
 
 #: contents/ui/config/ConfigEffect.qml:53
 msgid "Hint:"
@@ -143,7 +143,7 @@ msgstr ""
 
 #: contents/ui/config/ConfigGeneral.qml:38
 msgid "Lower FPS saves CPU and battries."
-msgstr "Niedrigere FPS sparen CPU Leistung und Batterielaufzeit"
+msgstr "Niedrigere FPS sparen CPU-Leistung und Batterielaufzeit"
 
 #: contents/ui/config/ConfigGeneral.qml:43
 msgctxt "@option:radio"
@@ -217,7 +217,7 @@ msgstr "Fehler: Undeklarierte Argumente gefunden."
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
-msgstr "Fehler: Laden des visuellen Effektes fehlgeschlagen. Bitte einen anderen Effekt "
+msgstr "Fehler: Laden des visuellen Effektes fehlgeschlagen. Bitte anderen Effekt "
 "im Konfigurationsdialog auswählen."
 
 #: contents/ui/Spectrum.qml:167
