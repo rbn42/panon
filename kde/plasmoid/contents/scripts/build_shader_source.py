@@ -89,30 +89,30 @@ def texture_uri(path: Path):
     return ''
 
 applet_effect_home = effect_dirs[-1]
+
+image_shader_path = effect_home / effect_name
+if not effect_name.endswith('.frag'):
+    image_shader_path /= 'image.frag'
+
+image_shader_files = [
+    applet_effect_home / 'hsluv-glsl.fsh',
+    applet_effect_home / 'utils.fsh',
+    applet_effect_home / 'shadertoy-api-head.fsh',
+    image_shader_path,
+    applet_effect_home / 'shadertoy-api-foot.fsh',
+]
+
 if effect_name.endswith('.frag'):
     obj = {
         'image_shader':
-        build_source([
-            applet_effect_home / 'hsluv-glsl.fsh',
-            applet_effect_home / 'utils.fsh',
-            applet_effect_home / 'shadertoy-api-head.fsh',
-            effect_home / effect_name,
-            applet_effect_home / 'shadertoy-api-foot.fsh',
-        ], effect_home / effect_name)
+        build_source(image_shader_files, image_shader_path)
     }
-    json.dump(obj, sys.stdout)
 else:
     obj = {
         'image_shader':
         build_source(
-            [
-                applet_effect_home / 'hsluv-glsl.fsh',
-                applet_effect_home / 'utils.fsh',
-                applet_effect_home / 'shadertoy-api-head.fsh',
-                effect_home / effect_name / 'image.frag',
-                applet_effect_home / 'shadertoy-api-foot.fsh',
-            ],
-            effect_home / effect_name / 'image.frag',
+            image_shader_files,
+            image_shader_path,
             effect_home / effect_name / 'meta.json',
             effect_arguments,
         ),
@@ -130,4 +130,5 @@ else:
         'texture':
         texture_uri(effect_home / effect_name / 'texture.png'),
     }
-    json.dump(obj, sys.stdout)
+
+json.dump(obj, sys.stdout)
