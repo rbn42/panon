@@ -8,7 +8,7 @@
   <group name="Effect">
 
     <entry name="visualEffect" type="String">
-      <default>default/</default>
+      <default>default</default>
     </entry>
 
     <entry name="randomVisualEffect" type="Bool">

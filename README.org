@@ -81,7 +81,7 @@ make install DESTDIR=~/.local/share/locale/
 
 ** Visual Effects
 
-Visual effects are stored in [[kde/plasmoid/contents/shaders/]]. You can create your own visual effects in =~/.config/panon/=.
+Visual effects are stored in [[kde/plasmoid/contents/shaders/]]. You can create your own visual effects in =~/.local/share/panon/=.
 
 A visual effect consists of a single main shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or a folder, like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]], with the following struture.
 - effect folder
