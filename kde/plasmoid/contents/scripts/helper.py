@@ -1,13 +1,21 @@
 import sys
 import os
-config_effect_home = os.path.expanduser('~/.config/panon/')
-applet_effect_home = os.path.join(os.path.split(sys.argv[0])[0], '../shaders/')
+from pathlib import Path
 
 
-def read_file(path):
-    return open(path, 'rb').read().decode(errors='ignore')
+_data_home = os.environ.get('XDG_DATA_HOME', None) or Path.home() / '.local' / 'share'
+
+effect_dirs = [
+    _data_home / 'panon',
+    Path.home() / '.config' / 'panon',  # legacy
+    Path(sys.argv[0]).parent.parent / 'shaders'
+]
 
 
-def read_file_lines(path):
-    for line in open(path, 'rb'):
+def read_file(path: Path):
+    return path.open('rb').read().decode(errors='ignore')
+
+
+def read_file_lines(path: Path):
+    for line in path.open('rb'):
         yield line.decode(errors='ignore')

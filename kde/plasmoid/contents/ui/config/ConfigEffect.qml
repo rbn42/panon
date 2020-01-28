@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0 as QQC2
 
 import org.kde.kirigami 2.3 as Kirigami
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.newstuff 1.62 as NewStuff
 
 import "utils.js" as Utils
 
@@ -19,9 +20,9 @@ Kirigami.FormLayout {
     property var cfg_effectArgValues:[]
     property bool cfg_effectArgTrigger:false
 
-    QQC2.Label {
-        text:i18n("<a href='https://store.kde.org/search/projectSearchText/panon/f/tags/'>Download more effects</a>")
-        onLinkActivated: Qt.openUrlExternally(link)
+    NewStuff.Button {
+        downloadNewWhat: "effects"
+        configFile: Utils.get_root() + "/config/panon.knsrc"
     }
 
     QQC2.CheckBox {

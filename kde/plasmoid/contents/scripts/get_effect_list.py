@@ -1,21 +1,22 @@
-import glob
 import sys
-import os
-from helper import config_effect_home, applet_effect_home
+from pathlib import Path
+from helper import effect_dirs
 
 
-def _get_list(root):
-    l = glob.glob(os.path.join(root, '*/')) + glob.glob(os.path.join(root, '*.frag'))
-    return [n[len(root):] for n in l]
+def _get_shaders(root: Path):
+    if not root.is_dir():
+        return
+    for file in root.iterdir():
+        if file.suffix == '.frag' or any(file.glob('*.frag')):
+            yield file.name
 
 
 def get_list():
-    l1 = _get_list(applet_effect_home)
-    l2 = _get_list(config_effect_home)
-    l2 = [n + ' ' for n in l2]
-    l = l1 + l2
-    l.sort()
-    return l
+    return sorted(
+        effect_name
+        for effect_dir in effect_dirs
+        for effect_name in _get_shaders(effect_dir)
+    )
 
 
 if __name__ == '__main__':

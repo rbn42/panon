@@ -11,12 +11,13 @@ Options:
   --effect-name=N
   --debug                       Debug
 """
-from docopt import docopt
 import sys
 import json
-import os.path
+from pathlib import Path
 
-from helper import config_effect_home, applet_effect_home, read_file, read_file_lines
+from docopt import docopt
+
+from helper import effect_dirs, read_file, read_file_lines
 
 arguments = docopt(__doc__)
 effect_name = arguments['--effect-name']
@@ -28,42 +29,40 @@ if arguments['--random-effect']:
     effect_name = random.choice(effect_list)
     effect_arguments = []
 
-if effect_name.endswith(' '):
-    effect_name = effect_name[:-1]
-    effect_home = config_effect_home
+for effect_dir in effect_dirs:
+    if (effect_dir / effect_name).exists():
+        effect_home = effect_dir
+        break
 else:
-    effect_home = applet_effect_home
+    raise RuntimeError(f'Could not find shader {effect_name} in any of {effect_dirs}')
 
 
 def value2str(value):
-    t = type(value)
-    if t == int:
+    if isinstance(value, int):
         return str(value)
-    elif t == float:
+    elif isinstance(value, float):
         return str(value)
-    elif t == bool:
-        return 'true' if value else 'false'
+    elif isinstance(value, bool):
+        return str(bool(value)).lower()
 
 
-def build_source(files, main_file, meta_file=None, effect_arguments=None):
-    if not os.path.exists(main_file):
+def build_source(files, main_file: Path, meta_file: Path = None, effect_arguments=None):
+    if not main_file.exists():
         return ''
     arguments_map = {}
-    if meta_file is not None:
-        if os.path.exists(meta_file):
-            meta = json.load(open(meta_file, 'rb'))
-            meta_arg = meta['arguments']
-            arguments_map = {arg['name']: arg['default'] for arg in meta_arg}
-            if len(effect_arguments) > 0:
-                for i in range(len(meta_arg)):
-                    value = effect_arguments[i]
-                    if meta_arg[i]['type'] == 'double':
-                        value = float(value)
-                    elif meta_arg[i]['type'] == 'int':
-                        value = int(value)
-                    elif meta_arg[i]['type'] == 'bool':
-                        value = (value == 'true')
-                    arguments_map[meta_arg[i]['name']] = value
+    if meta_file is not None and meta_file.exists():
+        meta = json.loads(meta_file.read_bytes())
+        meta_arg = meta['arguments']
+        arguments_map = {arg['name']: arg['default'] for arg in meta_arg}
+        if len(effect_arguments) > 0:
+            for a, value in zip(meta_arg, effect_arguments):
+                if a['type'] == 'double':
+                    value = float(value)
+                elif a['type'] == 'int':
+                    value = int(value)
+                elif a['type'] == 'bool':
+                    value = value == 'true'
+                arguments_map[a['name']] = value
 
     version = next(read_file_lines(main_file))
     source = version
@@ -84,50 +83,52 @@ def build_source(files, main_file, meta_file=None, effect_arguments=None):
             source += read_file(path)
     return source
 
-def texture_uri(path):
-    if os.path.exists(path):
-        return os.path.abspath(path)
+def texture_uri(path: Path):
+    if path.exists():
+        return path.absolute()
     return ''
+
+applet_effect_home = effect_dirs[-1]
+
+image_shader_path = effect_home / effect_name
+if not effect_name.endswith('.frag'):
+    image_shader_path /= 'image.frag'
+
+image_shader_files = [
+    applet_effect_home / 'hsluv-glsl.fsh',
+    applet_effect_home / 'utils.fsh',
+    applet_effect_home / 'shadertoy-api-head.fsh',
+    image_shader_path,
+    applet_effect_home / 'shadertoy-api-foot.fsh',
+]
 
 if effect_name.endswith('.frag'):
     obj = {
         'image_shader':
-        build_source([
-            os.path.join(applet_effect_home, 'hsluv-glsl.fsh'),
-            os.path.join(applet_effect_home, 'utils.fsh'),
-            os.path.join(applet_effect_home, 'shadertoy-api-head.fsh'),
-            os.path.join(effect_home, effect_name),
-            os.path.join(applet_effect_home, 'shadertoy-api-foot.fsh'),
-        ], os.path.join(effect_home, effect_name))
+        build_source(image_shader_files, image_shader_path)
     }
-    json.dump(obj, sys.stdout)
-elif effect_name.endswith('/'):
+else:
     obj = {
         'image_shader':
         build_source(
-            [
-                os.path.join(applet_effect_home, 'hsluv-glsl.fsh'),
-                os.path.join(applet_effect_home, 'utils.fsh'),
-                os.path.join(applet_effect_home, 'shadertoy-api-head.fsh'),
-                os.path.join(effect_home, effect_name, 'image.frag'),
-                os.path.join(applet_effect_home, 'shadertoy-api-foot.fsh'),
-            ],
-            os.path.join(effect_home, effect_name, 'image.frag'),
-            os.path.join(effect_home, effect_name, 'meta.json'),
+            image_shader_files,
+            image_shader_path,
+            effect_home / effect_name / 'meta.json',
             effect_arguments,
         ),
         'buffer_shader':
         build_source(
             [
-                os.path.join(applet_effect_home, 'shadertoy-api-head.fsh'),
-                os.path.join(effect_home, effect_name, 'buffer.frag'),
-                os.path.join(applet_effect_home, 'shadertoy-api-foot-buffer.fsh'),
+                applet_effect_home / 'shadertoy-api-head.fsh',
+                effect_home / effect_name / 'buffer.frag',
+                applet_effect_home / 'shadertoy-api-foot-buffer.fsh',
             ],
-            os.path.join(effect_home, effect_name, 'buffer.frag'),
-            os.path.join(effect_home, effect_name, 'meta.json'),
+            effect_home / effect_name / 'buffer.frag',
+            effect_home / effect_name / 'meta.json',
             effect_arguments,
         ),
         'texture':
-        texture_uri(os.path.join(effect_home, effect_name, 'texture.png')),
+        texture_uri(effect_home / effect_name / 'texture.png'),
     }
-    json.dump(obj, sys.stdout)
+
+json.dump(obj, sys.stdout)
