@@ -1,9 +1,9 @@
 """
-panon client
+panon
 
 Usage:
-  freetile [options] <effect> <file>
-  freetile -h | --help
+  main.py [options] <effect> <file>
+  main.py -h | --help
 
 Options:
   -h --help                     Show this screen.
@@ -12,11 +12,12 @@ Options:
 from pathlib import Path
 from docopt import docopt
 from helper import effect_dirs, read_file
+import get_effect_list
 
 arguments = docopt(__doc__)
-effect_name = arguments['<effect>']
+effect_id = arguments['<effect>']
 
-for effect_dir in effect_dirs:
-    effect = effect_dir / effect_name
-    if effect.is_dir():
-        print(read_file(effect / arguments['<file>']))
+for effect in get_effect_list.get_list():
+    if effect.id == effect_id:
+        print(read_file(Path(effect.path) / arguments['<file>']))
+        break

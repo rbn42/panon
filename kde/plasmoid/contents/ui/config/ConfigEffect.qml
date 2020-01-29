@@ -45,7 +45,8 @@ Kirigami.FormLayout {
             model: ListModel {
                 id: shaderOptions
             }
-            onCurrentIndexChanged:cfg_visualEffect= shaderOptions.get(currentIndex).text
+            textRole: 'name'
+            onCurrentIndexChanged:cfg_visualEffect= shaderOptions.get(currentIndex).id
             enabled:!randomEffect.checked
         }
     }
@@ -81,7 +82,7 @@ Kirigami.FormLayout {
         connectedSources: {
             if(shaderOptions.count<1)return[sh_get_styles]
 
-            if(cfg_visualEffect.endsWith('/')||cfg_visualEffect.endsWith('/ '))
+            if(!cfg_visualEffect.endsWith('.frag'))
                 return[sh_read_effect_hint,sh_read_effect_args]
 
             return []
@@ -124,10 +125,16 @@ Kirigami.FormLayout {
             }else if(sourceName==sh_get_styles){
                 var lst=JSON.parse(data.stdout)
                 for(var i in lst)
-                    shaderOptions.append({text:lst[i]})
+                    shaderOptions.append(lst[i])
+                // Default
+                var ci;
                 for(var i=0;i<lst.length;i++)
-                    if(shaderOptions.get(i).text==cfg_visualEffect)
-                        visualeffect.currentIndex=i;
+                    if(shaderOptions.get(i).name=='default')
+                        ci=i;
+                for(var i=0;i<lst.length;i++)
+                    if(shaderOptions.get(i).id==cfg_visualEffect)
+                        ci=i;
+                visualeffect.currentIndex=ci;
             }
         }
     }

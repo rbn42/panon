@@ -1,14 +1,14 @@
 """
-panon client
+panon 
 
 Usage:
-  freetile [options] [<effect-arguments>...]
-  freetile -h | --help
+  main [options] [<effect-arguments>...]
+  main -h | --help
 
 Options:
   -h --help                     Show this screen.
   --random-effect
-  --effect-name=N
+  --effect-id=N
   --debug                       Debug
 """
 import sys
@@ -20,21 +20,21 @@ from docopt import docopt
 from helper import effect_dirs, read_file, read_file_lines
 
 arguments = docopt(__doc__)
-effect_name = arguments['--effect-name']
+effect_id = arguments['--effect-id']
 effect_arguments = arguments['<effect-arguments>']
+import get_effect_list
+effect_list = get_effect_list.get_list()
+effect = None
+for e in effect_list:
+    if e.name == 'default':
+        effect = e
+for e in effect_list:
+    if e.id == effect_id:
+        effect = e
 if arguments['--random-effect']:
     import random
-    import get_effect_list
-    effect_list = get_effect_list.get_list()
-    effect_name = random.choice(effect_list)
+    effect = random.choice(effect_list)
     effect_arguments = []
-
-for effect_dir in effect_dirs:
-    if (effect_dir / effect_name).exists():
-        effect_home = effect_dir
-        break
-else:
-    raise RuntimeError(f'Could not find shader {effect_name} in any of {effect_dirs}')
 
 
 def value2str(value):
@@ -72,9 +72,9 @@ def build_source(files, main_file: Path, meta_file: Path = None, effect_argument
                 lst = line.split()
                 if len(lst) >= 3:
                     if lst[2].startswith('$'):
-                        key =lst[2][1:]
+                        key = lst[2][1:]
                         if key not in arguments_map:
-                            json.dump({"error_code":1}, sys.stdout)
+                            json.dump({"error_code": 1}, sys.stdout)
                             sys.exit()
                         lst[2] = value2str(arguments_map[key])
                         line = ' '.join(lst) + '\n'
@@ -83,15 +83,17 @@ def build_source(files, main_file: Path, meta_file: Path = None, effect_argument
             source += read_file(path)
     return source
 
+
 def texture_uri(path: Path):
     if path.exists():
-        return path.absolute()
+        return str(path.absolute())
     return ''
+
 
 applet_effect_home = effect_dirs[-1]
 
-image_shader_path = effect_home / effect_name
-if not effect_name.endswith('.frag'):
+image_shader_path = Path(effect.path)
+if not effect.name.endswith('.frag'):
     image_shader_path /= 'image.frag'
 
 image_shader_files = [
@@ -102,33 +104,30 @@ image_shader_files = [
     applet_effect_home / 'shadertoy-api-foot.fsh',
 ]
 
-if effect_name.endswith('.frag'):
-    obj = {
-        'image_shader':
-        build_source(image_shader_files, image_shader_path)
-    }
+if effect.name.endswith('.frag'):
+    obj = {'image_shader': build_source(image_shader_files, image_shader_path)}
 else:
     obj = {
         'image_shader':
         build_source(
             image_shader_files,
             image_shader_path,
-            effect_home / effect_name / 'meta.json',
+            Path(effect.path) / 'meta.json',
             effect_arguments,
         ),
         'buffer_shader':
         build_source(
             [
                 applet_effect_home / 'shadertoy-api-head.fsh',
-                effect_home / effect_name / 'buffer.frag',
+                Path(effect.path) / 'buffer.frag',
                 applet_effect_home / 'shadertoy-api-foot-buffer.fsh',
             ],
-            effect_home / effect_name / 'buffer.frag',
-            effect_home / effect_name / 'meta.json',
+            Path(effect.path) / 'buffer.frag',
+            Path(effect.path) / 'meta.json',
             effect_arguments,
         ),
         'texture':
-        texture_uri(effect_home / effect_name / 'texture.png'),
+        texture_uri(Path(effect.path) / 'texture.png'),
     }
 
 json.dump(obj, sys.stdout)
