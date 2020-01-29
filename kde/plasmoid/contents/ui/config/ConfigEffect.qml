@@ -23,6 +23,9 @@ Kirigami.FormLayout {
     NewStuff.Button {
         downloadNewWhat: i18n("Effects")
         configFile: Utils.get_root() + "/config/panon.knsrc"
+        onChangedEntriesChanged:{
+            shaderOptions.clear()
+        }
     }
 
     QQC2.CheckBox {
