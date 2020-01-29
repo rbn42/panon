@@ -2,8 +2,8 @@
 panon client
 
 Usage:
-  freetile [options] <port> 
-  freetile -h | --help
+  main [options] <port> 
+  main -h | --help
 
 Options:
   -h --help                     Show this screen.

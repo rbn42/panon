@@ -13,7 +13,7 @@ def _get_shaders(root: Path, root_id):
         if _file.suffix == '.frag' or any(_file.glob('*.frag')):
             yield Effect(
                 _file.name,
-                str(root_id) + ':' + _file.name.replace(' ', '_').replace('"', '__').replace("'", '___').replace("$", '____'),
+                str(root_id) + '.' + _file.name.replace(' ', '_').replace('"', '__').replace("'", '___').replace("$", '____'),
                 str(_file.absolute()),
             )
 
