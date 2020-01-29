@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-01-19 12:43+0800\n"
+"POT-Creation-Date: 2020-01-29 11:24+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Chris (NullDev) <chris@nulldev.org>\n"
 "Language-Team: NullDev <chris@nulldev.org>\n"
@@ -97,8 +97,8 @@ msgstr "Farbverlauf von"
 #: contents/ui/config/ConfigColors.qml:61
 #: contents/ui/config/ConfigColors.qml:83
 msgctxt "@label:spinbox"
-msgid "Farbverlauf bis"
-msgstr ""
+msgid "Hue to"
+msgstr "Farbverlauf bis"
 
 #: contents/ui/config/ConfigColors.qml:94
 #: contents/ui/config/ConfigColors.qml:116
@@ -112,27 +112,25 @@ msgctxt "@label:spinbox"
 msgid "Lightness"
 msgstr "Helligkeit"
 
-#: contents/ui/config/ConfigEffect.qml:23
-msgid ""
-"<a href='https://store.kde.org/search/projectSearchText/panon/f/"
-"tags/'>Download more effects</a>"
-msgstr "<a href='https://store.kde.org/search/projectSearchText/panon/f/"
-"tags/'>Mehr Effekte herunterladen</a>"
+#: contents/ui/config/ConfigEffect.qml:24
+msgid "Effects"
+msgstr "Effekte"
 
-#: contents/ui/config/ConfigEffect.qml:29
+#: contents/ui/config/ConfigEffect.qml:30
 msgctxt "@option:check"
 msgid "Random effect (on startup)"
 msgstr "Zufälliger Effekt (bei Start)"
 
-#: contents/ui/config/ConfigEffect.qml:34
+#: contents/ui/config/ConfigEffect.qml:35
 msgid "Unwanted effects can be removed <br/>from <a href='$link' >here</a>."
-msgstr "Unerwünschte Effekte können <br/><a href='$link' >hier</a> entfernt werden."
+msgstr ""
+"Unerwünschte Effekte können <br/><a href='$link' >hier</a> entfernt werden."
 
-#: contents/ui/config/ConfigEffect.qml:39
+#: contents/ui/config/ConfigEffect.qml:40
 msgid "Effect:"
 msgstr "Effekt:"
 
-#: contents/ui/config/ConfigEffect.qml:53
+#: contents/ui/config/ConfigEffect.qml:54
 msgid "Hint:"
 msgstr "Hinweis:"
 
@@ -209,7 +207,7 @@ msgctxt "@option:check"
 msgid "Hide tooltip"
 msgstr "Verstecke Hinweis"
 
-#: contents/ui/ShaderSource.qml:32
+#: contents/ui/ShaderSource.qml:43
 msgid "Error: Find undeclared arguments."
 msgstr "Fehler: Undeklarierte Argumente gefunden."
 
@@ -217,8 +215,9 @@ msgstr "Fehler: Undeklarierte Argumente gefunden."
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
-msgstr "Fehler: Laden des visuellen Effektes fehlgeschlagen. Bitte anderen Effekt "
-"im Konfigurationsdialog auswählen."
+msgstr ""
+"Fehler: Laden des visuellen Effektes fehlgeschlagen. Bitte anderen Effekt im "
+"Konfigurationsdialog auswählen."
 
 #: contents/ui/Spectrum.qml:167
 msgid "Error: Failed to compile image shader."
@@ -226,4 +225,12 @@ msgstr "Fehler: Kompilieren der Bilderschattierung fehlgeschlagen."
 
 #: contents/ui/Spectrum.qml:168
 msgid "Error: Failed to compile bufffer shader."
-msgstr "Fehler: Kompilieren der zwischengespeicherten Schattierungen fehlgeschlagen."
+msgstr ""
+"Fehler: Kompilieren der zwischengespeicherten Schattierungen fehlgeschlagen."
+
+#~ msgid ""
+#~ "<a href='https://store.kde.org/search/projectSearchText/panon/f/"
+#~ "tags/'>Download more effects</a>"
+#~ msgstr ""
+#~ "<a href='https://store.kde.org/search/projectSearchText/panon/f/"
+#~ "tags/'>Mehr Effekte herunterladen</a>"

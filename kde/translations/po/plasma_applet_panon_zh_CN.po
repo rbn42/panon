@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-01-19 12:43+0800\n"
+"POT-Creation-Date: 2020-01-29 11:24+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,28 +112,24 @@ msgctxt "@label:spinbox"
 msgid "Lightness"
 msgstr "亮度"
 
-#: contents/ui/config/ConfigEffect.qml:23
-msgid ""
-"<a href='https://store.kde.org/search/projectSearchText/panon/f/"
-"tags/'>Download more effects</a>"
-msgstr ""
-"<a href='https://store.kde.org/search/projectSearchText/panon/f/tags/'>下载更"
-"多特效</a>"
+#: contents/ui/config/ConfigEffect.qml:24
+msgid "Effects"
+msgstr "特效"
 
-#: contents/ui/config/ConfigEffect.qml:29
+#: contents/ui/config/ConfigEffect.qml:30
 msgctxt "@option:check"
 msgid "Random effect (on startup)"
 msgstr "随机特效(启动的时候)"
 
-#: contents/ui/config/ConfigEffect.qml:34
+#: contents/ui/config/ConfigEffect.qml:35
 msgid "Unwanted effects can be removed <br/>from <a href='$link' >here</a>."
 msgstr "不想要的特效可以从<a href='$link' >这里</a>删除"
 
-#: contents/ui/config/ConfigEffect.qml:39
+#: contents/ui/config/ConfigEffect.qml:40
 msgid "Effect:"
 msgstr "特效:"
 
-#: contents/ui/config/ConfigEffect.qml:53
+#: contents/ui/config/ConfigEffect.qml:54
 msgid "Hint:"
 msgstr "提示:"
 
@@ -210,7 +206,7 @@ msgctxt "@option:check"
 msgid "Hide tooltip"
 msgstr "隐藏提示窗口"
 
-#: contents/ui/ShaderSource.qml:32
+#: contents/ui/ShaderSource.qml:43
 msgid "Error: Find undeclared arguments."
 msgstr "错误:发现未声明的参数"
 
@@ -227,3 +223,10 @@ msgstr "错误:无法编译image shader"
 #: contents/ui/Spectrum.qml:168
 msgid "Error: Failed to compile bufffer shader."
 msgstr "错误:无法编译buffer shader"
+
+#~ msgid ""
+#~ "<a href='https://store.kde.org/search/projectSearchText/panon/f/"
+#~ "tags/'>Download more effects</a>"
+#~ msgstr ""
+#~ "<a href='https://store.kde.org/search/projectSearchText/panon/f/tags/'>下"
+#~ "载更多特效</a>"

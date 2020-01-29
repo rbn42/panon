@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-01-19 12:43+0800\n"
+"POT-Creation-Date: 2020-01-29 11:24+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,26 +112,24 @@ msgctxt "@label:spinbox"
 msgid "Lightness"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:23
-msgid ""
-"<a href='https://store.kde.org/search/projectSearchText/panon/f/"
-"tags/'>Download more effects</a>"
+#: contents/ui/config/ConfigEffect.qml:24
+msgid "Effects"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:29
+#: contents/ui/config/ConfigEffect.qml:30
 msgctxt "@option:check"
 msgid "Random effect (on startup)"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:34
+#: contents/ui/config/ConfigEffect.qml:35
 msgid "Unwanted effects can be removed <br/>from <a href='$link' >here</a>."
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:39
+#: contents/ui/config/ConfigEffect.qml:40
 msgid "Effect:"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:53
+#: contents/ui/config/ConfigEffect.qml:54
 msgid "Hint:"
 msgstr ""
 
@@ -208,7 +206,7 @@ msgctxt "@option:check"
 msgid "Hide tooltip"
 msgstr ""
 
-#: contents/ui/ShaderSource.qml:32
+#: contents/ui/ShaderSource.qml:43
 msgid "Error: Find undeclared arguments."
 msgstr ""
 

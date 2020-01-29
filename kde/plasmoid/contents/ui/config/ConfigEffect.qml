@@ -21,7 +21,7 @@ Kirigami.FormLayout {
     property bool cfg_effectArgTrigger:false
 
     NewStuff.Button {
-        downloadNewWhat: "effects"
+        downloadNewWhat: i18n("Effects")
         configFile: Utils.get_root() + "/config/panon.knsrc"
     }
 
