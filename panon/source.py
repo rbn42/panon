@@ -133,20 +133,16 @@ class SoundCardSource:
 
 
 if __name__ == '__main__':
-    import numpy as np
-    import time
-    sample = PyaudioSource(2, 44100, None)
+    sample = PyaudioSource(2, 44100, None, 60)
     print('Make sure you are playing music when run this script')
 
-    time.sleep(2)
-
-    data = sample.readlatest(1024 * 16)
-    data = np.frombuffer(data, 'int16')
+    data = sample.read()
 
     _max = np.max(data)
     _min = np.min(data)
     _sum = np.sum(data)
     print(_max, _min, _sum)
+
     if _max > 0:
         print('succeeded to catch audio')
     else:

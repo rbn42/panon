@@ -3,6 +3,11 @@ import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import "utils.js" as Utils
 
+/*
+ * This module executes a python script to build 
+ * the shader sources.
+ */
+
 PlasmaCore.DataSource {
 
     readonly property var cfg:plasmoid.configuration
@@ -15,9 +20,11 @@ PlasmaCore.DataSource {
 
     readonly property string cmd:'python3'
         + ' "'+Utils.get_scripts_root()+'/build_shader_source.py'+'"'
-        + (cfg.randomVisualEffect?' --random-effect':'')
+        + (cfg.randomVisualEffect ? " --random-effect" : "")
         + ' --effect-id="'+cfg.visualEffect+'"'
-        + ' '+cfg.effectArgValues.map(function(s){return '"'+s.replace('"','\\"').replace('$','\\$')+'"'}).join(' ')
+        + ' '+cfg.effectArgValues.map(function(s){
+            return '"'+s.replace('"','\\"').replace('$','\\$')+'"'
+        }).join(' ')
 
     connectedSources: [cmd]
 

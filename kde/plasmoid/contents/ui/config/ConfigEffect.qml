@@ -24,6 +24,11 @@ Kirigami.FormLayout {
         downloadNewWhat: i18n("Effects")
         configFile: Utils.get_root() + "/config/panon.knsrc"
         onChangedEntriesChanged:{
+            /*
+             * Triggers the executable DataSource to execute this line again: 
+             * if(shaderOptions.count<1)return[sh_get_visual_effects]
+             * So that the list model shaderOptions will be refreshed.
+             */
             shaderOptions.clear()
         }
     }
@@ -66,7 +71,7 @@ Kirigami.FormLayout {
     }
 
 
-    readonly property string sh_get_styles:'python3 "'+Utils.get_scripts_root()+'/get_effect_list.py"'
+    readonly property string sh_get_visual_effects:'python3 "'+Utils.get_scripts_root()+'/get_effect_list.py"'
 
     readonly property string sh_read_effect_hint:'python3 "'+Utils.get_scripts_root()+'/read_file.py" "'+cfg_visualEffect+'" hint.html'
     readonly property string sh_read_effect_args:'python3 "'+Utils.get_scripts_root()+'/read_file.py" "'+cfg_visualEffect+'" meta.json'
@@ -80,16 +85,19 @@ Kirigami.FormLayout {
 
      
     PlasmaCore.DataSource {
-        //id: getOptionsDS
         engine: 'executable'
         connectedSources: {
-            if(shaderOptions.count<1)return[sh_get_styles]
+            // Load visual effects when shaderOptions is empty.
+            if(shaderOptions.count<1)return[sh_get_visual_effects]
 
+            // Load hint.html and meta.json
             if(!cfg_visualEffect.endsWith('.frag'))
                 return[sh_read_effect_hint,sh_read_effect_args]
 
             return []
         }
+
+        // Text field components used to represent the arguments of the visual effect.
         property var textfieldlst:[]
         
         onNewData: {
@@ -125,15 +133,16 @@ Kirigami.FormLayout {
                     }
                 }
                 firstTimeLoadArgs=false
-            }else if(sourceName==sh_get_styles){
+            }else if(sourceName==sh_get_visual_effects){
                 var lst=JSON.parse(data.stdout)
                 for(var i in lst)
                     shaderOptions.append(lst[i])
-                // Default
                 var ci;
+                // Set a default effect.
                 for(var i=0;i<lst.length;i++)
                     if(shaderOptions.get(i).name=='default')
                         ci=i;
+                // Search for the effect identity cfg_visualEffect
                 for(var i=0;i<lst.length;i++)
                     if(shaderOptions.get(i).id==cfg_visualEffect)
                         ci=i;

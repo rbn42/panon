@@ -2,6 +2,10 @@ import QtQuick 2.0
 import QtWebSockets 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import "utils.js" as Utils
+/*
+ * This module starts a python back-end client, 
+ * and pushs messages from the client to a queue.
+ */
 Item{
 
     readonly property var cfg:plasmoid.configuration
@@ -14,7 +18,6 @@ Item{
         onClientConnected: {
             webSocket.onTextMessageReceived.connect(function(message) {
                 queue.push(message)
-                return
             });
         }
     }

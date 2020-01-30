@@ -22,15 +22,21 @@ from helper import effect_dirs, read_file, read_file_lines
 arguments = docopt(__doc__)
 effect_id = arguments['--effect-id']
 effect_arguments = arguments['<effect-arguments>']
+
 import get_effect_list
 effect_list = get_effect_list.get_list()
 effect = None
+
+# Set a default effect.
 for e in effect_list:
     if e.name == 'default':
         effect = e
+
 for e in effect_list:
     if e.id == effect_id:
         effect = e
+
+# If required, set a random effect.
 if arguments['--random-effect']:
     import random
     effect = random.choice(effect_list)
@@ -50,6 +56,7 @@ def build_source(files, main_file: Path, meta_file: Path = None, effect_argument
     if not main_file.exists():
         return ''
     arguments_map = {}
+    # If meta_file exists, construct a key-value map to store arguments' names and values.
     if meta_file is not None and meta_file.exists():
         meta = json.loads(meta_file.read_bytes())
         meta_arg = meta['arguments']
@@ -64,6 +71,7 @@ def build_source(files, main_file: Path, meta_file: Path = None, effect_argument
                     value = value == 'true'
                 arguments_map[a['name']] = value
 
+    # Extract glsl version
     version = next(read_file_lines(main_file))
     source = version
     for path in files:
@@ -71,8 +79,10 @@ def build_source(files, main_file: Path, meta_file: Path = None, effect_argument
             for line in list(read_file_lines(path))[1:]:
                 lst = line.split()
                 if len(lst) >= 3:
-                    if lst[2].startswith('$'):
+                    # Search for used arguments(start with $) in macro definitions.
+                    if lst[0] == '#define' and lst[2].startswith('$'):
                         key = lst[2][1:]
+                        # Raise an error when the value of an argument is not found.
                         if key not in arguments_map:
                             json.dump({"error_code": 1}, sys.stdout)
                             sys.exit()

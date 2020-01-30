@@ -1,9 +1,9 @@
 """
-panon
+Read a file of a specified visual effect.
 
 Usage:
-  main.py [options] <effect> <file>
-  main.py -h | --help
+  main [options] <effect-id> <file>
+  main -h | --help
 
 Options:
   -h --help                     Show this screen.
@@ -15,7 +15,7 @@ from helper import effect_dirs, read_file
 import get_effect_list
 
 arguments = docopt(__doc__)
-effect_id = arguments['<effect>']
+effect_id = arguments['<effect-id>']
 
 for effect in get_effect_list.get_list():
     if effect.id == effect_id:

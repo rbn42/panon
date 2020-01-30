@@ -1,4 +1,10 @@
 import QtQuick 2.0
+
+/*
+ * The length of this queue is 2. The queue rejects new 
+ * messages before the images of old messages are loaded.
+ */
+
 Item{
 
     property variant imgsReady:pt0

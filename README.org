@@ -59,7 +59,7 @@ cd panon/kde
 git submodule update --init
 # To install
 kpackagetool5 -t Plasma/Applet --install plasmoid
-# To upgrade. Backup your modified shaders before upgrading.
+# To upgrade
 kpackagetool5 -t Plasma/Applet --upgrade plasmoid
 #+END_SRC
 
