@@ -1,6 +1,5 @@
 [KNewStuff3]
 Name=Panon
-ProvidersUrl=https://store.kde.org/ocs/providers.xml
 Categories=Panon Shaders
 XdgTargetDir=panon
 Uncompress=archive
