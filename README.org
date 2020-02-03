@@ -1,33 +1,15 @@
-A Different Audio Spectrum Analyzer for KDE Plasma
+This is an audio spectrum analyzer for KDE panel.
 
 [[../../wiki/Previews][file:../../wiki/plasmoid/preview.png]] 
 
-** Contents                                                        :noexport:
-:PROPERTIES:
-:TOC:      this
-:END:
-  - [[#requirements][Requirements]]
-  -  [[#install-the-required-dependencies][Install the required dependencies]]
-    -  [[#arch-Linux][Arch Linux]]
-    -  [[#ubuntu][Ubuntu]]
-  -  [[#installation][Installation]]
-    -  [[#via-kde-store][Via KDE Store]]
-    -  [[#via-command-line][Via Command Line]]
-    -  [[#via-aur][Via AUR]]
-    -  [[#drag-panon-widget-to-your-panel-eg-latte-dock][Drag panon widget to your panel]]
-  -  [[#visual-effects][Visual Effects]]
-    -  [[#debugging-shaders][Debugging Shaders]]
-  -  [[#troubleshooting][Troubleshooting]]
-  -  [[#credits][Credits]]
-
 ** Requirements
 
-|               | Minimal version required |
+|               | Minimal required version |
 |---------------+--------------------------|
 | OpenGL / GLSL | 3.0 / 1.30               |
 | QtQuick       | 2.0                      |
 
-** Install the required dependencies
+** Dependencies
    
 *** Arch Linux
 #+BEGIN_SRC sh
@@ -75,75 +57,7 @@ make install DESTDIR=~/.local/share/locale/
 *** Via AUR
 [[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] is available for ArchLinux. 
 
-*** Drag panon widget to your panel (eg. [[https://github.com/psifidotos/Latte-Dock][latte-dock]]).
-[[file:../../wiki/plasmoid/step1.png]]
-[[file:../../wiki/plasmoid/step2.png]]
-
-** Visual Effects
-
-Visual effects are stored in [[plasmoid/contents/shaders/]]. You can create your own visual effects in =~/.local/share/panon/=.
-
-A visual effect consists of a single main shader file with its name ended with =.frag=, like [[plasmoid/contents/shaders/solid.frag][solid.frag]], or a folder, like [[file:plasmoid/contents/shaders/spectrogram][spectrogram/]], with the following struture.
-- effect folder
-  - image.frag, is the main shader file, must exist.
-  - buffer.frag, draws to the buffer(iChannel2), is optional.
-  - hint.html, shows hints to the user, is optional.
-  - [[#arguments][meta.json]], declares the arguments for the user, is optional.
-  - texture.png, a static image to be used as a texture(iChannel3), is optional.
-
-*** Shader API and Shadertoy.com
-
-[[https://gamedevelopment.tutsplus.com/tutorials/a-beginners-guide-to-coding-graphics-shaders--cms-23313][What is a shader? And a turtorial for beginners.]]
-
-Shadertoy.com is a cross-browser online community and tool for creating and sharing shaders through WebGL, from where you can find many wonderful works shared by kind people. By default, these works are licensed under [[https://www.shadertoy.com/terms][a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License]]. And [[https://www.shadertoy.com/view/Md23DV][here]] is an interactive tutorial for shadertoy.com.
-
-Panon's shader API is designed to be similar to shadertoy.com. Many of the works can be copied directly to panon, providing you add =#version 130= to the shader file's first line. [[https://github.com/rbn42/panon-effects/blob/master/effects/example-shadertoy.frag][example-shadertoy.frag]] is such an example. But all these works were designed to show in browsers, so they won't look good in tiny space like a panel.
-
-These shadertoy-like uniforms are provided. 
-| Uniform Name       | Description                                                                                                                                               |
-|--------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| iResolution        | Width and heigh of the applet                                                                                                                             |
-| iTime              |                                                                                                                                                           |
-| iTimeDelta         |                                                                                                                                                           |
-| iFrame             |                                                                                                                                                           |
-| iMouse             | Mouse position. [[https://github.com/rbn42/panon-effects/blob/master/effects/example-iMouse.frag][This example]] shows how to use it.                     |
-| iChannel0          | Wave data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel.                                               |
-| iChannel1          | Spectrum data: Red channel corresponds to left audio channel, green channel corresponds to right audio channel.                                           |
-| iChannel2          | Buffer data: Output of =buffer.frag=, has the same width and height of the applet.                                                                        |
-| iChannel3          | The static image texture.png. [[https://github.com/rbn42/panon-effects/blob/master/effects/example-texture-iChannel3][This example]] shows how to use it. |
-| iChannelResolution | Input channels' width and height                                                                                                                          |
-Both =image.frag= (or the single main shader) and =buffer.frag= can access these uniforms.
-
-*** Arguments
-meta.json contains a JSON list like this. 
-#+BEGIN_SRC js
-{
-  "arguments":[{
-    "name":"arg_name",
-    "default":1,
-    "type":"int"
-  }]
-}
-#+END_SRC
-"type" can be "int", "double" or "bool". A decalred argument can be used in a shader file's macros, like 
-#+BEGIN_SRC c
-#define NAME $arg_name
-#+END_SRC
-Which will be translated into
-#+BEGIN_SRC c
-#define NAME 1
-#+END_SRC
-*** Debugging Shaders
-
-Neither KDE Panel nor Latte-Dock shows the errors caused by the shaders. To catch the error messages, you have install =plasma-sdk=,  and start plasmoidviewer in a console. 
-
-#+BEGIN_SRC sh
-#Providing plasma-sdk is installed
-plasmoidviewer --applet ./plasmoid/
-#+END_SRC
-In plasmoidviewer, go to the configuration window and choose your own visual effect. 
-Then plasmoidviewer will run your visual effect and show the errors, if exist, in the console.
-
+** [[../../wiki/VisualEffects][Visual Effects]]
 ** Background transparency
 To achieve background transparency, after installing panon, go to ~/.local/share/plasma/plasmoids/panon/contents/ui/main.qml in your home directory,
 alter the following part and add the line marked below:
@@ -157,13 +71,15 @@ alter the following part and add the line marked below:
 ** Credits
 *** Main Contributors
     From old to new,
- | AUR package                   | maintained by [[https://aur.archlinux.org/packages/?K=mareex&SeB=m][mareex]] |
- | German translation            | added by [[https://github.com/NLDev][NullDev (Chris)]]                       |
- | "Download New Effects" dialog | added by [[https://github.com/flying-sheep][flying-sheep (Philipp A.)]]      |
+    |                                        | Contributor                                                    |
+    |----------------------------------------+----------------------------------------------------------------|
+    | AUR package maintained by              | [[https://aur.archlinux.org/packages/?K=mareex&SeB=m][mareex]] |
+    | German translation added by            | [[https://github.com/NLDev][NullDev (Chris)]]                  |
+    | "Download New Effects" dialog added by | [[https://github.com/flying-sheep][flying-sheep (Philipp A.)]] |
  And thanks for all the reported issues and suggestions, which I would not list here.
 *** Third Party Source 
- | Files                                                                           | Source                                                                                           | Licensed under |
- |---------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------|
- | [[file:panon/source.py][source.py]] and [[file:panon/spectrum.py][spectrum.py]] | adapted from [[https://github.com/ajalt/PyVisualizer][PyVisualizer]]                             |                |
- | =hsv2rgb= in [[file:plasmoid/contents/shaders/utils.fsh][utils.fsh]]            | copied from [[https://gist.github.com/patriciogonzalezvivo/114c1653de9e3da6e1e3][GLSL-color.md]] |                |
+ | Files                                                                                           | Source                                                                                           | Licensed under |
+ |-------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------|
+ | [[file:panon/backend/source.py][source.py]] and [[file:panon/backend/spectrum.py][spectrum.py]] | adapted from [[https://github.com/ajalt/PyVisualizer][PyVisualizer]]                             |                |
+ | =hsv2rgb= in [[file:plasmoid/contents/shaders/utils.fsh][utils.fsh]]                            | copied from [[https://gist.github.com/patriciogonzalezvivo/114c1653de9e3da6e1e3][GLSL-color.md]] |                |
 
