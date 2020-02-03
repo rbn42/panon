@@ -54,7 +54,7 @@ sudo apt-get install qml-module-qt-websockets \
 
 #+BEGIN_SRC sh
 git clone https://github.com/rbn42/panon.git
-cd panon/kde
+cd panon
 # Download SoundCard and hsluv-glsl
 git submodule update --init
 # To install
@@ -65,7 +65,7 @@ kpackagetool5 -t Plasma/Applet --upgrade plasmoid
 
 **** Install Translations
 #+BEGIN_SRC sh
-cd panon/kde/translations/
+cd panon/translations/
 mkdir build
 cd build 
 cmake ..
@@ -73,7 +73,7 @@ make install DESTDIR=~/.local/share/locale/
 #+END_SRC
 
 *** Via AUR
-[[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] and [[https://aur.archlinux.org/packages/plasma5-applets-panon-git/][plasma5-applets-panon-git]] are available for ArchLinux. 
+[[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] is available for ArchLinux. 
 
 *** Drag panon widget to your panel (eg. [[https://github.com/psifidotos/Latte-Dock][latte-dock]]).
 [[file:../../wiki/plasmoid/step1.png]]
@@ -81,9 +81,9 @@ make install DESTDIR=~/.local/share/locale/
 
 ** Visual Effects
 
-Visual effects are stored in [[kde/plasmoid/contents/shaders/]]. You can create your own visual effects in =~/.local/share/panon/=.
+Visual effects are stored in [[plasmoid/contents/shaders/]]. You can create your own visual effects in =~/.local/share/panon/=.
 
-A visual effect consists of a single main shader file with its name ended with =.frag=, like [[kde/plasmoid/contents/shaders/solid.frag][solid.frag]], or a folder, like [[file:kde/plasmoid/contents/shaders/spectrogram][spectrogram/]], with the following struture.
+A visual effect consists of a single main shader file with its name ended with =.frag=, like [[plasmoid/contents/shaders/solid.frag][solid.frag]], or a folder, like [[file:plasmoid/contents/shaders/spectrogram][spectrogram/]], with the following struture.
 - effect folder
   - image.frag, is the main shader file, must exist.
   - buffer.frag, draws to the buffer(iChannel2), is optional.
@@ -138,7 +138,6 @@ Which will be translated into
 Neither KDE Panel nor Latte-Dock shows the errors caused by the shaders. To catch the error messages, you have install =plasma-sdk=,  and start plasmoidviewer in a console. 
 
 #+BEGIN_SRC sh
-cd ./kde/
 #Providing plasma-sdk is installed
 plasmoidviewer --applet ./plasmoid/
 #+END_SRC
@@ -156,7 +155,15 @@ alter the following part and add the line marked below:
 
 ** Troubleshooting
 ** Credits
-| Files                                                                           | Source                                                                                           | Licensed under |
-|---------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------|
-| [[file:panon/source.py][source.py]] and [[file:panon/spectrum.py][spectrum.py]] | adapted from [[https://github.com/ajalt/PyVisualizer][PyVisualizer]]                             |                |
-| =hsv2rgb= in [[file:kde/plasmoid/contents/shaders/utils.fsh][utils.fsh]]        | copied from [[https://gist.github.com/patriciogonzalezvivo/114c1653de9e3da6e1e3][GLSL-color.md]] |                |
+*** Main Contributors
+    From old to new,
+ | AUR package                   | maintained by [[https://aur.archlinux.org/packages/?K=mareex&SeB=m][mareex]] |
+ | German translation            | added by [[https://github.com/NLDev][NullDev (Chris)]]                       |
+ | "Download New Effects" dialog | added by [[https://github.com/flying-sheep][flying-sheep (Philipp A.)]]      |
+ And thanks for all the reported issues and suggestions, which I would not list here.
+*** Third Party Source 
+ | Files                                                                           | Source                                                                                           | Licensed under |
+ |---------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------|
+ | [[file:panon/source.py][source.py]] and [[file:panon/spectrum.py][spectrum.py]] | adapted from [[https://github.com/ajalt/PyVisualizer][PyVisualizer]]                             |                |
+ | =hsv2rgb= in [[file:plasmoid/contents/shaders/utils.fsh][utils.fsh]]            | copied from [[https://gist.github.com/patriciogonzalezvivo/114c1653de9e3da6e1e3][GLSL-color.md]] |                |
+

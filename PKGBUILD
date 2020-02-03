@@ -27,15 +27,17 @@ package() {
   install -Dm644 third_party/hsluv-glsl/LICENCE.md "$pkgdir/usr/share/licenses/${_basename%-*}/hsluv-glsl/LICENCE.md"
   install -Dm644 third_party/SoundCard/LICENSE "$pkgdir/usr/share/licenses/${_basename%-*}/SoundCard/LICENSE"
 
+  # Install translations
   mkdir build
   cd build
-  cmake ../kde \
+  cmake .. \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_BUILD_TYPE=Release \
         -DKDE_INSTALL_LIBDIR=lib
   make install DESTDIR="$pkgdir" 
 
-  cd ../kde
+  # Install panon applet
+  cd ..
   rm -r "$pkgdir/usr/share/plasma/plasmoids/" 
   kpackagetool5 -p "$pkgdir/usr/share/plasma/plasmoids/" -t Plasma/Applet -i plasmoid
 

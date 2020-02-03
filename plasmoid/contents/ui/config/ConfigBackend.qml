@@ -100,8 +100,8 @@ Kirigami.FormLayout {
         text: i18nc("@option:check", "Debug")
     }
 
-    readonly property string sh_get_devices:'sh '+'"'+Utils.get_scripts_root()+'/get-devices.sh'+'" '
-    readonly property string sh_get_pa_devices:'sh '+'"'+Utils.get_scripts_root()+'/get-pa-devices.sh'+'" '
+    readonly property string sh_get_devices:Utils.chdir_scripts_root()+'python3 -m panon.backend.get_devices'
+    readonly property string sh_get_pa_devices:Utils.chdir_scripts_root()+'python3 -m panon.backend.get_pa_devices'
 
     PlasmaCore.DataSource {
         //id: getOptionsDS

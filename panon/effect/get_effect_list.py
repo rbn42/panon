@@ -6,7 +6,7 @@ build_shader_source.py.
 """
 import sys
 from pathlib import Path
-from helper import effect_dirs
+from .helper import effect_dirs
 import collections
 
 # The data structure of an effect

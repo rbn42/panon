@@ -18,8 +18,8 @@ PlasmaCore.DataSource {
     property string texture_uri:''
     property string error_message:''
 
-    readonly property string cmd:'python3'
-        + ' "'+Utils.get_scripts_root()+'/build_shader_source.py'+'"'
+    readonly property string cmd:Utils.chdir_scripts_root()
+        + 'python3 -m panon.effect.build_shader_source'
         + (cfg.randomVisualEffect ? " --random-effect" : "")
         + ' --effect-id="'+cfg.visualEffect+'"'
         + ' '+cfg.effectArgValues.map(function(s){

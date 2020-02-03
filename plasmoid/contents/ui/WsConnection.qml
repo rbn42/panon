@@ -23,7 +23,7 @@ Item{
     }
 
     readonly property string startBackEnd:{
-        var cmd='sh '+'"'+Utils.get_scripts_root()+'/run-client.sh'+'" '
+        var cmd=Utils.chdir_scripts_root()+'exec python3 -m panon.backend.client '
         cmd+=server.port
         var be=['pyaudio','soundcard','fifo'][cfg.backendIndex]
         cmd+=' --backend='+be

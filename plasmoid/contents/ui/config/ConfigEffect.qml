@@ -71,10 +71,10 @@ Kirigami.FormLayout {
     }
 
 
-    readonly property string sh_get_visual_effects:'python3 "'+Utils.get_scripts_root()+'/get_effect_list.py"'
+    readonly property string sh_get_visual_effects:Utils.chdir_scripts_root()+'python3 -m panon.effect.get_effect_list'
 
-    readonly property string sh_read_effect_hint:'python3 "'+Utils.get_scripts_root()+'/read_file.py" "'+cfg_visualEffect+'" hint.html'
-    readonly property string sh_read_effect_args:'python3 "'+Utils.get_scripts_root()+'/read_file.py" "'+cfg_visualEffect+'" meta.json'
+    readonly property string sh_read_effect_hint:Utils.chdir_scripts_root()+'python3 -m panon.effect.read_file "'+cfg_visualEffect+'" hint.html'
+    readonly property string sh_read_effect_args:Utils.chdir_scripts_root()+'python3 -m panon.effect.read_file "'+cfg_visualEffect+'" meta.json'
 
     onCfg_visualEffectChanged:{
         hint.text=''
