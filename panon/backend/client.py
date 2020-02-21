@@ -62,9 +62,25 @@ async def hello():
     uri = f"ws://localhost:{server_port}"
     async with websockets.connect(uri) as websocket:
 
+        #if useAubioToComputeSpectrum:
+        #    import aubio
+        #    hop_s = sample_rate // cfg_fps * 2    # hop size
+        #    win_s = hop_s * 2    # fft size
+        #    pv = aubio.pvoc(win_s, hop_s)    # phase vocoder
+
         while True:
 
             latest_wave_data = spectrum_source.read()
+
+            #if useAubioToComputeSpectrum:
+            #    if latest_wave_data.dtype.type is np.float32:
+            #        dpv = pv(latest_wave_data.reshape((hop_s, ))).norm
+            #        dpv0 = dpv[:hop_s // 2]
+            #        dpv1 = dpv[:-hop_s // 2 - 1:-1]
+            #        spectrum_data = np.rollaxis(np.asarray([dpv0, dpv1]), 1, 0)
+
+            if latest_wave_data.dtype.type is np.float32:
+                latest_wave_data = np.asarray(latest_wave_data * (2**16), dtype='int16')
             wave_hist = spec.updateHistory(latest_wave_data)
             data = spec.computeSpectrum(wave_hist, bassResolutionLevel=bassResolutionLevel, reduceBass=reduceBass)
 

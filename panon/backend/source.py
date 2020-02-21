@@ -99,7 +99,6 @@ class SoundCardSource:
             data = sum(data) / len(data)
         else:
             data = self.stream.record(self.blocksize)
-        data = np.asarray(data * (2**16), dtype='int16')
         return data
 
     def start(self):
