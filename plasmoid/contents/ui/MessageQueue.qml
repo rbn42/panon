@@ -23,6 +23,7 @@ Item{
 
         imgsLoading.s.source = 'data:' + obj.spectrum
         imgsLoading.w.source = 'data:' + obj.wave
+        imgsLoading.beat = obj.beat
 
         if(imgsLoading.ready){
             var p

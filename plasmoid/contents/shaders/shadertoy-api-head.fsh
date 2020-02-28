@@ -2,6 +2,7 @@
 uniform vec3      iResolution;           // viewport resolution (in pixels)
 uniform float     iTime;                 // shader playback time (in seconds)
 uniform float     iTimeDelta;            // render time (in seconds)
+uniform float     iBeat;                // Is this frame a beat? (provided by aubio)
 uniform int       iFrame;                // shader playback frame
 //uniform float     iChannelTime[4];       // channel playback time (in seconds)
 #define iChannelTime (float[4](iTime,iTime,iTime,iTime))

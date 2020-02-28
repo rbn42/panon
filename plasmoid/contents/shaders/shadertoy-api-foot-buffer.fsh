@@ -7,5 +7,5 @@ vec2 getCoord() {
 }
 
 void main() {
-    mainImage( out_Color,getCoord()*iResolution.xy );
+    mainImage( out_Color,floor(getCoord()*iResolution.xy) );
 }

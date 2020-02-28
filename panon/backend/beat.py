@@ -1,3 +1,8 @@
+def canImportAubio():
+    import importlib
+    return importlib.find_loader('aubio') is not None
+
+
 class BeatsDetector:
     def __init__(self, channels, samplerate, cfg_fps):
 
@@ -10,7 +15,7 @@ class BeatsDetector:
         self.hop_s = hop_s
 
     def isBeat(self, samples):
-        return self.a_tempo(samples.reshape((self.hop_s, )))[0]
+        return float(self.a_tempo(samples.reshape((self.hop_s, )))[0])
 
 
 if __name__ == '__main__':

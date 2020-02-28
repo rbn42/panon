@@ -108,6 +108,7 @@ Item{
 
         property double iTime
         property double iTimeDelta
+        property double iBeat
         property variant iResolution:root.gravity<=2?Qt.vector3d(se.width,se.height,0):Qt.vector3d(se.height,se.width,0)
         property int iFrame:0
         property vector3d iChannelResolution0:iChannel0?Qt.vector3d(iChannel0.width,iChannel0.height,0):Qt.vector3d(0,0,0)
@@ -140,6 +141,7 @@ Item{
 
             readonly property double iTime:se.iTime
             readonly property double iTimeDelta:se.iTimeDelta
+            readonly property double iBeat:se.iBeat
             readonly property variant iResolution:se.iResolution
             readonly property int iFrame:se.iFrame
             readonly property vector3d iChannelResolution0:se.iChannelResolution0
@@ -185,29 +187,28 @@ Item{
     WsConnection{
         queue:MessageQueue{
             onImgsReadyChanged:{
-                draw_se(imgsReady.w,imgsReady.s,imgsReady.audioAvailable)
+
+                audioAvailable=imgsReady.audioAvailable
+                var time_current_frame=Date.now()
+                var deltatime=(time_current_frame-time_prev_frame)/1000.0
+                se.iTime=(time_current_frame-time_first_frame) /1000.0
+                se.iTimeDelta=deltatime
+                se.iFrame+=1
+                if(cfg.showFps)
+                    if(se.iFrame%30==1){
+                        fps_message='fps:'+ Math.round(1000*30/(time_current_frame-time_fps_start))
+                        time_fps_start=time_current_frame
+                    }
+
+                se.iChannel0=imgsReady.w
+                se.iChannel1=imgsReady.s
+                se.iBeat=imgsReady.beat
+                buffer.scheduleUpdate()
+
+                time_prev_frame=time_current_frame
+
             }
         }
-    }
-
-    function draw_se(w,s,avail){
-        audioAvailable=avail
-        var time_current_frame=Date.now()
-        var deltatime=(time_current_frame-time_prev_frame)/1000.0
-        se.iTime=(time_current_frame-time_first_frame) /1000.0
-        se.iTimeDelta=deltatime
-        se.iFrame+=1
-        if(cfg.showFps)
-            if(se.iFrame%30==1){
-                fps_message='fps:'+ Math.round(1000*30/(time_current_frame-time_fps_start))
-                time_fps_start=time_current_frame
-            }
-
-        se.iChannel0=w
-        se.iChannel1=s
-        buffer.scheduleUpdate()
-
-        time_prev_frame=time_current_frame
     }
 
     property bool audioAvailable

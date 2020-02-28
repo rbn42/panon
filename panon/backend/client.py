@@ -39,6 +39,7 @@ reduceBass = arguments['--reduce-bass'] is not None
 
 import time
 sample_rate = 44100
+beatsDetector = None
 
 if arguments['--backend'] == 'pyaudio':
     spectrum_source = source.PyaudioSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'], cfg_fps)
@@ -48,6 +49,9 @@ elif arguments['--backend'] == 'fifo':
 #    spectrum_source = source.SounddeviceSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'])
 elif arguments['--backend'] == 'soundcard':
     spectrum_source = source.SoundCardSource(spectrum.NUM_CHANNEL, sample_rate, arguments['--device-index'], cfg_fps)
+    from . import beat
+    if beat.canImportAubio():
+        beatsDetector = beat.BeatsDetector(spectrum.NUM_CHANNEL, sample_rate, cfg_fps)
 else:
     assert False
 
@@ -71,6 +75,7 @@ async def hello():
         while True:
 
             latest_wave_data = spectrum_source.read()
+            isBeat = beatsDetector is not None and beatsDetector.isBeat(latest_wave_data)
 
             #if useAubioToComputeSpectrum:
             #    if latest_wave_data.dtype.type is np.float32:
@@ -99,6 +104,7 @@ async def hello():
                 await websocket.send(json.dumps({
                     'spectrum': spectrum_data_m,
                     'wave': wave_data_m,
+                    'beat': isBeat,
                 }))
 
 
