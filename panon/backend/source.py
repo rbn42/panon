@@ -20,7 +20,8 @@ class PyaudioSource:
         self.start()
 
     def read(self):
-        result = self.stream.read(self.chunk)
+        # Ignores PyAudio exception on overflow.
+        result = self.stream.read(self.chunk, exception_on_overflow=False)
         return binary2numpy(result, self.channel_count)
 
     def start(self):
