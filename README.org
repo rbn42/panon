@@ -54,9 +54,6 @@ cmake ..
 make install DESTDIR=~/.local/share/locale/
 #+END_SRC
 
-*** Via AUR
-[[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] is available for ArchLinux. 
-
 ** [[../../wiki/VisualEffects][Visual Effects]]
 ** [[../../wiki/Troubleshooting][Troubleshooting]]
 ** Credits
