@@ -22,9 +22,7 @@ PlasmaCore.DataSource {
         + 'python3 -m panon.effect.build_shader_source'
         + (cfg.randomVisualEffect ? " --random-effect" : "")
         + ' --effect-id="'+cfg.visualEffect+'"'
-        + ' '+cfg.effectArgValues.map(function(s){
-            return '"'+s.replace('"','\\"').replace('$','\\$')+'"'
-        }).join(' ')
+        + ' '+Qt.btoa(JSON.stringify(cfg.effectArgValues))
 
     connectedSources: [cmd]
 

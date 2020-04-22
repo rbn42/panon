@@ -2,7 +2,7 @@
 panon 
 
 Usage:
-  main [options] [<effect-arguments>...]
+  main [options] <base64-effect-arguments>
   main -h | --help
 
 Options:
@@ -20,9 +20,12 @@ from docopt import docopt
 from .helper import effect_dirs, read_file, read_file_lines
 from . import get_effect_list
 
+import json, base64
+
 arguments = docopt(__doc__)
 effect_id = arguments['--effect-id']
-effect_arguments = arguments['<effect-arguments>']
+base64_effect_arguments = arguments['<base64-effect-arguments>']
+effect_arguments = json.loads(base64.b64decode(base64_effect_arguments))
 
 effect_list = get_effect_list.get_list()
 effect = None
