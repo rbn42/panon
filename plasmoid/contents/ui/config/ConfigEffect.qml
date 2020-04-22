@@ -15,7 +15,6 @@ Kirigami.FormLayout {
     anchors.left: parent.left
 
     property string cfg_visualEffect
-    property alias cfg_randomVisualEffect: randomEffect.checked
 
     property var cfg_effectArgValues:[]
     property bool cfg_effectArgTrigger:false
@@ -33,17 +32,6 @@ Kirigami.FormLayout {
         }
     }
 
-    QQC2.CheckBox {
-        id: randomEffect
-        text: i18nc("@option:check", "Random effect (on startup)")
-    }
-
-    QQC2.Label {
-        visible:randomEffect.checked
-        text:i18n("Unwanted effects can be removed <br/>from <a href='$link' >here</a>.").replace("$link",('file:///'+Utils.get_root()+'/shaders/').replace('////','///').replace('////','///').replace('////','///'))
-        onLinkActivated: Qt.openUrlExternally(link)
-    }
-
     RowLayout {
         Kirigami.FormData.label: i18n("Effect:")
         Layout.fillWidth: true
@@ -55,7 +43,6 @@ Kirigami.FormLayout {
             }
             textRole: 'name'
             onCurrentIndexChanged:cfg_visualEffect= shaderOptions.get(currentIndex).id
-            enabled:!randomEffect.checked
         }
     }
 
@@ -119,6 +106,7 @@ Kirigami.FormLayout {
                                 "int":"EffectArgumentInt.qml",
                                 "double":"EffectArgumentDouble.qml",
                                 "bool":"EffectArgumentBool.qml",
+                                "color":"EffectArgumentColor.qml",
                             }[arg["type"]]);
                         else
                             component= Qt.createComponent("EffectArgument.qml");
@@ -126,7 +114,6 @@ Kirigami.FormLayout {
                             index:index,
                             root:root,
                             effectArgValues:cfg_effectArgValues,
-                            randomEffect:randomEffect
                         });
                             
                         textfieldlst.push(obj)

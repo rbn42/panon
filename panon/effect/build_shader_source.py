@@ -1,16 +1,3 @@
-"""
-panon 
-
-Usage:
-  main [options] <base64-effect-arguments>
-  main -h | --help
-
-Options:
-  -h --help                     Show this screen.
-  --random-effect
-  --effect-id=N
-  --debug                       Debug
-"""
 import sys
 import json
 from pathlib import Path
@@ -22,10 +9,7 @@ from . import get_effect_list
 
 import json, base64
 
-arguments = docopt(__doc__)
-effect_id = arguments['--effect-id']
-base64_effect_arguments = arguments['<base64-effect-arguments>']
-effect_arguments = json.loads(base64.b64decode(base64_effect_arguments))
+effect_id, effect_arguments = json.loads(base64.b64decode(sys.argv[1]))
 
 effect_list = get_effect_list.get_list()
 effect = None
@@ -39,20 +23,21 @@ for e in effect_list:
     if e.id == effect_id:
         effect = e
 
-# If required, set a random effect.
-if arguments['--random-effect']:
-    import random
-    effect = random.choice(effect_list)
-    effect_arguments = []
+
+def hex2vec4(value):
+    assert value.startswith('#')
+    value = value[1:]
+    nums = [int(value[i:i + 2], base=16) / 256 for i in range(0, len(value), 2)]
+    if len(nums) < 4:
+        nums.append(1)
+    assert len(nums) == 4
+    return "vec4(%f,%f,%f,%f)" % tuple(nums)
 
 
-def value2str(value):
-    if isinstance(value, int):
-        return str(value)
-    elif isinstance(value, float):
-        return str(value)
-    elif isinstance(value, bool):
-        return str(bool(value)).lower()
+def format_value(type_, value):
+    if type_ == 'color':
+        return hex2vec4(value)
+    return value
 
 
 def build_source(files, main_file: Path, meta_file: Path = None, effect_arguments=None):
@@ -62,17 +47,7 @@ def build_source(files, main_file: Path, meta_file: Path = None, effect_argument
     # If meta_file exists, construct a key-value map to store arguments' names and values.
     if meta_file is not None and meta_file.exists():
         meta = json.loads(meta_file.read_bytes())
-        meta_arg = meta['arguments']
-        arguments_map = {arg['name']: arg['default'] for arg in meta_arg}
-        if len(effect_arguments) > 0:
-            for a, value in zip(meta_arg, effect_arguments):
-                if a['type'] == 'double':
-                    value = float(value)
-                elif a['type'] == 'int':
-                    value = int(value)
-                elif a['type'] == 'bool':
-                    value = value == 'true'
-                arguments_map[a['name']] = value
+        arguments_map = {arg['name']: format_value(arg['type'], value) for arg, value in zip(meta['arguments'], effect_arguments)}
 
     # Extract glsl version
     version = next(read_file_lines(main_file))
@@ -89,7 +64,7 @@ def build_source(files, main_file: Path, meta_file: Path = None, effect_argument
                         if key not in arguments_map:
                             json.dump({"error_code": 1}, sys.stdout)
                             sys.exit()
-                        lst[2] = value2str(arguments_map[key])
+                        lst[2] = arguments_map[key]
                         line = ' '.join(lst) + '\n'
                 source += line
         else:

@@ -9,14 +9,12 @@ RowLayout {
     property var root
     property int index
     property var effectArgValues
-    property var randomEffect
 
     property var vali:null
 
     Kirigami.FormData.label: visible?root.effect_arguments[index]["name"]+":":""
     visible:root.effect_arguments.length>index
     QQC2.TextField {
-        enabled:!randomEffect.checked
         text:visible? effectArgValues[index]:""
         onTextChanged:{
             effectArgValues[index]=text

@@ -20,9 +20,7 @@ PlasmaCore.DataSource {
 
     readonly property string cmd:Utils.chdir_scripts_root()
         + 'python3 -m panon.effect.build_shader_source'
-        + (cfg.randomVisualEffect ? " --random-effect" : "")
-        + ' --effect-id="'+cfg.visualEffect+'"'
-        + ' '+Qt.btoa(JSON.stringify(cfg.effectArgValues))
+        + ' '+Qt.btoa(JSON.stringify([cfg.visualEffect,cfg.effectArgValues]))
 
     connectedSources: [cmd]
 

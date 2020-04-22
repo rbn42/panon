@@ -8,8 +8,6 @@ QQC2.CheckBox {
     property int index
     property var effectArgValues
 
-    property var randomEffect
-    enabled:!randomEffect.checked
 
     visible:root.effect_arguments.length>index
     text: visible?root.effect_arguments[index]["name"]:""
