@@ -106,6 +106,8 @@ else:
         'buffer_shader':
         build_source(
             [
+                applet_effect_home / 'hsluv-glsl.fsh',
+                applet_effect_home / 'utils.fsh',
                 applet_effect_home / 'shadertoy-api-head.fsh',
                 Path(effect.path) / 'buffer.frag',
                 applet_effect_home / 'shadertoy-api-foot-buffer.fsh',
