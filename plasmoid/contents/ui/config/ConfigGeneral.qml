@@ -97,4 +97,13 @@ Kirigami.FormLayout {
         text: i18nc("@option:check", "Hide tooltip")
     }
 
+    RowLayout {
+        Kirigami.FormData.label: i18n("Version:")
+        Layout.fillWidth: true
+
+        QQC2.Label {
+            text: "0.4.1"
+        }
+    }
+
 }
