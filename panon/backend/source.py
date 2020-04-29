@@ -103,7 +103,11 @@ class SoundCardSource:
         return data
 
     def start(self):
-        from soundcard import pulseaudio as sc
+        import soundcard as sc
+        try:
+            sc.set_name('Panon')
+        except (AttributeError, NotImplementedError):
+            pass
         if self.device_id == 'all':
             mics = sc.all_microphones(exclude_monitors=False)
             self.streams = []
