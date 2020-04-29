@@ -31,7 +31,7 @@ def hex2vec4(value):
     if len(nums) < 4:
         nums.insert(0,1)
     assert len(nums) == 4
-    return "vec4(%f,%f,%f,%f)" % tuple(nums[1:]+num[:1])
+    return "vec4(%f,%f,%f,%f)" % tuple(nums[1:]+nums[:1])
 
 
 def format_value(type_, value):
