@@ -54,6 +54,9 @@ cmake ..
 make install DESTDIR=~/.local/share/locale/
 #+END_SRC
 
+*** Via AUR
+[[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] is available for ArchLinux. 
+
 ** [[../../wiki/VisualEffects][Visual Effects]]
 ** [[../../wiki/Troubleshooting][Troubleshooting]]
 ** Credits
@@ -61,7 +64,7 @@ make install DESTDIR=~/.local/share/locale/
     From old to new,
     |                                        | Contributor                                                    |
     |----------------------------------------+----------------------------------------------------------------|
-    | AUR package maintained by              | [[https://aur.archlinux.org/packages/?K=mareex&SeB=m][mareex]] |
+    | AUR package maintained by              | [[https://aur.archlinux.org/packages/?K=mareex&SeB=m][mareex]], [[https://github.com/flying-sheep][flying-sheep (Philipp A.)]] |
     | German translation added by            | [[https://github.com/NLDev][NullDev (Chris)]]                  |
     | "Download New Effects" dialog added by | [[https://github.com/flying-sheep][flying-sheep (Philipp A.)]] |
  And thanks for all the reported issues and suggestions, which I would not list here.
