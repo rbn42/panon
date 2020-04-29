@@ -29,9 +29,9 @@ def hex2vec4(value):
     value = value[1:]
     nums = [int(value[i:i + 2], base=16) / 256 for i in range(0, len(value), 2)]
     if len(nums) < 4:
-        nums.append(1)
+        nums.insert(0,1)
     assert len(nums) == 4
-    return "vec4(%f,%f,%f,%f)" % tuple(nums)
+    return "vec4(%f,%f,%f,%f)" % tuple(nums[1:]+num[:1])
 
 
 def format_value(type_, value):
