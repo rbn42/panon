@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-01-29 11:24+0800\n"
+"POT-Creation-Date: 2020-04-29 23:11+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,24 +112,15 @@ msgctxt "@label:spinbox"
 msgid "Lightness"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:24
+#: contents/ui/config/ConfigEffect.qml:23
 msgid "Effects"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:30
-msgctxt "@option:check"
-msgid "Random effect (on startup)"
-msgstr ""
-
-#: contents/ui/config/ConfigEffect.qml:35
-msgid "Unwanted effects can be removed <br/>from <a href='$link' >here</a>."
-msgstr ""
-
-#: contents/ui/config/ConfigEffect.qml:40
+#: contents/ui/config/ConfigEffect.qml:36
 msgid "Effect:"
 msgstr ""
 
-#: contents/ui/config/ConfigEffect.qml:54
+#: contents/ui/config/ConfigEffect.qml:50
 msgid "Hint:"
 msgstr ""
 
@@ -206,20 +197,24 @@ msgctxt "@option:check"
 msgid "Hide tooltip"
 msgstr ""
 
-#: contents/ui/ShaderSource.qml:43
+#: contents/ui/config/ConfigGeneral.qml:101
+msgid "Version:"
+msgstr ""
+
+#: contents/ui/ShaderSource.qml:46
 msgid "Error: Find undeclared arguments."
 msgstr ""
 
-#: contents/ui/Spectrum.qml:166
+#: contents/ui/Spectrum.qml:168
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
 msgstr ""
 
-#: contents/ui/Spectrum.qml:167
+#: contents/ui/Spectrum.qml:169
 msgid "Error: Failed to compile image shader."
 msgstr ""
 
-#: contents/ui/Spectrum.qml:168
+#: contents/ui/Spectrum.qml:170
 msgid "Error: Failed to compile bufffer shader."
 msgstr ""

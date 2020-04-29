@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-01-29 11:24+0800\n"
+"POT-Creation-Date: 2020-04-29 23:11+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,24 +112,15 @@ msgctxt "@label:spinbox"
 msgid "Lightness"
 msgstr "亮度"
 
-#: contents/ui/config/ConfigEffect.qml:24
+#: contents/ui/config/ConfigEffect.qml:23
 msgid "Effects"
 msgstr "特效"
 
-#: contents/ui/config/ConfigEffect.qml:30
-msgctxt "@option:check"
-msgid "Random effect (on startup)"
-msgstr "随机特效(启动的时候)"
-
-#: contents/ui/config/ConfigEffect.qml:35
-msgid "Unwanted effects can be removed <br/>from <a href='$link' >here</a>."
-msgstr "不想要的特效可以从<a href='$link' >这里</a>删除"
-
-#: contents/ui/config/ConfigEffect.qml:40
+#: contents/ui/config/ConfigEffect.qml:36
 msgid "Effect:"
 msgstr "特效:"
 
-#: contents/ui/config/ConfigEffect.qml:54
+#: contents/ui/config/ConfigEffect.qml:50
 msgid "Hint:"
 msgstr "提示:"
 
@@ -206,23 +197,34 @@ msgctxt "@option:check"
 msgid "Hide tooltip"
 msgstr "隐藏提示窗口"
 
-#: contents/ui/ShaderSource.qml:43
+#: contents/ui/config/ConfigGeneral.qml:101
+msgid "Version:"
+msgstr "版本:"
+
+#: contents/ui/ShaderSource.qml:46
 msgid "Error: Find undeclared arguments."
 msgstr "错误:发现未声明的参数"
 
-#: contents/ui/Spectrum.qml:166
+#: contents/ui/Spectrum.qml:168
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
 msgstr "错误:无法加载视觉特效,请从配置窗口中选择一个新的视觉特效."
 
-#: contents/ui/Spectrum.qml:167
+#: contents/ui/Spectrum.qml:169
 msgid "Error: Failed to compile image shader."
 msgstr "错误:无法编译image shader"
 
-#: contents/ui/Spectrum.qml:168
+#: contents/ui/Spectrum.qml:170
 msgid "Error: Failed to compile bufffer shader."
 msgstr "错误:无法编译buffer shader"
+
+#~ msgctxt "@option:check"
+#~ msgid "Random effect (on startup)"
+#~ msgstr "随机特效(启动的时候)"
+
+#~ msgid "Unwanted effects can be removed <br/>from <a href='$link' >here</a>."
+#~ msgstr "不想要的特效可以从<a href='$link' >这里</a>删除"
 
 #~ msgid ""
 #~ "<a href='https://store.kde.org/search/projectSearchText/panon/f/"
