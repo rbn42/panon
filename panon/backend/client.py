@@ -94,7 +94,7 @@ async def hello():
                 await websocket.send('')
             else:
                 spectrum_data = np.clip(spectrum_data[1:] / 3.0, 0, 0.99) * 256
-                wave_data = wave_hist[-spectrum_data.shape[0]:]
+                wave_data = latest_wave_data # wave_hist[-spectrum_data.shape[0]:]
                 wave_max = np.max(np.abs(wave_data))
                 wave_data = (wave_data + wave_max) / wave_max / 2 * 256
 
