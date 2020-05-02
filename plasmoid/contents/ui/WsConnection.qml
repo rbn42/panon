@@ -5,6 +5,12 @@ import "utils.js" as Utils
 /*
  * This module starts a python back-end client, 
  * and pushs messages from the client to a queue.
+ *
+ * A queue is required to store new data sent from the 
+ * audio back-end. Because if new audio data is used 
+ * directly as an image by the shaders, those images 
+ * may be used before they are loaded, which will cause 
+ * flikering problems.
  */
 Item{
 
