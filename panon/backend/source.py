@@ -95,11 +95,8 @@ class SoundCardSource:
         self.start()
 
     def read(self):
-        if self.device_id == 'all':
-            data = [stream.record(self.blocksize) for stream in self.streams]
-            data = sum(data) / len(data)
-        else:
-            data = self.stream.record(self.blocksize)
+        data = [stream.record(self.blocksize) for stream in self.streams]
+        data = sum(data) / len(data)
         return data
 
     def start(self):
@@ -108,32 +105,28 @@ class SoundCardSource:
             sc.set_name('Panon')
         except (AttributeError, NotImplementedError):
             pass
+
         if self.device_id == 'all':
             mics = sc.all_microphones(exclude_monitors=False)
-            self.streams = []
-            for mic in mics:
-                stream = mic.recorder(
-                    self.sample_rate,
-                    self.channel_count,
-                    self.blocksize,
-                )
-                stream.__enter__()
-                self.streams.append(stream)
+        elif self.device_id == 'allspeakers':
+            mics = [mic for mic in sc.all_microphones(exclude_monitors=False) if mic.id.endswith('.monitor')]
+        elif self.device_id == 'default':
+            mics = [sc.default_microphone()]
         else:
-            if self.device_id == 'default':
-                mic = sc.default_microphone()
-            else:
-                mic = sc.get_microphone(
-                    self.device_id,
-                    include_loopback=False,
-                    exclude_monitors=False,
-                )
-            self.stream = mic.recorder(
+            mics = [sc.get_microphone(
+                self.device_id,
+                include_loopback=False,
+                exclude_monitors=False,
+            )]
+        self.streams = []
+        for mic in mics:
+            stream = mic.recorder(
                 self.sample_rate,
                 self.channel_count,
                 self.blocksize,
             )
-            self.stream.__enter__()
+            stream.__enter__()
+            self.streams.append(stream)
 
 
 if __name__ == '__main__':

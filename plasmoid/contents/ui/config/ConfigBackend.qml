@@ -117,6 +117,7 @@ Kirigami.FormLayout {
                 for(var i in lst)
                     pdItems.append(lst[i])
                 if(lst.length>1){
+                    pdItems.append({name:i18n("Mixing All Speakers"),id:'allspeakers'})
                     pdItems.append({name:i18n("Mixing All Microphones and Speakers"),id:'all'})
                 }
 
