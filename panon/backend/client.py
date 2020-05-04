@@ -16,7 +16,6 @@ Options:
   --debug                       Debug
 """
 import asyncio
-import time
 import numpy as np
 import json
 import websockets
@@ -28,16 +27,12 @@ import sys
 
 from docopt import docopt
 arguments = docopt(__doc__)
-if arguments['--debug']:
-    import time
-    #time.sleep(30)
 
 server_port = int(arguments['<port>'])
 cfg_fps = int(arguments['--fps'])
 bassResolutionLevel = int(arguments['--bass-resolution-level'])
 reduceBass = arguments['--reduce-bass'] is not None
 
-import time
 sample_rate = 44100
 beatsDetector = None
 
@@ -55,35 +50,27 @@ elif arguments['--backend'] == 'soundcard':
 else:
     assert False
 
-spec = spectrum.Spectrum()
-decay = Decay()
 
-from .convertor import Numpy2Str
-n2s = Numpy2Str()
+async def mainloop():
+    async with websockets.connect(f"ws://localhost:{server_port}") as websocket:
 
+        spec = spectrum.Spectrum()
+        decay = Decay()
 
-async def hello():
-    uri = f"ws://localhost:{server_port}"
-    async with websockets.connect(uri) as websocket:
+        from .convertor import Numpy2Str
+        n2s = Numpy2Str()
 
-        #if useAubioToComputeSpectrum:
-        #    import aubio
-        #    hop_s = sample_rate // cfg_fps * 2    # hop size
-        #    win_s = hop_s * 2    # fft size
-        #    pv = aubio.pvoc(win_s, hop_s)    # phase vocoder
+        spectrum_data = None
+        isBeat = False
 
         while True:
 
-            latest_wave_data = spectrum_source.read()
-            isBeat = beatsDetector is not None and beatsDetector.isBeat(latest_wave_data)
-
-            #if useAubioToComputeSpectrum:
-            #    if latest_wave_data.dtype.type is np.float32:
-            #        dpv = pv(latest_wave_data.reshape((hop_s, ))).norm
-            #        dpv0 = dpv[:hop_s // 2]
-            #        dpv1 = dpv[:-hop_s // 2 - 1:-1]
-            #        spectrum_data = np.rollaxis(np.asarray([dpv0, dpv1]), 1, 0)
-
+            if spectrum_data is None:
+                # Set fps to 2 to lower CPU usage, when audio is unavailable.
+                latest_wave_data = spectrum_source.read(fps=2)
+            else:
+                latest_wave_data = spectrum_source.read()
+                isBeat = beatsDetector is not None and beatsDetector.isBeat(latest_wave_data)
             if latest_wave_data.dtype.type is np.float32:
                 latest_wave_data = np.asarray(latest_wave_data * (2**16), dtype='int16')
             wave_hist = spec.updateHistory(latest_wave_data)
@@ -94,7 +81,7 @@ async def hello():
                 await websocket.send('')
             else:
                 spectrum_data = np.clip(spectrum_data[1:] / 3.0, 0, 0.99) * 256
-                wave_data = latest_wave_data # wave_hist[-spectrum_data.shape[0]:]
+                wave_data = latest_wave_data
                 wave_max = np.max(np.abs(wave_data))
                 wave_data = (wave_data + wave_max) / wave_max / 2 * 256
 
@@ -108,4 +95,4 @@ async def hello():
                 }))
 
 
-asyncio.get_event_loop().run_until_complete(hello())
+asyncio.get_event_loop().run_until_complete(mainloop())

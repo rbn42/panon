@@ -19,9 +19,13 @@ class PyaudioSource:
 
         self.start()
 
-    def read(self):
+    def read(self, fps=None):
         # Ignores PyAudio exception on overflow.
-        result = self.stream.read(self.chunk, exception_on_overflow=False)
+        if fps is None:
+            c = self.chunk
+        else:
+            c = self.sample_rate // fps
+        result = self.stream.read(c, exception_on_overflow=False)
         return binary2numpy(result, self.channel_count)
 
     def start(self):
@@ -40,13 +44,18 @@ class PyaudioSource:
 class FifoSource:
     def __init__(self, channel_count, sample_rate, fifo_path, fps):
         self.channel_count = channel_count
+        self.sample_rate = sample_rate
         self.fifo_path = fifo_path
         self.blocksize = sample_rate // fps * channel_count * 2    #int16  44100:16:2
 
         self.start()
 
-    def read(self):
-        data = self.stream.read(self.blocksize)
+    def read(self, fps=None):
+        if fps is None:
+            b = self.blocksize
+        else:
+            b = self.sample_rate // fps * self.channel_count * 2    #int16  44100:16:2
+        data = self.stream.read(b)
         if data is None:
             return None
         return binary2numpy(data, self.channel_count)
@@ -94,8 +103,12 @@ class SoundCardSource:
         self.blocksize = self.sample_rate // fps
         self.start()
 
-    def read(self):
-        data = [stream.record(self.blocksize) for stream in self.streams]
+    def read(self, fps=None):
+        if fps is None:
+            b = self.blocksize
+        else:
+            b = self.sample_rate // fps
+        data = [stream.record(b) for stream in self.streams]
         data = sum(data) / len(data)
         return data
 
