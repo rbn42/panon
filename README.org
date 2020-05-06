@@ -19,7 +19,7 @@ sudo pacman -S qt5-websockets \
 
 *** openSUSE
 #+BEGIN_SRC sh
-sudo zypper se -x libQt5WebSockets5 \
+sudo zypper in libQt5WebSockets5 \
     python3-docopt python3-numpy python3-Pillow python3-PyAudio python3-cffi python3-websockets
 #+END_SRC
 
