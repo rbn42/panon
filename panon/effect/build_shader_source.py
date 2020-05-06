@@ -35,6 +35,14 @@ def hex2vec4(value):
 
 
 def format_value(type_, value):
+    if type_ == 'int':
+        return f'int({value})'
+    if type_ == 'double':
+        return f'float({value})'
+    if type_ == 'float':
+        return f'float({value})'
+    if type_ == 'bool':
+        return f'bool({value})'
     if type_ == 'color':
         return hex2vec4(value)
     return value

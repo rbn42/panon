@@ -105,6 +105,7 @@ Kirigami.FormLayout {
                             component= Qt.createComponent({
                                 "int":"EffectArgumentInt.qml",
                                 "double":"EffectArgumentDouble.qml",
+                                "float":"EffectArgumentDouble.qml",
                                 "bool":"EffectArgumentBool.qml",
                                 "color":"EffectArgumentColor.qml",
                             }[arg["type"]]);
