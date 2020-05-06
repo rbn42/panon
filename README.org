@@ -17,6 +17,12 @@ sudo pacman -S qt5-websockets \
     python-docopt python-numpy python-pillow python-pyaudio python-cffi python-websockets 
 #+END_SRC
 
+*** openSUSE
+#+BEGIN_SRC sh
+sudo zypper in libQt5WebSockets5 \
+    python3-docopt python3-numpy python3-Pillow python3-PyAudio python3-cffi python3-websockets
+#+END_SRC
+
 *** Ubuntu
 #+BEGIN_SRC sh
 sudo apt-get install qml-module-qt-websockets \
