@@ -7,6 +7,8 @@ import QtQuick 2.0
 
 Item{
 
+    readonly property var cfg:plasmoid.configuration
+
     property variant imgsReady:pt0
 
     property variant imgsLoading:pt0
@@ -18,12 +20,17 @@ Item{
         }
         if(!imgsLoading.used)
             return
-        imgsLoading.used=false
-        var obj = JSON.parse(message)
 
-        imgsLoading.s.source = 'data:' + obj.spectrum
-        imgsLoading.w.source = 'data:' + obj.wave
-        imgsLoading.beat = obj.beat
+        if(cfg.glDFT){
+            imgsLoading.used=false
+            imgsLoading.w.source = 'data:' + message
+        }else{
+            var obj = JSON.parse(message)
+            imgsLoading.used=false
+            imgsLoading.s.source = 'data:' + obj.spectrum
+            imgsLoading.w.source = 'data:' + obj.wave
+            imgsLoading.beat = obj.beat
+        }
 
         if(imgsLoading.ready){
             var p

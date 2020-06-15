@@ -45,7 +45,7 @@ Item{
     property double random_seed:Math.random()
 
     ShaderEffect {
-        id:se
+        id:mainSE
         readonly property bool colorSpaceHSL:cfg.randomColor?false: cfg.colorSpaceHSL
         readonly property bool colorSpaceHSLuv:cfg.randomColor?true:cfg.colorSpaceHSLuv
 
@@ -96,20 +96,20 @@ Item{
         readonly property variant iMouse:{
             switch(root.gravity){
                 case 1:
-                return Qt.vector4d(iMouseArea.mouseX,se.height- iMouseArea.mouseY ,0,0)
+                return Qt.vector4d(iMouseArea.mouseX,mainSE.height- iMouseArea.mouseY ,0,0)
                 case 2:
                 return Qt.vector4d(iMouseArea.mouseX, iMouseArea.mouseY ,0,0)
                 case 3:
-                return Qt.vector4d(se.height-iMouseArea.mouseY, se.width-iMouseArea.mouseX ,0,0)
+                return Qt.vector4d(mainSE.height-iMouseArea.mouseY, mainSE.width-iMouseArea.mouseX ,0,0)
                 case 4:
-                return Qt.vector4d(se.height- iMouseArea.mouseY, iMouseArea.mouseX ,0,0)
+                return Qt.vector4d(mainSE.height- iMouseArea.mouseY, iMouseArea.mouseX ,0,0)
             }
         }
 
         property double iTime
         property double iTimeDelta
         property double iBeat
-        property variant iResolution:root.gravity<=2?Qt.vector3d(se.width,se.height,0):Qt.vector3d(se.height,se.width,0)
+        property variant iResolution:root.gravity<=2?Qt.vector3d(mainSE.width,mainSE.height,0):Qt.vector3d(mainSE.height,mainSE.width,0)
         property int iFrame:0
         property vector3d iChannelResolution0:iChannel0?Qt.vector3d(iChannel0.width,iChannel0.height,0):Qt.vector3d(0,0,0)
         property vector3d iChannelResolution1:iChannel1?Qt.vector3d(iChannel1.width,iChannel1.height,0):Qt.vector3d(0,0,0)
@@ -117,57 +117,91 @@ Item{
         property vector3d iChannelResolution3:iChannel3?Qt.vector3d(iChannel3.width,iChannel3.height,0):Qt.vector3d(0,0,0)
         property variant iChannel0
         property variant iChannel1
-        readonly property variant iChannel2:buffer
-        readonly property variant iChannel3:Image{source:'file://'+shaderSource.texture_uri}
+        readonly property variant iChannel2:bufferSES
+        readonly property variant iChannel3:Image{source:'file://'+shaderSourceReader.texture_uri}
 
 
         property int gravity:root.gravity
 
         anchors.fill: parent
         blending: true
-        fragmentShader:shaderSource.image_shader_source
+        fragmentShader:shaderSourceReader.image_shader_source
     }
 
     ShaderEffectSource {
         visible:false
-        id:buffer
-        width: se.iResolution.x
-        height: se.iResolution.y
+        id:bufferSES
+        width: mainSE.iResolution.x
+        height: mainSE.iResolution.y
         recursive :true
         live:false
         sourceItem: ShaderEffect {
-            width: se.iResolution.x
-            height: se.iResolution.y
+            width: mainSE.iResolution.x
+            height: mainSE.iResolution.y
 
-            readonly property double iTime:se.iTime
-            readonly property double iTimeDelta:se.iTimeDelta
-            readonly property double iBeat:se.iBeat
-            readonly property variant iResolution:se.iResolution
-            readonly property int iFrame:se.iFrame
-            readonly property vector3d iChannelResolution0:se.iChannelResolution0
-            readonly property vector3d iChannelResolution1:se.iChannelResolution1
-            readonly property vector3d iChannelResolution2:se.iChannelResolution2
-            readonly property vector3d iChannelResolution3:se.iChannelResolution3
-            readonly property variant iChannel0:se.iChannel0
-            readonly property variant iChannel1:se.iChannel1
-            readonly property variant iChannel2:se.iChannel2
-            readonly property variant iChannel3:se.iChannel3
-            readonly property variant iMouse:se.iMouse
-            readonly property int gravity:se.gravity
-            fragmentShader:shaderSource.buffer_shader_source
+            readonly property double iTime:mainSE.iTime
+            readonly property double iTimeDelta:mainSE.iTimeDelta
+            readonly property double iBeat:mainSE.iBeat
+            readonly property variant iResolution:mainSE.iResolution
+            readonly property int iFrame:mainSE.iFrame
+            readonly property vector3d iChannelResolution0:mainSE.iChannelResolution0
+            readonly property vector3d iChannelResolution1:mainSE.iChannelResolution1
+            readonly property vector3d iChannelResolution2:mainSE.iChannelResolution2
+            readonly property vector3d iChannelResolution3:mainSE.iChannelResolution3
+            readonly property variant iChannel0:mainSE.iChannel0
+            readonly property variant iChannel1:mainSE.iChannel1
+            readonly property variant iChannel2:mainSE.iChannel2
+            readonly property variant iChannel3:mainSE.iChannel3
+            readonly property variant iMouse:mainSE.iMouse
+            readonly property int gravity:mainSE.gravity
+            fragmentShader:shaderSourceReader.buffer_shader_source
         }
     }
 
-    readonly property bool loadImageShaderSource:   shaderSource.image_shader_source.trim().length>0
-    readonly property bool loadBufferShaderSource:  shaderSource.buffer_shader_source.trim().length>0
-    readonly property bool failCompileImageShader:  loadImageShaderSource && false // (se.status==ShaderEffect.Error)
-    readonly property bool failCompileBufferShader: loadBufferShaderSource && false // (buffer.sourceItem.status==ShaderEffect.Error)
+    ShaderEffectSource {
+        id:glDFTSES
+        width: glDFTSE.width
+        height: glDFTSE.height
+        visible:false
+        live:false
+        sourceItem: ShaderEffect {
+
+            id:glDFTSE
+            width: 200
+            height: 1
+            property int dftSize:glDFTSE.width
+            property int bufferSize:waveBufferSE.width
+            fragmentShader:shaderSourceReader.gldft_source
+
+            readonly property variant waveBuffer:ShaderEffectSource {
+                id:waveBufferSES
+                width: waveBufferSE.width
+                height: waveBufferSE.height
+                live:false
+                sourceItem: ShaderEffect {
+                    id:waveBufferSE
+                    width: 2000
+                    height: 2
+                    property variant newWave
+                    property int bufferSize:waveBufferSE.width
+                    property int newWaveSize:newWave?newWave.width:0
+                    readonly property variant waveBuffer:waveBufferSES
+                    fragmentShader:shaderSourceReader.wave_buffer_source
+                }
+            }
+        }
+    }
+
+    readonly property bool loadImageShaderSource:   shaderSourceReader.image_shader_source.trim().length>0
+    readonly property bool loadBufferShaderSource:  shaderSourceReader.buffer_shader_source.trim().length>0
+    readonly property bool failCompileImageShader:  loadImageShaderSource && false // (mainSE.status==ShaderEffect.Error)
+    readonly property bool failCompileBufferShader: loadBufferShaderSource && false // (bufferSES.sourceItem.status==ShaderEffect.Error)
     property string fps_message:""
     property string error_message:
-        shaderSource.error_message
+        shaderSourceReader.error_message
         + (loadImageShaderSource ?"":i18n("Error: Failed to load the visual effect. Please choose another visual effect in the configuration dialog."))
-        + (failCompileImageShader?(i18n("Error: Failed to compile image shader.")+se.log):"")
-        + (failCompileBufferShader?(i18n("Error: Failed to compile bufffer shader.")+buffer.sourceItem.log):"")
+        + (failCompileImageShader?(i18n("Error: Failed to compile image shader.")+mainSE.log):"")
+        + (failCompileBufferShader?(i18n("Error: Failed to compile bufffer shader.")+bufferSES.sourceItem.log):"")
     QQC2.Label {
         id:console_output
         anchors.fill: parent
@@ -182,7 +216,7 @@ Item{
         onClicked:random_seed=Math.random()
     }
 
-    ShaderSource{id:shaderSource}
+    ShaderSource{id:shaderSourceReader}
 
     WsConnection{
         queue:MessageQueue{
@@ -191,19 +225,27 @@ Item{
                 audioAvailable=imgsReady.audioAvailable
                 var time_current_frame=Date.now()
                 var deltatime=(time_current_frame-time_prev_frame)/1000.0
-                se.iTime=(time_current_frame-time_first_frame) /1000.0
-                se.iTimeDelta=deltatime
-                se.iFrame+=1
+                mainSE.iTime=(time_current_frame-time_first_frame) /1000.0
+                mainSE.iTimeDelta=deltatime
+                mainSE.iFrame+=1
                 if(cfg.showFps)
-                    if(se.iFrame%30==1){
+                    if(mainSE.iFrame%30==1){
                         fps_message='fps:'+ Math.round(1000*30/(time_current_frame-time_fps_start))
                         time_fps_start=time_current_frame
                     }
 
-                se.iChannel0=imgsReady.w
-                se.iChannel1=imgsReady.s
-                se.iBeat=imgsReady.beat
-                buffer.scheduleUpdate()
+                        
+                if(cfg.glDFT){
+                    waveBufferSE.newWave=imgsReady.w;
+                    waveBufferSES.scheduleUpdate();
+                    glDFTSES.scheduleUpdate();
+                    mainSE.iChannel1=glDFTSES;
+                }else{
+                    mainSE.iChannel0=imgsReady.w;
+                    mainSE.iChannel1=imgsReady.s;
+                    mainSE.iBeat=imgsReady.beat;
+                }
+                bufferSES.scheduleUpdate();
 
                 time_prev_frame=time_current_frame
 

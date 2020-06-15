@@ -29,9 +29,9 @@ def hex2vec4(value):
     value = value[1:]
     nums = [int(value[i:i + 2], base=16) / 256 for i in range(0, len(value), 2)]
     if len(nums) < 4:
-        nums.insert(0,1)
+        nums.insert(0, 1)
     assert len(nums) == 4
-    return "vec4(%f,%f,%f,%f)" % tuple(nums[1:]+nums[:1])
+    return "vec4(%f,%f,%f,%f)" % tuple(nums[1:] + nums[:1])
 
 
 def format_value(type_, value):
@@ -125,5 +125,8 @@ else:
         'texture':
         texture_uri(Path(effect.path) / 'texture.png'),
     }
+
+obj['wave_buffer'] = read_file(applet_effect_home / 'wave-buffer.frag')
+obj['gldft'] = read_file(applet_effect_home / 'gldft.frag')
 
 json.dump(obj, sys.stdout)

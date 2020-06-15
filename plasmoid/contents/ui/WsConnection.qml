@@ -40,6 +40,8 @@ Item{
         cmd+=' --fps='+cfg.fps
         if(cfg.reduceBass)
             cmd+=' --reduce-bass'
+        if(cfg.glDFT)
+            cmd+=' --gldft'
         if(cfg.debugBackend)
             cmd+=' --debug'
         cmd+=' --bass-resolution-level='+cfg.bassResolutionLevel

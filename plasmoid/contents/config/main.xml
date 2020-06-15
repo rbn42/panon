@@ -51,6 +51,10 @@
       <default>/tmp/mpd.fifo</default>
     </entry>
 
+    <entry name="glDFT" type="Bool">
+      <default>false</default>
+    </entry>
+
   </group>
   <group name="General">
 

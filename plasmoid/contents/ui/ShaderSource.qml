@@ -15,6 +15,9 @@ PlasmaCore.DataSource {
 
     property string image_shader_source:''
     property string buffer_shader_source:''
+    property string wave_buffer_source:''
+    property string gldft_source:''
+
     property string texture_uri:''
     property string error_message:''
 
@@ -49,6 +52,8 @@ PlasmaCore.DataSource {
         }
         image_shader_source=obj.image_shader
         buffer_shader_source=obj.buffer_shader
+        wave_buffer_source=obj.wave_buffer
+        gldft_source=obj.gldft
         texture_uri=obj.texture
         error_message=''
     }

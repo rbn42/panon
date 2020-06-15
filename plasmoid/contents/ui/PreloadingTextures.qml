@@ -6,7 +6,12 @@ Item{
     property variant s:Image{visible:false}
     property double beat
 
-    readonly property bool ready: (w.status!=Image.Loading) && (s.status!=Image.Loading) 
+    readonly property bool ready: {
+        if(cfg.glDFT)
+            return (w.status!=Image.Loading)  
+        else
+            return (w.status!=Image.Loading) && (s.status!=Image.Loading) 
+    }
     property bool used:true
     property bool audioAvailable:true
 }

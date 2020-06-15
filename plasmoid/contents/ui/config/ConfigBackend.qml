@@ -14,6 +14,7 @@ Kirigami.FormLayout {
 
 
     property alias cfg_reduceBass: reduceBass.checked
+    property alias cfg_glDFT: glDFT.checked
     property alias cfg_debugBackend: debugBackend.checked
 
     property alias cfg_bassResolutionLevel: bassResolutionLevel.currentIndex
@@ -83,6 +84,11 @@ Kirigami.FormLayout {
     QQC2.CheckBox {
         id: reduceBass
         text: i18nc("@option:check", "Reduce the weight of bass")
+    }
+
+    QQC2.CheckBox {
+        id: glDFT
+        text: i18nc("@option:check", "Use GLDFT (to lower CPU Usage) (experimental, not recommended)")
     }
 
     QQC2.CheckBox {
