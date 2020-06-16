@@ -9,6 +9,7 @@ Viewport {
     property alias imageOutput: imageOutput.texture
 
     property bool enable:true
+    property bool glDFT:true
 
     normalizedRect: Qt.rect(0.0, 0.0, 1.0, 1.0)
 
@@ -17,9 +18,8 @@ Viewport {
             matchAll: [ FilterKey { name: "tech"; value: enable?"run":"stop" } ]
             
             DispatchCompute {
-                workGroupX: 50; workGroupY: 1; workGroupZ: 1
                 RenderPassFilter {
-                    matchAny: [ FilterKey { name: "pass"; value: "remotedftpass" } ]
+                    matchAny: [ FilterKey { name: "pass"; value: glDFT?"gldftpass":"remotedftpass" } ]
                 }
             }
 

@@ -9,6 +9,7 @@ Entity {
     property alias bufferShaderSource:spe.bufferShaderSource
 
     property alias enable:spfg.enable
+    property alias glDFT:spfg.glDFT
 
     property alias colorSpaceHSL:     colorSpaceHSLP.value
     property alias colorSpaceHSLuv:   colorSpaceHSLuvP.value
@@ -33,6 +34,9 @@ Entity {
 
     property var npdft
     property int dftlength:{npdft?npdft.length/2:10}
+
+    property var npwave
+    property int npwavelength:{npwave?npwave.length/2:10}
 
     components: [
         RenderSettings {
@@ -62,6 +66,9 @@ Entity {
                     Parameter {name: "Npdft";value: Buffer {data:npdft}},
                     Parameter {name: "dftlength";value: dftlength;},
 
+                    Parameter {name: "Npwave";value: Buffer {data:npwave}},
+                    Parameter {name: "npwavelength";value: npwavelength;},
+
                     Parameter{id:colorSpaceHSLP;name:"colorSpaceHSL";},
                     Parameter{id:colorSpaceHSLuvP;name:"colorSpaceHSLuv";},
                     Parameter{name:"hueFrom";value:hueFrom;},
@@ -79,7 +86,7 @@ Entity {
                     Parameter {
                         id:iChannel1P
                         name: "iChannel1"
-                        value:Texture2D {width: dftlength;format: Texture.RGBA8_UNorm;}
+                        value:Texture2D {width:glDFT?300:dftlength;format: Texture.RGBA8_UNorm;}
                     },
 
                     Parameter {name: "iChannelResolution2";value:Qt.vector3d(iChannel2P.value.width,iChannel2P.value.height,0);},

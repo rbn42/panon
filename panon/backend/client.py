@@ -77,6 +77,8 @@ async def mainloop():
                 latest_wave_data = np.asarray(latest_wave_data * (2**16), dtype='int16')
 
             if use_glDFT:
+                await websocket.send(latest_wave_data.tobytes())
+                continue
                 await websocket.send(n2s.convert_int16(latest_wave_data))
                 continue
 

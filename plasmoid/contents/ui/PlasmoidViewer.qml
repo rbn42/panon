@@ -74,10 +74,7 @@ Item{
                     }
 
                 if(cfg.glDFT){
-                    waveBufferSE.newWave=imgsReady.w;
-                    waveBufferSES.scheduleUpdate();
-                    glDFTSES.scheduleUpdate();
-                    mainSE.iChannel1=glDFTSES;
+                    mainSE.npwave= new Int32Array(new Int16Array(message));
                 }else{
                     mainSE.npdft= new Int32Array(new Uint8Array(message));
                 }
@@ -112,6 +109,8 @@ Item{
         height:root.height
         SpScene{
             id:mainSE
+
+            glDFT:cfg.glDFT
 
             imageShaderSource:shaderSourceReader.image_shader_source
             bufferShaderSource:shaderSourceReader.buffer_shader_source
