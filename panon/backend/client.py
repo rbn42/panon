@@ -85,7 +85,7 @@ async def mainloop():
 
             spectrum_data = decay.process(data)
             if spectrum_data is None:
-                await websocket.send('')
+                await websocket.send(b'')
             else:
                 spectrum_data = np.clip(spectrum_data[1:] / 3.0, 0, 0.99) * 256
                 wave_data = latest_wave_data
@@ -95,6 +95,9 @@ async def mainloop():
                 spectrum_data_m = n2s.convert(spectrum_data)
                 wave_data_m = n2s.convert(wave_data)
 
+                await websocket.send(np.asarray( spectrum_data,dtype='uint8').tobytes())
+                continue
+                    
                 await websocket.send(json.dumps({
                     'spectrum': spectrum_data_m,
                     'wave': wave_data_m,

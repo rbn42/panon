@@ -22,7 +22,9 @@ Item{
         id: server
         listen: true
         onClientConnected: {
-            webSocket.onTextMessageReceived.connect(function(message) {
+            //webSocket.onTextMessageReceived.connect(function(message) {
+            webSocket.onBinaryMessageReceived.connect(function(message) {
+                //ArrayBuffer
                 queue.push(message)
             });
         }
