@@ -33,16 +33,22 @@ Entity {
     readonly property int gravityHeight:gravity<=2?sceneHeight:sceneWidth
 
     property var npdft
-    property int dftlength:{npdft?npdft.length/2:10}
+    readonly property int npdftLength:{npdft?npdft.length/2:10}
 
-    property var npwave
-    property int npwavelength:{npwave?npwave.length/2:10}
+    property var newWaveData
+    property int newWaveLength:10 
+
+    readonly property int waveBufferLength:44100*4
+
+    function push(arr){
+        newWaveData=arr ; 
+        newWaveLength=arr.length/2;
+    }
 
     components: [
         RenderSettings {
             SpFrameGraph{
                 id:spfg
-                //dftOutput:dftOutputP.value
                 bufferOutput:bufferOutputP.value
                 flipbufferOutput:iChannel2P.value
                 imageOutput:imageOutputP.value
@@ -62,12 +68,16 @@ Entity {
                 effect: SpEffect{id:spe}
 
                 parameters: [
-
+                    // Remote DFT data
                     Parameter {name: "Npdft";value: Buffer {data:npdft}},
-                    Parameter {name: "dftlength";value: dftlength;},
-
-                    Parameter {name: "Npwave";value: Buffer {data:npwave}},
-                    Parameter {name: "npwavelength";value: npwavelength;},
+                    Parameter {name: "npdftLength";value: npdftLength;},
+                    // Remote wave data
+                    Parameter {name: "NewWaveData";value: Buffer {data:newWaveData}},
+                    Parameter {name: "newWaveLength";value: newWaveLength;},
+                    // Wave buffer
+                    Parameter {name: "WaveBuffer";value: Buffer {data:new Int32Array(waveBufferLength*2)}},
+                    Parameter {name: "Maxwave";value: Buffer {data:new Int32Array(100)}},
+                    Parameter {name: "waveBufferLength";value:waveBufferLength;},
 
                     Parameter{id:colorSpaceHSLP;name:"colorSpaceHSL";},
                     Parameter{id:colorSpaceHSLuvP;name:"colorSpaceHSLuv";},
@@ -86,7 +96,17 @@ Entity {
                     Parameter {
                         id:iChannel1P
                         name: "iChannel1"
-                        value:Texture2D {width:glDFT?300:dftlength;format: Texture.RGBA8_UNorm;}
+                        value:Texture2D {
+                            width:glDFT?400:npdftLength;format: Texture.RGBA8_UNorm;
+                            magnificationFilter: Texture.Linear
+                            minificationFilter: Texture.LinearMipMapLinear
+                            generateMipMaps: true
+                            maximumAnisotropy: 16.0
+                            wrapMode {
+                                x: WrapMode.ClampToEdge
+                                y: WrapMode.ClampToEdge
+                            }
+                        }
                     },
 
                     Parameter {name: "iChannelResolution2";value:Qt.vector3d(iChannel2P.value.width,iChannel2P.value.height,0);},
@@ -113,15 +133,6 @@ Entity {
                         value:Texture2D {
                             width: gravityWidth
                             height: gravityHeight
-                            format: Texture.RGBA8_UNorm
-                        }
-                    },
-                    Parameter {
-                        id:dftOutputP
-                        name:"dftOutput"
-                        value:Texture2D {
-                            width: 12
-                            height: 1
                             format: Texture.RGBA8_UNorm
                         }
                     },

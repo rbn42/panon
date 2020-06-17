@@ -1,0 +1,59 @@
+#version 430
+#define LOCALX 512
+#define GLOBALX (LOCALX*1)
+layout (local_size_x = LOCALX) in;
+
+struct WaveData {
+    int l;
+    int r;
+};
+
+layout (std430, binding = 2) coherent buffer Maxwave
+{int arr[];} maxwavedata;
+layout (std430, binding = 1) readonly buffer NewWaveData
+{WaveData arr[];} data;
+layout (std430, binding = 0) writeonly buffer WaveBuffer
+{WaveData arr[];} waveBuffer;
+
+uniform int newWaveLength;
+uniform int waveBufferLength;
+
+void updateMaximumValue(int gid) {
+
+    if(gid<15) {
+        int newvalue=0;
+        for(int i=0; i<15; i++) {
+            WaveData d=data.arr[i+gid*15];
+            newvalue=max(newvalue,abs(d.l));
+            newvalue=max(newvalue,abs(d.r));
+        }
+        maxwavedata.arr[gid]=newvalue;
+    } else if(gid<16) {
+        int newvalue=0;
+        for(int i=0; i<15; i++) {
+            newvalue=max(newvalue,maxwavedata.arr[i]);
+        }
+        int oldvalue=maxwavedata.arr[gid];
+        float decay=0.01;
+
+        newvalue=int(oldvalue*(1-decay)+newvalue*decay);
+        maxwavedata.arr[gid]=newvalue;
+    }
+}
+
+void main() {
+    int gid=int(gl_GlobalInvocationID.x);
+    if(gid>=GLOBALX)return;
+    updateMaximumValue(gid);
+
+    // Update index
+    int wavebufferidx=maxwavedata.arr[16];
+    if(gid<1)
+        maxwavedata.arr[16]=(wavebufferidx+newWaveLength);
+
+    for(int idx = gid; idx<newWaveLength; idx+=GLOBALX) {
+        int idxhist=(wavebufferidx+idx)%waveBufferLength ;//  (int(idx)+wavebufferidx - newWaveLength) % waveBufferLength;
+        waveBuffer.arr[idxhist]=data.arr[idx];
+    }
+
+}

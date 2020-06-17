@@ -3,7 +3,6 @@ import Qt3D.Render 2.14
 
 Viewport {
 
-    //property alias dftOutput: dftOutput.texture
     property alias bufferOutput: bufferOutput.texture
     property alias flipbufferOutput: flipbufferOutput.texture
     property alias imageOutput: imageOutput.texture
@@ -16,7 +15,13 @@ Viewport {
     RenderSurfaceSelector {
         TechniqueFilter {
             matchAll: [ FilterKey { name: "tech"; value: enable?"run":"stop" } ]
-            
+             
+            DispatchCompute {
+                RenderPassFilter {
+                    matchAny: [ FilterKey { name: "pass"; value: glDFT?"remotewavepass":"stop" } ]
+                }
+            }
+
             DispatchCompute {
                 RenderPassFilter {
                     matchAny: [ FilterKey { name: "pass"; value: glDFT?"gldftpass":"remotedftpass" } ]

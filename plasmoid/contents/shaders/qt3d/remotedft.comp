@@ -1,0 +1,25 @@
+#version 430
+uniform int npdftLength;
+#define LOCALX 256
+writeonly uniform image2D remotedftdOutput;
+layout (local_size_x = LOCALX) in;
+struct DFTData
+{
+    int left;
+    int right;
+};
+layout (std430, binding = 0) coherent buffer Npdft
+{
+    DFTData dftarray[];
+} data;
+
+void main() {
+    uint globalId = gl_GlobalInvocationID.x;
+    if(globalId<LOCALX)
+        while(globalId<npdftLength) {
+            DFTData dft = data.dftarray[globalId];
+            ivec2 storePos = ivec2(globalId,0);
+            imageStore(remotedftdOutput, storePos, vec4(dft.left/256.0,dft.right/256.0,0,1));
+            globalId+=LOCALX;
+        }
+}

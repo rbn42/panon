@@ -74,7 +74,8 @@ Item{
                     }
 
                 if(cfg.glDFT){
-                    mainSE.npwave= new Int32Array(new Int16Array(message));
+                    var arr=new Int32Array(new Int16Array(message));
+                    mainSE.push(arr);
                 }else{
                     mainSE.npdft= new Int32Array(new Uint8Array(message));
                 }

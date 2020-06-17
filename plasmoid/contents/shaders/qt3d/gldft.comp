@@ -1,0 +1,58 @@
+#version 430
+#define LOCALX 512
+#define GLOBALX (LOCALX*1)
+#define PI 3.14159265359
+layout (local_size_x = LOCALX) in;
+
+struct WaveData {
+    int l;
+    int r;
+};
+
+layout (std430, binding = 2) coherent buffer Maxwave
+{int arr[];} maxwavedata;
+layout (std430, binding = 0) readonly buffer WaveBuffer
+{WaveData arr[];} histdata;
+
+uniform int newWaveLength;
+uniform int waveBufferLength;
+writeonly uniform image2D remotedftdOutput;
+
+int N=3000;
+
+WaveData getWave(int x) {
+    int histwaveidx=maxwavedata.arr[16];
+    x=(histwaveidx-N+x)%waveBufferLength;
+    return histdata.arr[x];
+}
+
+vec2 computeDFT(uint k) {
+    //int N=newWaveLength;
+    double vrc=0.0,vrs=0.0,vgc=0.0,vgs=0.0;
+    for(int m=0; m<N; m++) {
+        WaveData wd=getWave(m);
+        vrc+=wd.l*cos(float(-2.0)*float(PI)*float(m)*float(k)/float(N));
+        vrs+=wd.l*sin(float(-2.0)*float(PI)*float(m)*float(k)/float(N));
+        vgc+=wd.r*cos(float(-2.0)*float(PI)*float(m)*float(k)/float(N));
+        vgs+=wd.r*sin(float(-2.0)*float(PI)*float(m)*float(k)/float(N));
+    }
+    float maxwaveF=10000.0;//200*10*abs(float(maxwavedata.arr[15]))+100.0;
+    return vec2(length(vec2(vrc/maxwaveF,vrs/maxwaveF)),length(vec2(vgc/maxwaveF,vgs/maxwaveF)));
+}
+
+void main() {
+    if(gl_GlobalInvocationID.x>=GLOBALX)return;
+
+
+    for(uint idx = gl_GlobalInvocationID.x; idx<400; idx+=GLOBALX) {
+        imageStore(remotedftdOutput,ivec2(idx,0), vec4(computeDFT(idx),0,1));
+    }
+    for(uint idx = gl_GlobalInvocationID.x; idx<800; idx+=GLOBALX) {
+        continue;
+        int id0=int(idx);
+        id0=int(id0/200.0* waveBufferLength);
+        WaveData d=histdata.arr[id0];
+        imageStore(remotedftdOutput,ivec2(idx,0), vec4( abs(d.l),abs(d.r),0,1));
+    }
+
+}
