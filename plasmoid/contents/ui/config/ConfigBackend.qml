@@ -88,6 +88,7 @@ Kirigami.FormLayout {
 
     QQC2.CheckBox {
         id: glDFT
+        visible:false
         text: i18nc("@option:check", "Use GLDFT (to lower CPU Usage) (experimental, not recommended)")
     }
 

@@ -5,7 +5,7 @@ from pathlib import Path
 _data_home = os.environ.get('XDG_DATA_HOME', None) or Path.home() / '.local' / 'share'
 
 effect_dirs = [
-    _data_home / 'panon',
+    Path(_data_home) / 'panon',
     Path.home() / '.config' / 'panon',    # legacy
     Path(os.curdir).absolute().parent / 'shaders'
 ]
