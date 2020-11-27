@@ -45,19 +45,16 @@ git clone https://github.com/rbn42/panon.git
 cd panon
 # Download SoundCard and hsluv-glsl
 git submodule update --init
+# Build translations
+mkdir build
+cd build
+cmake ../translations
+make install DESTDIR=../plasmoid/contents/locale
+cd ..
 # To install
 kpackagetool5 -t Plasma/Applet --install plasmoid
 # To upgrade
 kpackagetool5 -t Plasma/Applet --upgrade plasmoid
-#+END_SRC
-
-**** Install Translations
-#+BEGIN_SRC sh
-cd panon/translations/
-mkdir build
-cd build 
-cmake ..
-make install DESTDIR=~/.local/share/locale/
 #+END_SRC
 
 *** Via AUR
