@@ -29,6 +29,12 @@ sudo apt-get install qml-module-qt-websockets \
     python3-docopt python3-numpy python3-pyaudio python3-cffi python3-websockets
 #+END_SRC
 
+*** Solus
+#+BEGIN_SRC sh
+sudo eopkg install qt5-websockets  \
+   python-docopt PyAudio numpy python-cffi python-websockets
+#+END_SRC
+
 ** Installation
 *** Via KDE Store
 
