@@ -109,6 +109,11 @@ Kirigami.FormLayout {
         }
     }
 
+    QQC2.Label {
+        onLinkActivated: Qt.openUrlExternally(link)
+        text: "<a href='https://www.szynalski.com/tone-generator/' >"+ i18n("Test your audio frequency.") + "</a>"
+    }
+
     RowLayout {
         Kirigami.FormData.label: i18n("Latency / resolution:")
         Layout.fillWidth: true

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-01-29 11:24+0800\n"
+"POT-Creation-Date: 2020-12-12 17:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Chris (NullDev) <chris@nulldev.org>\n"
 "Language-Team: NullDev <chris@nulldev.org>\n"
@@ -37,34 +37,53 @@ msgctxt "@title"
 msgid "Colors"
 msgstr "Farben"
 
-#: contents/ui/config/ConfigBackend.qml:30
+#: contents/ui/config/ConfigBackend.qml:31
 msgid "Back-end:"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:42
-#: contents/ui/config/ConfigBackend.qml:57
+#: contents/ui/config/ConfigBackend.qml:43
+#: contents/ui/config/ConfigBackend.qml:58
 msgid "Input device:"
 msgstr "Eingabegeräte"
 
-#: contents/ui/config/ConfigBackend.qml:75
+#: contents/ui/config/ConfigBackend.qml:76
 msgid "Fifo path:"
 msgstr "Fifo Pfad"
 
-#: contents/ui/config/ConfigBackend.qml:84
-msgid "Audio frequency:"
-msgstr "Audio Frequenz"
-
-#: contents/ui/config/ConfigBackend.qml:95
+#: contents/ui/config/ConfigBackend.qml:86
 msgctxt "@option:check"
 msgid "Reduce the weight of bass"
 msgstr "Bass-Stärke reduzieren"
 
-#: contents/ui/config/ConfigBackend.qml:100
+#: contents/ui/config/ConfigBackend.qml:92
+msgctxt "@option:check"
+msgid "Use GLDFT (to lower CPU Usage) (experimental, not recommended)"
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:97
 msgctxt "@option:check"
 msgid "Debug"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:120
+#: contents/ui/config/ConfigBackend.qml:101
+msgid "Audio frequency:"
+msgstr "Audio Frequenz"
+
+#: contents/ui/config/ConfigBackend.qml:114
+#, fuzzy
+msgid "Test your audio frequency."
+msgstr "Audio Frequenz"
+
+#: contents/ui/config/ConfigBackend.qml:118
+msgid "Latency / resolution:"
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:190
+#, fuzzy
+msgid "Mixing All Speakers"
+msgstr "Alle Mikrofone und Lautsprecher mischen"
+
+#: contents/ui/config/ConfigBackend.qml:191
 msgid "Mixing All Microphones and Speakers"
 msgstr "Alle Mikrofone und Lautsprecher mischen"
 
@@ -112,25 +131,15 @@ msgctxt "@label:spinbox"
 msgid "Lightness"
 msgstr "Helligkeit"
 
-#: contents/ui/config/ConfigEffect.qml:24
+#: contents/ui/config/ConfigEffect.qml:23
 msgid "Effects"
 msgstr "Effekte"
 
-#: contents/ui/config/ConfigEffect.qml:30
-msgctxt "@option:check"
-msgid "Random effect (on startup)"
-msgstr "Zufälliger Effekt (bei Start)"
-
-#: contents/ui/config/ConfigEffect.qml:35
-msgid "Unwanted effects can be removed <br/>from <a href='$link' >here</a>."
-msgstr ""
-"Unerwünschte Effekte können <br/><a href='$link' >hier</a> entfernt werden."
-
-#: contents/ui/config/ConfigEffect.qml:40
+#: contents/ui/config/ConfigEffect.qml:36
 msgid "Effect:"
 msgstr "Effekt:"
 
-#: contents/ui/config/ConfigEffect.qml:54
+#: contents/ui/config/ConfigEffect.qml:50
 msgid "Hint:"
 msgstr "Hinweis:"
 
@@ -207,11 +216,15 @@ msgctxt "@option:check"
 msgid "Hide tooltip"
 msgstr "Verstecke Hinweis"
 
-#: contents/ui/ShaderSource.qml:43
+#: contents/ui/config/ConfigGeneral.qml:101
+msgid "Version:"
+msgstr ""
+
+#: contents/ui/ShaderSource.qml:49
 msgid "Error: Find undeclared arguments."
 msgstr "Fehler: Undeklarierte Argumente gefunden."
 
-#: contents/ui/Spectrum.qml:166
+#: contents/ui/Spectrum.qml:202
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
@@ -219,14 +232,23 @@ msgstr ""
 "Fehler: Laden des visuellen Effektes fehlgeschlagen. Bitte anderen Effekt im "
 "Konfigurationsdialog auswählen."
 
-#: contents/ui/Spectrum.qml:167
+#: contents/ui/Spectrum.qml:203
 msgid "Error: Failed to compile image shader."
 msgstr "Fehler: Kompilieren der Bilderschattierung fehlgeschlagen."
 
-#: contents/ui/Spectrum.qml:168
+#: contents/ui/Spectrum.qml:204
 msgid "Error: Failed to compile bufffer shader."
 msgstr ""
 "Fehler: Kompilieren der zwischengespeicherten Schattierungen fehlgeschlagen."
+
+#~ msgctxt "@option:check"
+#~ msgid "Random effect (on startup)"
+#~ msgstr "Zufälliger Effekt (bei Start)"
+
+#~ msgid "Unwanted effects can be removed <br/>from <a href='$link' >here</a>."
+#~ msgstr ""
+#~ "Unerwünschte Effekte können <br/><a href='$link' >hier</a> entfernt "
+#~ "werden."
 
 #~ msgid ""
 #~ "<a href='https://store.kde.org/search/projectSearchText/panon/f/"

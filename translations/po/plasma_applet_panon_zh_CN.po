@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-04-29 23:11+0800\n"
+"POT-Creation-Date: 2020-12-12 17:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,34 +36,51 @@ msgctxt "@title"
 msgid "Colors"
 msgstr "色彩"
 
-#: contents/ui/config/ConfigBackend.qml:30
+#: contents/ui/config/ConfigBackend.qml:31
 msgid "Back-end:"
 msgstr "音频数据源:"
 
-#: contents/ui/config/ConfigBackend.qml:42
-#: contents/ui/config/ConfigBackend.qml:57
+#: contents/ui/config/ConfigBackend.qml:43
+#: contents/ui/config/ConfigBackend.qml:58
 msgid "Input device:"
 msgstr "输入设备:"
 
-#: contents/ui/config/ConfigBackend.qml:75
+#: contents/ui/config/ConfigBackend.qml:76
 msgid "Fifo path:"
 msgstr "fifo文件路径:"
 
-#: contents/ui/config/ConfigBackend.qml:84
-msgid "Audio frequency:"
-msgstr "音域:"
-
-#: contents/ui/config/ConfigBackend.qml:95
+#: contents/ui/config/ConfigBackend.qml:86
 msgctxt "@option:check"
 msgid "Reduce the weight of bass"
 msgstr "减小低音权重"
 
-#: contents/ui/config/ConfigBackend.qml:100
+#: contents/ui/config/ConfigBackend.qml:92
+msgctxt "@option:check"
+msgid "Use GLDFT (to lower CPU Usage) (experimental, not recommended)"
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:97
 msgctxt "@option:check"
 msgid "Debug"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:120
+#: contents/ui/config/ConfigBackend.qml:101
+msgid "Audio frequency:"
+msgstr "音域:"
+
+#: contents/ui/config/ConfigBackend.qml:114
+msgid "Test your audio frequency."
+msgstr "测试你的音域"
+
+#: contents/ui/config/ConfigBackend.qml:118
+msgid "Latency / resolution:"
+msgstr "延迟/分辨率"
+
+#: contents/ui/config/ConfigBackend.qml:190
+msgid "Mixing All Speakers"
+msgstr "混合所有扬声器"
+
+#: contents/ui/config/ConfigBackend.qml:191
 msgid "Mixing All Microphones and Speakers"
 msgstr "混合所有麦克风和扬声器"
 
@@ -201,21 +217,21 @@ msgstr "隐藏提示窗口"
 msgid "Version:"
 msgstr "版本:"
 
-#: contents/ui/ShaderSource.qml:46
+#: contents/ui/ShaderSource.qml:49
 msgid "Error: Find undeclared arguments."
 msgstr "错误:发现未声明的参数"
 
-#: contents/ui/Spectrum.qml:168
+#: contents/ui/Spectrum.qml:202
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
 msgstr "错误:无法加载视觉特效,请从配置窗口中选择一个新的视觉特效."
 
-#: contents/ui/Spectrum.qml:169
+#: contents/ui/Spectrum.qml:203
 msgid "Error: Failed to compile image shader."
 msgstr "错误:无法编译image shader"
 
-#: contents/ui/Spectrum.qml:170
+#: contents/ui/Spectrum.qml:204
 msgid "Error: Failed to compile bufffer shader."
 msgstr "错误:无法编译buffer shader"
 

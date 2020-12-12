@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-04-29 23:11+0800\n"
+"POT-Creation-Date: 2020-12-12 17:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,34 +37,51 @@ msgctxt "@title"
 msgid "Colors"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:30
+#: contents/ui/config/ConfigBackend.qml:31
 msgid "Back-end:"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:42
-#: contents/ui/config/ConfigBackend.qml:57
+#: contents/ui/config/ConfigBackend.qml:43
+#: contents/ui/config/ConfigBackend.qml:58
 msgid "Input device:"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:75
+#: contents/ui/config/ConfigBackend.qml:76
 msgid "Fifo path:"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:84
-msgid "Audio frequency:"
-msgstr ""
-
-#: contents/ui/config/ConfigBackend.qml:95
+#: contents/ui/config/ConfigBackend.qml:86
 msgctxt "@option:check"
 msgid "Reduce the weight of bass"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:100
+#: contents/ui/config/ConfigBackend.qml:92
+msgctxt "@option:check"
+msgid "Use GLDFT (to lower CPU Usage) (experimental, not recommended)"
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:97
 msgctxt "@option:check"
 msgid "Debug"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:120
+#: contents/ui/config/ConfigBackend.qml:101
+msgid "Audio frequency:"
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:114
+msgid "Test your audio frequency."
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:118
+msgid "Latency / resolution:"
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:190
+msgid "Mixing All Speakers"
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:191
 msgid "Mixing All Microphones and Speakers"
 msgstr ""
 
@@ -201,20 +218,20 @@ msgstr ""
 msgid "Version:"
 msgstr ""
 
-#: contents/ui/ShaderSource.qml:46
+#: contents/ui/ShaderSource.qml:49
 msgid "Error: Find undeclared arguments."
 msgstr ""
 
-#: contents/ui/Spectrum.qml:168
+#: contents/ui/Spectrum.qml:202
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
 msgstr ""
 
-#: contents/ui/Spectrum.qml:169
+#: contents/ui/Spectrum.qml:203
 msgid "Error: Failed to compile image shader."
 msgstr ""
 
-#: contents/ui/Spectrum.qml:170
+#: contents/ui/Spectrum.qml:204
 msgid "Error: Failed to compile bufffer shader."
 msgstr ""
