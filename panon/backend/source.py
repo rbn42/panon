@@ -136,7 +136,6 @@ class SoundCardSource:
             stream = mic.recorder(
                 self.sample_rate,
                 self.channel_count,
-                self.blocksize,
             )
             stream.__enter__()
             self.streams.append(stream)
