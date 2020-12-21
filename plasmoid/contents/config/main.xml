@@ -59,7 +59,7 @@
   <group name="General">
 
     <entry name="fps" type="Int">
-      <default>60</default>
+      <default>30</default>
     </entry>
     <entry name="showFps" type="Bool">
       <default>false</default>
