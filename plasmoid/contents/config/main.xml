@@ -31,7 +31,7 @@
       <default>false</default>
     </entry>
     <entry name="bassResolutionLevel" type="Int">
-      <default>1</default>
+      <default>4</default>
     </entry>
     <entry name="deviceIndex" type="Int">
       <default>-1</default>

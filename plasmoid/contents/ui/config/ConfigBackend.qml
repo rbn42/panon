@@ -149,8 +149,7 @@ Kirigami.FormLayout {
                     break;
 
                     case '0 to 1,800Hz (A6) with lower latency':
-                    l=[[0,600,133],
-                    [600,1800,100]];
+                    l=[[0,1800,100]];
                     break;
 
                     case '0 to 600Hz (D5)':
