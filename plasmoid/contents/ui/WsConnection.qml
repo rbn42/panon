@@ -18,6 +18,9 @@ Item{
 
     property variant queue
 
+    property bool enable_wave_data:false
+    property bool enable_spectrum_data:false
+
     WebSocketServer {
         id: server
         listen: true
@@ -49,6 +52,10 @@ Item{
             console.log('Executing: '+cmd)
             cmd='echo do nothing'
         }
+        if(enable_wave_data)
+            cmd+=' --enable-wave-data'
+        if(enable_spectrum_data)
+            cmd+=' --enable-spectrum-data'
         return cmd
     }
 

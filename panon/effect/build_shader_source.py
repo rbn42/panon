@@ -128,5 +128,7 @@ else:
 
 obj['wave_buffer'] = read_file(applet_effect_home / 'wave-buffer.frag')
 obj['gldft'] = read_file(applet_effect_home / 'gldft.frag')
+obj['enable_iChannel0'] = 'iChannel0' in (read_file(image_shader_path) + (read_file(Path(effect.path) / 'buffer.frag') if (Path(effect.path) / 'buffer.frag').exists() else ""))
+obj['enable_iChannel1'] = 'iChannel1' in (read_file(image_shader_path) + (read_file(Path(effect.path) / 'buffer.frag') if (Path(effect.path) / 'buffer.frag').exists() else ""))
 
 json.dump(obj, sys.stdout)

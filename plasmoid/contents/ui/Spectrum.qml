@@ -219,6 +219,8 @@ Item{
     ShaderSource{id:shaderSourceReader}
 
     WsConnection{
+        enable_wave_data:shaderSourceReader.enable_iChannel0
+        enable_spectrum_data:shaderSourceReader.enable_iChannel1
         queue:MessageQueue{
             onImgsReadyChanged:{
 

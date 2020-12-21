@@ -15,6 +15,8 @@ Options:
   --backend=B                   [default: pyaudio]
   --fifo-path=P
   --debug                       Debug
+  --enable-wave-data
+  --enable-spectrum-data
 """
 import asyncio
 import numpy as np
@@ -87,19 +89,22 @@ async def mainloop():
             if spectrum_data is None:
                 await websocket.send('')
             else:
-                spectrum_data = np.clip(spectrum_data[1:] / 3.0, 0, 0.99) * 256
-                wave_data = latest_wave_data
-                wave_max = np.max(np.abs(wave_data))
-                wave_data = (wave_data + wave_max) / wave_max / 2 * 256
 
-                spectrum_data_m = n2s.convert(spectrum_data)
-                wave_data_m = n2s.convert(wave_data)
-
-                await websocket.send(json.dumps({
-                    'spectrum': spectrum_data_m,
-                    'wave': wave_data_m,
+                obj = {
                     'beat': isBeat,
-                }))
+                }
+                if arguments['--enable-wave-data']:
+                    wave_data = latest_wave_data
+                    wave_max = np.max(np.abs(wave_data))
+                    wave_data = (wave_data + wave_max) / wave_max / 2 * 256
+                    wave_data_m = n2s.convert(wave_data)
+                    obj['wave'] = wave_data_m
+                if arguments['--enable-spectrum-data']:
+                    spectrum_data = np.clip(spectrum_data[1:] / 3.0, 0, 0.99) * 256
+                    spectrum_data_m = n2s.convert(spectrum_data)
+                    obj['spectrum'] = spectrum_data_m
+
+                await websocket.send(json.dumps(obj))
 
 
 asyncio.get_event_loop().run_until_complete(mainloop())
