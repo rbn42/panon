@@ -21,6 +21,8 @@ PlasmaCore.DataSource {
     property string texture_uri:''
     property string error_message:''
 
+    readonly property bool enable_buffer:buffer_shader_source.length>0
+
     readonly property string cmd:Utils.chdir_scripts_root()
         + 'python3 -m panon.effect.build_shader_source'
         + ' '+Qt.btoa(JSON.stringify([cfg.visualEffect,cfg.effectArgValues]))

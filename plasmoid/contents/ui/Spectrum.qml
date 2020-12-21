@@ -245,7 +245,8 @@ Item{
                     mainSE.iChannel1=imgsReady.s;
                     mainSE.iBeat=imgsReady.beat;
                 }
-                bufferSES.scheduleUpdate();
+                if(shaderSourceReader.enable_buffer)
+                    bufferSES.scheduleUpdate();
 
                 time_prev_frame=time_current_frame
 
