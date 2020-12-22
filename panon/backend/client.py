@@ -102,6 +102,10 @@ async def mainloop():
                 if arguments['--enable-spectrum-data']:
                     spectrum_data = np.clip(spectrum_data[1:] / 3.0, 0, 0.99) * 256
                     spectrum_data_m = n2s.convert(spectrum_data)
+                    # When only spectrum data is enabled, send raw data to reduce cpu usage.
+                    if not arguments['--enable-wave-data']:
+                        await websocket.send(spectrum_data_m)
+                        continue
                     obj['spectrum'] = spectrum_data_m
 
                 await websocket.send(json.dumps(obj))

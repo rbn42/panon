@@ -6,6 +6,8 @@ import QtQuick 2.0
  */
 
 Item{
+    // When only spectrum data is enabled, receive raw data to reduce cpu usage.
+    property bool only_spectrum:false
 
     readonly property var cfg:plasmoid.configuration
 
@@ -25,11 +27,16 @@ Item{
             imgsLoading.used=false
             imgsLoading.w.source = 'data:' + message
         }else{
-            var obj = JSON.parse(message)
-            imgsLoading.used=false
-            imgsLoading.s.source = 'data:' + obj.spectrum
-            imgsLoading.w.source = 'data:' + obj.wave
-            imgsLoading.beat = obj.beat
+            if(only_spectrum){
+                imgsLoading.used=false
+                imgsLoading.s.source = 'data:' + message
+            }else{
+                var obj = JSON.parse(message)
+                imgsLoading.used=false
+                imgsLoading.s.source = 'data:' + obj.spectrum
+                imgsLoading.w.source = 'data:' + obj.wave
+                imgsLoading.beat = obj.beat
+            }
         }
 
         if(imgsLoading.ready){
