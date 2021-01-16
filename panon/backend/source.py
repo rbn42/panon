@@ -123,6 +123,8 @@ class SoundCardSource:
             mics = sc.all_microphones(exclude_monitors=False)
         elif self.device_id == 'allspeakers':
             mics = [mic for mic in sc.all_microphones(exclude_monitors=False) if mic.id.endswith('.monitor')]
+        elif self.device_id == 'allmicrophones':
+            mics = [mic for mic in sc.all_microphones(exclude_monitors=True)]
         elif self.device_id == 'default':
             mics = [sc.default_microphone()]
         else:
