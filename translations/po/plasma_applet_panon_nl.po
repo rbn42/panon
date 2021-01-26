@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-12-12 17:49+0800\n"
+"POT-Creation-Date: 2021-01-26 10:14+0800\n"
 "PO-Revision-Date: 2021-01-25 14:46+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <vistausss@outlook.com>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.4.2\n"
-"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: nl\n"
 
 #: contents/config/config.qml:6
 msgctxt "@title"
@@ -80,9 +80,13 @@ msgstr "Test uw audiofrequentie."
 msgid "Latency / resolution:"
 msgstr "Vertraging/Resolutie:"
 
-#: contents/ui/config/ConfigBackend.qml:190
+#: contents/ui/config/ConfigBackend.qml:189
 msgid "Mixing All Speakers"
 msgstr "Alle luidsprekers worden gemengd"
+
+#: contents/ui/config/ConfigBackend.qml:190
+msgid "Mixing All Microphones"
+msgstr "Alle microfoons worden gemengd"
 
 #: contents/ui/config/ConfigBackend.qml:191
 msgid "Mixing All Microphones and Speakers"
@@ -221,7 +225,7 @@ msgstr "Hulpballon verbergen"
 msgid "Version:"
 msgstr "Versie:"
 
-#: contents/ui/ShaderSource.qml:49
+#: contents/ui/ShaderSource.qml:54
 msgid "Error: Find undeclared arguments."
 msgstr "Fout: niet-aangevulde aanvullende opties."
 

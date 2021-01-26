@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-12-12 17:49+0800\n"
+"POT-Creation-Date: 2021-01-26 10:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,9 +76,13 @@ msgstr "测试你的音域"
 msgid "Latency / resolution:"
 msgstr "延迟/分辨率"
 
-#: contents/ui/config/ConfigBackend.qml:190
+#: contents/ui/config/ConfigBackend.qml:189
 msgid "Mixing All Speakers"
 msgstr "混合所有扬声器"
+
+#: contents/ui/config/ConfigBackend.qml:190
+msgid "Mixing All Microphones"
+msgstr "混合所有麦克风"
 
 #: contents/ui/config/ConfigBackend.qml:191
 msgid "Mixing All Microphones and Speakers"
@@ -217,7 +221,7 @@ msgstr "隐藏提示窗口"
 msgid "Version:"
 msgstr "版本:"
 
-#: contents/ui/ShaderSource.qml:49
+#: contents/ui/ShaderSource.qml:54
 msgid "Error: Find undeclared arguments."
 msgstr "错误:发现未声明的参数"
 

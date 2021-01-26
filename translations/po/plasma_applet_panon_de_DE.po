@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-12-12 17:49+0800\n"
+"POT-Creation-Date: 2021-01-26 10:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Chris (NullDev) <chris@nulldev.org>\n"
 "Language-Team: NullDev <chris@nulldev.org>\n"
@@ -72,16 +72,21 @@ msgstr "Audio Frequenz"
 #: contents/ui/config/ConfigBackend.qml:114
 #, fuzzy
 msgid "Test your audio frequency."
-msgstr "Audio Frequenz"
+msgstr ""
 
 #: contents/ui/config/ConfigBackend.qml:118
 msgid "Latency / resolution:"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:190
+#: contents/ui/config/ConfigBackend.qml:189
 #, fuzzy
 msgid "Mixing All Speakers"
-msgstr "Alle Mikrofone und Lautsprecher mischen"
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:190
+#, fuzzy
+msgid "Mixing All Microphones"
+msgstr ""
 
 #: contents/ui/config/ConfigBackend.qml:191
 msgid "Mixing All Microphones and Speakers"
@@ -220,7 +225,7 @@ msgstr "Verstecke Hinweis"
 msgid "Version:"
 msgstr ""
 
-#: contents/ui/ShaderSource.qml:49
+#: contents/ui/ShaderSource.qml:54
 msgid "Error: Find undeclared arguments."
 msgstr "Fehler: Undeklarierte Argumente gefunden."
 

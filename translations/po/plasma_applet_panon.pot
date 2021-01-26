@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-12-12 17:49+0800\n"
+"POT-Creation-Date: 2021-01-26 10:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,8 +77,12 @@ msgstr ""
 msgid "Latency / resolution:"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:190
+#: contents/ui/config/ConfigBackend.qml:189
 msgid "Mixing All Speakers"
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:190
+msgid "Mixing All Microphones"
 msgstr ""
 
 #: contents/ui/config/ConfigBackend.qml:191
@@ -218,7 +222,7 @@ msgstr ""
 msgid "Version:"
 msgstr ""
 
-#: contents/ui/ShaderSource.qml:49
+#: contents/ui/ShaderSource.qml:54
 msgid "Error: Find undeclared arguments."
 msgstr ""
 

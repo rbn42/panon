@@ -14,13 +14,12 @@ In the copied file:
 
 4)
 To "debug" the translation without changing your system language:
-1. Execute kde/translations/install_translations.sh 
-2. Prepend these lines to kde/test.sh and run it.
-```bash
+1. Execute /translations/install_translations.sh 
+2. Prepend these lines to /test.sh and run it.
+
 LANGUAGE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 LANG=en_US.UTF-8
 # Replace en_US with your language.
-```bash
 
 Thank You for your translations!
