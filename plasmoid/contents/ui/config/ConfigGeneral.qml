@@ -17,6 +17,7 @@ Kirigami.FormLayout {
     property alias cfg_fps: fps.value
     property alias cfg_showFps: showFps.checked
     property alias cfg_hideTooltip: hideTooltip.checked
+    property alias cfg_transparentBackground: transparentBackground.checked
 
     property alias cfg_preferredWidth: preferredWidth.value
     property alias cfg_autoExtend: autoExtend.checked
@@ -95,6 +96,11 @@ Kirigami.FormLayout {
     QQC2.CheckBox {
         id:hideTooltip
         text: i18nc("@option:check", "Hide tooltip")
+    }
+
+    QQC2.CheckBox {
+        id:transparentBackground
+        text: i18nc("@option:check", "Transparent Background")
     }
 
     RowLayout {
