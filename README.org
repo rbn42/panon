@@ -71,6 +71,9 @@ kpackagetool5 -t Plasma/Applet --upgrade plasmoid
 [[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] is available for ArchLinux. 
 
 ** [[../../wiki/VisualEffects][Visual Effects]]
+   
+** Known Issues
+   1. When a panon widget is removed manually from the Plasma desktop, a process called "python -m panon.backend" will be left alive. The process will be killed when plasma itself is killed (or you can find and kill this process manually). But before that, it may affect audio performance.
 ** [[../../wiki/Troubleshooting][Troubleshooting]]
 ** Credits
 *** Main Contributors
