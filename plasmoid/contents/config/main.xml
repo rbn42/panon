@@ -88,10 +88,6 @@
   </group>
   <group name="Colors">
 
-    <entry name="randomColor" type="Bool">
-      <default>false</default>
-    </entry>
-
     <entry name="colorSpaceHSL" type="Bool">
       <default>true</default>
     </entry>
