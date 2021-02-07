@@ -78,18 +78,7 @@ Item{
                 return cfg.hsluvLightness
         }
 
-        readonly property variant iMouse:{
-            switch(root.gravity){
-                case 1:
-                return Qt.vector4d(iMouseArea.mouseX,mainSE.height- iMouseArea.mouseY ,0,0)
-                case 2:
-                return Qt.vector4d(iMouseArea.mouseX, iMouseArea.mouseY ,0,0)
-                case 3:
-                return Qt.vector4d(mainSE.height-iMouseArea.mouseY, mainSE.width-iMouseArea.mouseX ,0,0)
-                case 4:
-                return Qt.vector4d(mainSE.height- iMouseArea.mouseY, iMouseArea.mouseX ,0,0)
-            }
-        }
+        readonly property variant iMouse:iMouseArea.i
 
         property double iTime
         property double iTimeDelta
@@ -198,7 +187,28 @@ Item{
         id:iMouseArea
         hoverEnabled :true
         anchors.fill: parent
-        //onClicked:random_seed=Math.random()
+
+        readonly property double current_x:root.gravity<3?mouseX:mainSE.height-mouseY
+        readonly property double current_y:[mainSE.height- mouseY,mouseY ,mainSE.width-mouseX ,mouseX ][root.gravity-1]
+        property double lastdown_x
+        property double lastdown_y
+        property double lastclick_x
+        property double lastclick_y
+
+        property var i:Qt.vector4d(lastdown_x,lastdown_y ,pressed?lastclick_x:-lastclick_x,-lastclick_y)
+        onPressed:{
+            lastclick_x=current_x
+            lastclick_y=current_y
+
+            lastdown_x=current_x
+            lastdown_y=current_y
+        }
+        onPositionChanged:{
+            if(pressed){
+                lastdown_x=current_x
+                lastdown_y=current_y
+            }
+        }
     }
 
     ShaderSource{id:shaderSourceReader}
