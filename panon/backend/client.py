@@ -29,8 +29,12 @@ from . import source
 import sys
 
 from docopt import docopt
-arguments = docopt(__doc__)
 
+import sys
+from .. import logger
+logger.log('argv: %s', sys.argv[1:])
+
+arguments = docopt(__doc__)
 server_port = int(arguments['<port>'])
 cfg_fps = int(arguments['--fps'])
 bassResolutionLevel = int(arguments['--bass-resolution-level'])
@@ -67,6 +71,7 @@ async def mainloop():
         spectrum_data = None
         isBeat = False
 
+        logger.log('loop')
         while True:
 
             if not use_glDFT and spectrum_data is None:
