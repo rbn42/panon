@@ -96,6 +96,7 @@ Item{
 
 
         property int gravity:root.gravity
+        property bool inversion:cfg.inversion
 
         anchors.fill: parent
         blending: true

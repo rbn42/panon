@@ -79,6 +79,9 @@
     <entry name="gravity" type="Int">
       <default>1</default>
     </entry>
+    <entry name="inversion" type="Bool">
+      <default>false</default>
+    </entry>
 
     <entry name="hideTooltip" type="Bool">
       <default>true</default>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2021-01-26 10:14+0800\n"
+"POT-Creation-Date: 2021-02-18 20:38+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,46 +88,45 @@ msgstr "混合所有麦克风"
 msgid "Mixing All Microphones and Speakers"
 msgstr "混合所有麦克风和扬声器"
 
-#: contents/ui/config/ConfigColors.qml:29
-msgctxt "@option:check"
-msgid "Randomize colors (on clicked)"
-msgstr "生成随机颜色(点击画面的时候)"
+#: contents/ui/config/ConfigColors.qml:28
+msgid "Randomize colors"
+msgstr "生成随机颜色"
 
-#: contents/ui/config/ConfigColors.qml:35
+#: contents/ui/config/ConfigColors.qml:49
 msgctxt "@label"
 msgid "Color space:"
 msgstr "色彩空间"
 
-#: contents/ui/config/ConfigColors.qml:36
+#: contents/ui/config/ConfigColors.qml:50
 msgctxt "@option:radio"
 msgid "HSL"
 msgstr ""
 
-#: contents/ui/config/ConfigColors.qml:43
+#: contents/ui/config/ConfigColors.qml:56
 msgctxt "@option:radio"
 msgid "HSLuv"
 msgstr ""
 
-#: contents/ui/config/ConfigColors.qml:50
-#: contents/ui/config/ConfigColors.qml:72
+#: contents/ui/config/ConfigColors.qml:62
+#: contents/ui/config/ConfigColors.qml:82
 msgctxt "@label:spinbox"
 msgid "Hue from"
 msgstr "色相起点"
 
-#: contents/ui/config/ConfigColors.qml:61
-#: contents/ui/config/ConfigColors.qml:83
+#: contents/ui/config/ConfigColors.qml:72
+#: contents/ui/config/ConfigColors.qml:92
 msgctxt "@label:spinbox"
 msgid "Hue to"
 msgstr "色相终点"
 
-#: contents/ui/config/ConfigColors.qml:94
-#: contents/ui/config/ConfigColors.qml:116
+#: contents/ui/config/ConfigColors.qml:102
+#: contents/ui/config/ConfigColors.qml:122
 msgctxt "@label:spinbox"
 msgid "Saturation"
 msgstr "饱和度"
 
-#: contents/ui/config/ConfigColors.qml:105
-#: contents/ui/config/ConfigColors.qml:127
+#: contents/ui/config/ConfigColors.qml:112
+#: contents/ui/config/ConfigColors.qml:132
 msgctxt "@label:spinbox"
 msgid "Lightness"
 msgstr "亮度"
@@ -144,80 +143,85 @@ msgstr "特效:"
 msgid "Hint:"
 msgstr "提示:"
 
-#: contents/ui/config/ConfigGeneral.qml:30
+#: contents/ui/config/ConfigGeneral.qml:31
 msgctxt "@label:spinbox"
 msgid "FPS:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:38
+#: contents/ui/config/ConfigGeneral.qml:39
 msgid "Lower FPS saves CPU and battries."
 msgstr "更低的FPS能节省CPU和电池"
 
-#: contents/ui/config/ConfigGeneral.qml:43
+#: contents/ui/config/ConfigGeneral.qml:44
 msgctxt "@option:radio"
 msgid "Show FPS"
 msgstr "显示FPS"
 
-#: contents/ui/config/ConfigGeneral.qml:52
+#: contents/ui/config/ConfigGeneral.qml:53
 msgctxt "@option:radio"
 msgid "Auto-hide (when audio is gone)"
 msgstr "自动隐藏(当没有声音的时候)"
 
-#: contents/ui/config/ConfigGeneral.qml:61
+#: contents/ui/config/ConfigGeneral.qml:62
 msgctxt "@option:radio"
 msgid "Animate auto-hiding"
 msgstr "自动隐藏动画"
 
-#: contents/ui/config/ConfigGeneral.qml:67
+#: contents/ui/config/ConfigGeneral.qml:68
 msgctxt "@label:spinbox"
 msgid "Height:"
 msgstr "高度:"
 
-#: contents/ui/config/ConfigGeneral.qml:67
+#: contents/ui/config/ConfigGeneral.qml:68
 msgctxt "@label:spinbox"
 msgid "Width:"
 msgstr "宽度:"
 
-#: contents/ui/config/ConfigGeneral.qml:78
+#: contents/ui/config/ConfigGeneral.qml:79
 msgctxt "@option:check"
 msgid "Fill height (don't work with Auto-hiding)"
 msgstr "填充高度(不能和自动隐藏一起用)"
 
-#: contents/ui/config/ConfigGeneral.qml:78
+#: contents/ui/config/ConfigGeneral.qml:79
 msgctxt "@option:check"
 msgid "Fill width (don't work with Auto-hiding)"
 msgstr "填充宽度(不能和自动隐藏一起用)"
 
-#: contents/ui/config/ConfigGeneral.qml:86
+#: contents/ui/config/ConfigGeneral.qml:87
 msgid "Gravity:"
 msgstr "重力(反)方向:"
 
-#: contents/ui/config/ConfigGeneral.qml:91
+#: contents/ui/config/ConfigGeneral.qml:92
 msgid "Center"
 msgstr "中心"
 
-#: contents/ui/config/ConfigGeneral.qml:91
+#: contents/ui/config/ConfigGeneral.qml:92
 msgid "North"
 msgstr "北"
 
-#: contents/ui/config/ConfigGeneral.qml:91
+#: contents/ui/config/ConfigGeneral.qml:92
 msgid "South"
 msgstr "南"
 
-#: contents/ui/config/ConfigGeneral.qml:91
+#: contents/ui/config/ConfigGeneral.qml:92
 msgid "East"
 msgstr "东"
 
-#: contents/ui/config/ConfigGeneral.qml:91
+#: contents/ui/config/ConfigGeneral.qml:92
 msgid "West"
 msgstr "西"
 
-#: contents/ui/config/ConfigGeneral.qml:97
+#: contents/ui/config/ConfigGeneral.qml:98
+msgctxt "@option:check"
+msgid "Invert"
+msgstr "反转"
+
+#: contents/ui/config/ConfigGeneral.qml:103
 msgctxt "@option:check"
 msgid "Hide tooltip"
 msgstr "隐藏提示窗口"
 
-#: contents/ui/config/ConfigGeneral.qml:101
+#: contents/ui/config/ConfigGeneral.qml:107
 msgid "Version:"
 msgstr "版本:"
 
@@ -225,17 +229,17 @@ msgstr "版本:"
 msgid "Error: Find undeclared arguments."
 msgstr "错误:发现未声明的参数"
 
-#: contents/ui/Spectrum.qml:202
+#: contents/ui/Spectrum.qml:177
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
 msgstr "错误:无法加载视觉特效,请从配置窗口中选择一个新的视觉特效."
 
-#: contents/ui/Spectrum.qml:203
+#: contents/ui/Spectrum.qml:178
 msgid "Error: Failed to compile image shader."
 msgstr "错误:无法编译image shader"
 
-#: contents/ui/Spectrum.qml:204
+#: contents/ui/Spectrum.qml:179
 msgid "Error: Failed to compile bufffer shader."
 msgstr "错误:无法编译buffer shader"
 
