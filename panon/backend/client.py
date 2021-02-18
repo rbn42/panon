@@ -68,7 +68,7 @@ async def mainloop():
         from .convertor import Numpy2Str
         n2s = Numpy2Str()
 
-        spectrum_data = None
+        spectrum_data = True    #None
         isBeat = False
 
         logger.log('loop')
@@ -77,6 +77,8 @@ async def mainloop():
             if not use_glDFT and spectrum_data is None:
                 # Set fps to 2 to lower CPU usage, when audio is unavailable.
                 latest_wave_data = spectrum_source.read(fps=2)
+                if type(spectrum_source) is source.SoundCardSource:
+                    spectrum_source.update_smart_device()
             else:
                 latest_wave_data = spectrum_source.read()
                 isBeat = beatsDetector is not None and beatsDetector.isBeat(latest_wave_data)

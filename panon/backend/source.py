@@ -112,6 +112,47 @@ class SoundCardSource:
         data = sum(data) / len(data)
         return data
 
+    def update_smart_device(self, ):
+        if not self.device_id == 'smart':
+            return
+        import subprocess
+        s = subprocess.run(['pacmd', 'list-sinks'], capture_output=True).stdout
+        l = s.decode(errors='ignore').split('\n')
+        name = None
+        for line in l:
+            if line.startswith('\tname: '):
+                name = line.split('<')[-1][:-1]
+            elif line.startswith('\tstate: '):
+                state = line.split()[-1]
+                if state == 'RUNNING':
+                    break
+                else:
+                    name = None
+
+        if name is not None:
+            if not self.smart_device_id == name:
+                self.smart_device_id = name
+                for stream in self.streams:
+                    stream.__exit__(None, None, None)
+
+                import soundcard as sc
+                try:
+                    sc.set_name('Panon')
+                except (AttributeError, NotImplementedError):
+                    pass
+                mic = sc.get_microphone(
+                    self.smart_device_id+'.monitor',
+                    include_loopback=False,
+                    exclude_monitors=False,
+                )
+                stream = mic.recorder(
+                    self.sample_rate,
+                    self.channel_count,
+                    self.blocksize,
+                )
+                stream.__enter__()
+                self.streams = [stream]
+
     def start(self):
         import soundcard as sc
         try:
@@ -126,6 +167,9 @@ class SoundCardSource:
         elif self.device_id == 'allmicrophones':
             mics = [mic for mic in sc.all_microphones(exclude_monitors=True)]
         elif self.device_id == 'default':
+            mics = [sc.default_microphone()]
+        elif self.device_id == 'smart':
+            self.smart_device_id = ''
             mics = [sc.default_microphone()]
         else:
             mics = [sc.get_microphone(
