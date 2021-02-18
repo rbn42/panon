@@ -116,18 +116,16 @@ class SoundCardSource:
         if not self.device_id == 'smart':
             return
         import subprocess
-        s = subprocess.run(['pacmd', 'list-sinks'], capture_output=True).stdout
+        s = subprocess.run(['pacmd', 'list-sink-inputs'], capture_output=True).stdout
         l = s.decode(errors='ignore').split('\n')
         name = None
         for line in l:
-            if line.startswith('\tname: '):
-                name = line.split('<')[-1][:-1]
-            elif line.startswith('\tstate: '):
+            if line.startswith('\tstate: '):
                 state = line.split()[-1]
+            if line.startswith('\tsink: '):
                 if state == 'RUNNING':
+                    name = line.split('<')[-1][:-1]
                     break
-                else:
-                    name = None
 
         if name is not None:
             if not self.smart_device_id == name:
@@ -141,7 +139,7 @@ class SoundCardSource:
                 except (AttributeError, NotImplementedError):
                     pass
                 mic = sc.get_microphone(
-                    self.smart_device_id+'.monitor',
+                    self.smart_device_id + '.monitor',
                     include_loopback=False,
                     exclude_monitors=False,
                 )
