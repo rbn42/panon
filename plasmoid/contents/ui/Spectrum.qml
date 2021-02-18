@@ -95,8 +95,8 @@ Item{
         readonly property variant iChannel3:Image{source:'file://'+shaderSourceReader.texture_uri}
 
 
-        property int gravity:root.gravity
-        property bool inversion:cfg.inversion
+        property int coord_gravity:root.gravity
+        property bool coord_inversion:cfg.inversion
 
         anchors.fill: parent
         blending: true
@@ -128,7 +128,6 @@ Item{
             readonly property variant iChannel2:mainSE.iChannel2
             readonly property variant iChannel3:mainSE.iChannel3
             readonly property variant iMouse:mainSE.iMouse
-            readonly property int gravity:mainSE.gravity
             fragmentShader:shaderSourceReader.buffer_shader_source
         }
     }
