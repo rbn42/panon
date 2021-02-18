@@ -74,8 +74,9 @@ async def mainloop():
         while True:
 
             if type(spectrum_source) is source.SoundCardSource:
-                if spectrum_source.smart_device_id == '':
-                    spectrum_source.update_smart_device()
+                if spectrum_source.device_id == 'smart':
+                    if spectrum_source.smart_device_id == '':
+                        spectrum_source.update_smart_device()
 
             if not use_glDFT and spectrum_data is None:
                 # Set fps to 2 to lower CPU usage, when audio is unavailable.
