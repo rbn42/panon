@@ -55,12 +55,12 @@ PlasmaCore.DataSource {
             }[obj.error_code]
             return
         }
+        enable_iChannel0=obj.enable_iChannel0
+        enable_iChannel1=obj.enable_iChannel1
         image_shader_source=obj.image_shader
         buffer_shader_source=obj.buffer_shader
         wave_buffer_source=obj.wave_buffer
         gldft_source=obj.gldft
-        enable_iChannel0=obj.enable_iChannel0
-        enable_iChannel1=obj.enable_iChannel1
         texture_uri=obj.texture
         error_message=''
     }

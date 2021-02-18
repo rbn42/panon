@@ -42,12 +42,11 @@ Item{
     Layout.fillWidth: vertical? false:cfg.autoExtend
     Layout.fillHeight: vertical? cfg.autoExtend :false
 
-    property double random_seed:Math.random()
 
     ShaderEffect {
         id:mainSE
-        readonly property bool colorSpaceHSL:cfg.randomColor?false: cfg.colorSpaceHSL
-        readonly property bool colorSpaceHSLuv:cfg.randomColor?true:cfg.colorSpaceHSLuv
+        readonly property bool colorSpaceHSL: cfg.colorSpaceHSL
+        readonly property bool colorSpaceHSLuv:cfg.colorSpaceHSLuv
 
         Behavior on hueFrom{ NumberAnimation { duration: 1000} }
         Behavior on hueTo{ NumberAnimation { duration: 1000} }
@@ -55,56 +54,31 @@ Item{
         Behavior on lightness{ NumberAnimation { duration: 1000} }
 
         property int hueFrom    :{
-            if(cfg.randomColor)
-                return 360*Utils.random(random_seed+1)
-            else if(cfg.colorSpaceHSL)
+            if(cfg.colorSpaceHSL)
                 return cfg.hslHueFrom
             else if(cfg.colorSpaceHSLuv)
                 return cfg.hsluvHueFrom
         }
         property int hueTo    :{
-            if(cfg.randomColor)
-                return 1080*Utils.random(random_seed+2)-360
-            else if(cfg.colorSpaceHSL)
+            if(cfg.colorSpaceHSL)
                 return cfg.hslHueTo
             else if(cfg.colorSpaceHSLuv)
                 return cfg.hsluvHueTo
         }
         property int saturation  :{
-            if(cfg.randomColor)
-                if(Math.abs(hueTo-hueFrom)>100)
-                    return 80+20*Utils.random(random_seed+3)
-                else
-                    return 80+20*Utils.random(random_seed+4)
-            else if(cfg.colorSpaceHSL)
+            if(cfg.colorSpaceHSL)
                 return cfg.hslSaturation
             else if(cfg.colorSpaceHSLuv)
                 return cfg.hsluvSaturation
         }
         property int lightness   :{
-            if(cfg.randomColor)
-                if(Math.abs(hueTo-hueFrom)>100)
-                    return 60+20*Utils.random(random_seed+5)
-                else
-                    return 100*Utils.random(random_seed+6)
-            else if(cfg.colorSpaceHSL)
+            if(cfg.colorSpaceHSL)
                 return cfg.hslLightness
             else if(cfg.colorSpaceHSLuv)
                 return cfg.hsluvLightness
         }
 
-        readonly property variant iMouse:{
-            switch(root.gravity){
-                case 1:
-                return Qt.vector4d(iMouseArea.mouseX,mainSE.height- iMouseArea.mouseY ,0,0)
-                case 2:
-                return Qt.vector4d(iMouseArea.mouseX, iMouseArea.mouseY ,0,0)
-                case 3:
-                return Qt.vector4d(mainSE.height-iMouseArea.mouseY, mainSE.width-iMouseArea.mouseX ,0,0)
-                case 4:
-                return Qt.vector4d(mainSE.height- iMouseArea.mouseY, iMouseArea.mouseX ,0,0)
-            }
-        }
+        readonly property variant iMouse:iMouseArea.i
 
         property double iTime
         property double iTimeDelta
@@ -122,6 +96,7 @@ Item{
 
 
         property int gravity:root.gravity
+        property bool inversion:cfg.inversion
 
         anchors.fill: parent
         blending: true
@@ -213,14 +188,34 @@ Item{
         id:iMouseArea
         hoverEnabled :true
         anchors.fill: parent
-        onClicked:random_seed=Math.random()
+
+        readonly property double current_x:root.gravity<3?mouseX:mainSE.height-mouseY
+        readonly property double current_y:[mainSE.height- mouseY,mouseY ,mainSE.width-mouseX ,mouseX ][root.gravity-1]
+        property double lastdown_x
+        property double lastdown_y
+        property double lastclick_x
+        property double lastclick_y
+
+        property var i:Qt.vector4d(lastdown_x,lastdown_y ,pressed?lastclick_x:-lastclick_x,-lastclick_y)
+        onPressed:{
+            lastclick_x=current_x
+            lastclick_y=current_y
+
+            lastdown_x=current_x
+            lastdown_y=current_y
+        }
+        onPositionChanged:{
+            if(pressed){
+                lastdown_x=current_x
+                lastdown_y=current_y
+            }
+        }
     }
 
     ShaderSource{id:shaderSourceReader}
 
     WsConnection{
-        enable_wave_data:shaderSourceReader.enable_iChannel0
-        enable_spectrum_data:shaderSourceReader.enable_iChannel1
+        shaderSourceReader:shaderSourceReader
         queue:MessageQueue{
             only_spectrum:shaderSourceReader.enable_iChannel1 && !shaderSourceReader.enable_iChannel0
             onImgsReadyChanged:{

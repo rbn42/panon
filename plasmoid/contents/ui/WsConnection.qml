@@ -18,8 +18,7 @@ Item{
 
     property variant queue
 
-    property bool enable_wave_data:false
-    property bool enable_spectrum_data:false
+    property var shaderSourceReader
 
     WebSocketServer {
         id: server
@@ -32,8 +31,10 @@ Item{
     }
 
     readonly property string startBackEnd:{
+        if(server.port==0) return '';
+        if(shaderSourceReader.image_shader_source=='') return ''
         var cmd=Utils.chdir_scripts_root()+'exec python3 -m panon.backend.client '
-        cmd+=server.port
+        cmd+=server.url  //+':'+server.port
         var be=['pyaudio','soundcard','fifo'][cfg.backendIndex]
         cmd+=' --backend='+be
         if(be=='soundcard')
@@ -52,9 +53,9 @@ Item{
             console.log('Executing: '+cmd)
             cmd='echo do nothing'
         }
-        if(enable_wave_data)
+        if(shaderSourceReader.enable_iChannel0)
             cmd+=' --enable-wave-data'
-        if(enable_spectrum_data)
+        if(shaderSourceReader.enable_iChannel1)
             cmd+=' --enable-spectrum-data'
         return cmd
     }

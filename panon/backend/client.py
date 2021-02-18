@@ -2,7 +2,7 @@
 panon client
 
 Usage:
-  main [options] <port> 
+  main [options] <url> 
   main -h | --help
 
 Options:
@@ -29,9 +29,12 @@ from . import source
 import sys
 
 from docopt import docopt
-arguments = docopt(__doc__)
 
-server_port = int(arguments['<port>'])
+import sys
+from .. import logger
+logger.log('argv: %s', sys.argv[1:])
+
+arguments = docopt(__doc__)
 cfg_fps = int(arguments['--fps'])
 bassResolutionLevel = int(arguments['--bass-resolution-level'])
 reduceBass = arguments['--reduce-bass']
@@ -56,7 +59,7 @@ else:
 
 
 async def mainloop():
-    async with websockets.connect(f"ws://localhost:{server_port}") as websocket:
+    async with websockets.connect(arguments['<url>']) as websocket:
 
         spec = spectrum.Spectrum()
         decay = Decay()
@@ -64,14 +67,17 @@ async def mainloop():
         from .convertor import Numpy2Str
         n2s = Numpy2Str()
 
-        spectrum_data = None
+        spectrum_data = True    #None
         isBeat = False
 
+        logger.log('loop')
         while True:
 
             if not use_glDFT and spectrum_data is None:
                 # Set fps to 2 to lower CPU usage, when audio is unavailable.
                 latest_wave_data = spectrum_source.read(fps=2)
+                if type(spectrum_source) is source.SoundCardSource:
+                    spectrum_source.update_smart_device()
             else:
                 latest_wave_data = spectrum_source.read()
                 isBeat = beatsDetector is not None and beatsDetector.isBeat(latest_wave_data)

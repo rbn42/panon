@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Chris (NullDev) <chris@nulldev.org>, 2020.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2020-12-12 17:49+0800\n"
+"POT-Creation-Date: 2021-02-18 22:46+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Chris (NullDev) <chris@nulldev.org>\n"
 "Language-Team: NullDev <chris@nulldev.org>\n"
@@ -70,63 +69,68 @@ msgid "Audio frequency:"
 msgstr "Audio Frequenz"
 
 #: contents/ui/config/ConfigBackend.qml:114
-#, fuzzy
 msgid "Test your audio frequency."
-msgstr "Audio Frequenz"
+msgstr ""
 
 #: contents/ui/config/ConfigBackend.qml:118
 msgid "Latency / resolution:"
 msgstr ""
 
+#: contents/ui/config/ConfigBackend.qml:189
+msgid "Any Active Speaker"
+msgstr ""
+
 #: contents/ui/config/ConfigBackend.qml:190
-#, fuzzy
 msgid "Mixing All Speakers"
-msgstr "Alle Mikrofone und Lautsprecher mischen"
+msgstr ""
 
 #: contents/ui/config/ConfigBackend.qml:191
+msgid "Mixing All Microphones"
+msgstr ""
+
+#: contents/ui/config/ConfigBackend.qml:192
 msgid "Mixing All Microphones and Speakers"
 msgstr "Alle Mikrofone und Lautsprecher mischen"
 
-#: contents/ui/config/ConfigColors.qml:29
-msgctxt "@option:check"
-msgid "Randomize colors (on clicked)"
-msgstr "Zufällige Farben (bei Klick)"
+#: contents/ui/config/ConfigColors.qml:28
+msgid "Randomize colors"
+msgstr "Zufällige Farben"
 
-#: contents/ui/config/ConfigColors.qml:35
+#: contents/ui/config/ConfigColors.qml:49
 msgctxt "@label"
 msgid "Color space:"
 msgstr "Farbraum"
 
-#: contents/ui/config/ConfigColors.qml:36
+#: contents/ui/config/ConfigColors.qml:50
 msgctxt "@option:radio"
 msgid "HSL"
 msgstr ""
 
-#: contents/ui/config/ConfigColors.qml:43
+#: contents/ui/config/ConfigColors.qml:56
 msgctxt "@option:radio"
 msgid "HSLuv"
 msgstr ""
 
-#: contents/ui/config/ConfigColors.qml:50
-#: contents/ui/config/ConfigColors.qml:72
+#: contents/ui/config/ConfigColors.qml:62
+#: contents/ui/config/ConfigColors.qml:82
 msgctxt "@label:spinbox"
 msgid "Hue from"
 msgstr "Farbverlauf von"
 
-#: contents/ui/config/ConfigColors.qml:61
-#: contents/ui/config/ConfigColors.qml:83
+#: contents/ui/config/ConfigColors.qml:72
+#: contents/ui/config/ConfigColors.qml:92
 msgctxt "@label:spinbox"
 msgid "Hue to"
 msgstr "Farbverlauf bis"
 
-#: contents/ui/config/ConfigColors.qml:94
-#: contents/ui/config/ConfigColors.qml:116
+#: contents/ui/config/ConfigColors.qml:102
+#: contents/ui/config/ConfigColors.qml:122
 msgctxt "@label:spinbox"
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: contents/ui/config/ConfigColors.qml:105
-#: contents/ui/config/ConfigColors.qml:127
+#: contents/ui/config/ConfigColors.qml:112
+#: contents/ui/config/ConfigColors.qml:132
 msgctxt "@label:spinbox"
 msgid "Lightness"
 msgstr "Helligkeit"
@@ -143,88 +147,93 @@ msgstr "Effekt:"
 msgid "Hint:"
 msgstr "Hinweis:"
 
-#: contents/ui/config/ConfigGeneral.qml:30
+#: contents/ui/config/ConfigGeneral.qml:31
 msgctxt "@label:spinbox"
 msgid "FPS:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:38
+#: contents/ui/config/ConfigGeneral.qml:39
 msgid "Lower FPS saves CPU and battries."
 msgstr "Niedrigere FPS sparen CPU-Leistung und Batterielaufzeit"
 
-#: contents/ui/config/ConfigGeneral.qml:43
+#: contents/ui/config/ConfigGeneral.qml:44
 msgctxt "@option:radio"
 msgid "Show FPS"
 msgstr "Zeige FPS"
 
-#: contents/ui/config/ConfigGeneral.qml:52
+#: contents/ui/config/ConfigGeneral.qml:53
 msgctxt "@option:radio"
 msgid "Auto-hide (when audio is gone)"
 msgstr "Automatisch Verstecken (wenn keine Töne abgespielt werden)"
 
-#: contents/ui/config/ConfigGeneral.qml:61
+#: contents/ui/config/ConfigGeneral.qml:62
 msgctxt "@option:radio"
 msgid "Animate auto-hiding"
 msgstr "Automatisches Verstecken mit Animation"
 
-#: contents/ui/config/ConfigGeneral.qml:67
+#: contents/ui/config/ConfigGeneral.qml:68
 msgctxt "@label:spinbox"
 msgid "Height:"
 msgstr "Höhe:"
 
-#: contents/ui/config/ConfigGeneral.qml:67
+#: contents/ui/config/ConfigGeneral.qml:68
 msgctxt "@label:spinbox"
 msgid "Width:"
 msgstr "Breite:"
 
-#: contents/ui/config/ConfigGeneral.qml:78
+#: contents/ui/config/ConfigGeneral.qml:79
 msgctxt "@option:check"
 msgid "Fill height (don't work with Auto-hiding)"
 msgstr "Fülle Höhe (funktioniert nicht mit automatischem Verstecken)"
 
-#: contents/ui/config/ConfigGeneral.qml:78
+#: contents/ui/config/ConfigGeneral.qml:79
 msgctxt "@option:check"
 msgid "Fill width (don't work with Auto-hiding)"
 msgstr "Fülle Breite (funktioniert nicht mit automatischem Verstecken)"
 
-#: contents/ui/config/ConfigGeneral.qml:86
+#: contents/ui/config/ConfigGeneral.qml:87
 msgid "Gravity:"
 msgstr "Schwerkraft"
 
-#: contents/ui/config/ConfigGeneral.qml:91
+#: contents/ui/config/ConfigGeneral.qml:92
 msgid "Center"
 msgstr "Mitte"
 
-#: contents/ui/config/ConfigGeneral.qml:91
+#: contents/ui/config/ConfigGeneral.qml:92
 msgid "North"
 msgstr "Nord"
 
-#: contents/ui/config/ConfigGeneral.qml:91
+#: contents/ui/config/ConfigGeneral.qml:92
 msgid "South"
 msgstr "Süd"
 
-#: contents/ui/config/ConfigGeneral.qml:91
+#: contents/ui/config/ConfigGeneral.qml:92
 msgid "East"
 msgstr "Ost"
 
-#: contents/ui/config/ConfigGeneral.qml:91
+#: contents/ui/config/ConfigGeneral.qml:92
 msgid "West"
 msgstr "West"
 
-#: contents/ui/config/ConfigGeneral.qml:97
+#: contents/ui/config/ConfigGeneral.qml:98
+msgctxt "@option:check"
+msgid "Invert"
+msgstr ""
+
+#: contents/ui/config/ConfigGeneral.qml:103
 msgctxt "@option:check"
 msgid "Hide tooltip"
 msgstr "Verstecke Hinweis"
 
-#: contents/ui/config/ConfigGeneral.qml:101
+#: contents/ui/config/ConfigGeneral.qml:107
 msgid "Version:"
 msgstr ""
 
-#: contents/ui/ShaderSource.qml:49
+#: contents/ui/ShaderSource.qml:54
 msgid "Error: Find undeclared arguments."
 msgstr "Fehler: Undeklarierte Argumente gefunden."
 
-#: contents/ui/Spectrum.qml:202
+#: contents/ui/Spectrum.qml:177
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
@@ -232,11 +241,11 @@ msgstr ""
 "Fehler: Laden des visuellen Effektes fehlgeschlagen. Bitte anderen Effekt im "
 "Konfigurationsdialog auswählen."
 
-#: contents/ui/Spectrum.qml:203
+#: contents/ui/Spectrum.qml:178
 msgid "Error: Failed to compile image shader."
 msgstr "Fehler: Kompilieren der Bilderschattierung fehlgeschlagen."
 
-#: contents/ui/Spectrum.qml:204
+#: contents/ui/Spectrum.qml:179
 msgid "Error: Failed to compile bufffer shader."
 msgstr ""
 "Fehler: Kompilieren der zwischengespeicherten Schattierungen fehlgeschlagen."

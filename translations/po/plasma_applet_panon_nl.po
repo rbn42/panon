@@ -3,79 +3,82 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
 "POT-Creation-Date: 2021-02-18 22:46+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2021-01-25 14:46+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Language-Team: Dutch <vistausss@outlook.com>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: contents/config/config.qml:6
 msgctxt "@title"
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: contents/config/config.qml:11
 msgctxt "@title"
 msgid "Visual Effects"
-msgstr ""
+msgstr "Visuele effecten"
 
 #: contents/config/config.qml:16
 msgctxt "@title"
 msgid "Back-end"
-msgstr ""
+msgstr "Backend"
 
 #: contents/config/config.qml:21
 msgctxt "@title"
 msgid "Colors"
-msgstr ""
+msgstr "Kleuren"
 
 #: contents/ui/config/ConfigBackend.qml:31
 msgid "Back-end:"
-msgstr ""
+msgstr "Backend:"
 
 #: contents/ui/config/ConfigBackend.qml:43
 #: contents/ui/config/ConfigBackend.qml:58
 msgid "Input device:"
-msgstr ""
+msgstr "Invoerapparaat:"
 
 #: contents/ui/config/ConfigBackend.qml:76
 msgid "Fifo path:"
-msgstr ""
+msgstr "Fifo-pad:"
 
 #: contents/ui/config/ConfigBackend.qml:86
 msgctxt "@option:check"
 msgid "Reduce the weight of bass"
-msgstr ""
+msgstr "Basniveau verlagen"
 
 #: contents/ui/config/ConfigBackend.qml:92
 msgctxt "@option:check"
 msgid "Use GLDFT (to lower CPU Usage) (experimental, not recommended)"
 msgstr ""
+"GLDFT gebruiken (om het cpu-verbruik te verlagen - experimenteel en niet "
+"aanbevolen)"
 
 #: contents/ui/config/ConfigBackend.qml:97
 msgctxt "@option:check"
 msgid "Debug"
-msgstr ""
+msgstr "Foutopsporing"
 
 #: contents/ui/config/ConfigBackend.qml:101
 msgid "Audio frequency:"
-msgstr ""
+msgstr "Audiofrequentie:"
 
 #: contents/ui/config/ConfigBackend.qml:114
 msgid "Test your audio frequency."
-msgstr ""
+msgstr "Test uw audiofrequentie."
 
 #: contents/ui/config/ConfigBackend.qml:118
 msgid "Latency / resolution:"
-msgstr ""
+msgstr "Vertraging/Resolutie:"
 
 #: contents/ui/config/ConfigBackend.qml:189
 msgid "Any Active Speaker"
@@ -83,138 +86,138 @@ msgstr ""
 
 #: contents/ui/config/ConfigBackend.qml:190
 msgid "Mixing All Speakers"
-msgstr ""
+msgstr "Alle luidsprekers worden gemengd"
 
 #: contents/ui/config/ConfigBackend.qml:191
 msgid "Mixing All Microphones"
-msgstr ""
+msgstr "Alle microfoons worden gemengd"
 
 #: contents/ui/config/ConfigBackend.qml:192
 msgid "Mixing All Microphones and Speakers"
-msgstr ""
+msgstr "Alle microfoons en luidsprekers worden gemengd"
 
 #: contents/ui/config/ConfigColors.qml:28
 msgid "Randomize colors"
-msgstr ""
+msgstr "Willekeurige kleuren"
 
 #: contents/ui/config/ConfigColors.qml:49
 msgctxt "@label"
 msgid "Color space:"
-msgstr ""
+msgstr "Kleurruimte:"
 
 #: contents/ui/config/ConfigColors.qml:50
 msgctxt "@option:radio"
 msgid "HSL"
-msgstr ""
+msgstr "HSL"
 
 #: contents/ui/config/ConfigColors.qml:56
 msgctxt "@option:radio"
 msgid "HSLuv"
-msgstr ""
+msgstr "HSLuv"
 
 #: contents/ui/config/ConfigColors.qml:62
 #: contents/ui/config/ConfigColors.qml:82
 msgctxt "@label:spinbox"
 msgid "Hue from"
-msgstr ""
+msgstr "Tint van"
 
 #: contents/ui/config/ConfigColors.qml:72
 #: contents/ui/config/ConfigColors.qml:92
 msgctxt "@label:spinbox"
 msgid "Hue to"
-msgstr ""
+msgstr "Tint tot"
 
 #: contents/ui/config/ConfigColors.qml:102
 #: contents/ui/config/ConfigColors.qml:122
 msgctxt "@label:spinbox"
 msgid "Saturation"
-msgstr ""
+msgstr "Verzadiging"
 
 #: contents/ui/config/ConfigColors.qml:112
 #: contents/ui/config/ConfigColors.qml:132
 msgctxt "@label:spinbox"
 msgid "Lightness"
-msgstr ""
+msgstr "Belichting"
 
 #: contents/ui/config/ConfigEffect.qml:23
 msgid "Effects"
-msgstr ""
+msgstr "Effecten"
 
 #: contents/ui/config/ConfigEffect.qml:36
 msgid "Effect:"
-msgstr ""
+msgstr "Effect:"
 
 #: contents/ui/config/ConfigEffect.qml:50
 msgid "Hint:"
-msgstr ""
+msgstr "Hint:"
 
 #: contents/ui/config/ConfigGeneral.qml:31
 msgctxt "@label:spinbox"
 msgid "FPS:"
-msgstr ""
+msgstr "FPS:"
 
 #: contents/ui/config/ConfigGeneral.qml:39
 msgid "Lower FPS saves CPU and battries."
-msgstr ""
+msgstr "Verlaag het aantal fps om het cpu- en accuverbruik te verlagen."
 
 #: contents/ui/config/ConfigGeneral.qml:44
 msgctxt "@option:radio"
 msgid "Show FPS"
-msgstr ""
+msgstr "FPS tonen"
 
 #: contents/ui/config/ConfigGeneral.qml:53
 msgctxt "@option:radio"
 msgid "Auto-hide (when audio is gone)"
-msgstr ""
+msgstr "Automatisch verbergen (als er geen audio wordt afgespeeld)"
 
 #: contents/ui/config/ConfigGeneral.qml:62
 msgctxt "@option:radio"
 msgid "Animate auto-hiding"
-msgstr ""
+msgstr "Automatisch verbergen voorzien van effect"
 
 #: contents/ui/config/ConfigGeneral.qml:68
 msgctxt "@label:spinbox"
 msgid "Height:"
-msgstr ""
+msgstr "Hoogte:"
 
 #: contents/ui/config/ConfigGeneral.qml:68
 msgctxt "@label:spinbox"
 msgid "Width:"
-msgstr ""
+msgstr "Breedte:"
 
 #: contents/ui/config/ConfigGeneral.qml:79
 msgctxt "@option:check"
 msgid "Fill height (don't work with Auto-hiding)"
-msgstr ""
+msgstr "Hoogte opvullen (werkt niet i.c.m. automatisch verbergen)"
 
 #: contents/ui/config/ConfigGeneral.qml:79
 msgctxt "@option:check"
 msgid "Fill width (don't work with Auto-hiding)"
-msgstr ""
+msgstr "Breedte opvullen (werkt niet i.c.m. automatisch verbergen)"
 
 #: contents/ui/config/ConfigGeneral.qml:87
 msgid "Gravity:"
-msgstr ""
+msgstr "Zwaarte:"
 
 #: contents/ui/config/ConfigGeneral.qml:92
 msgid "Center"
-msgstr ""
+msgstr "Midden"
 
 #: contents/ui/config/ConfigGeneral.qml:92
 msgid "North"
-msgstr ""
+msgstr "Noorden"
 
 #: contents/ui/config/ConfigGeneral.qml:92
 msgid "South"
-msgstr ""
+msgstr "Zuiden"
 
 #: contents/ui/config/ConfigGeneral.qml:92
 msgid "East"
-msgstr ""
+msgstr "Oosten"
 
 #: contents/ui/config/ConfigGeneral.qml:92
 msgid "West"
-msgstr ""
+msgstr "Westen"
 
 #: contents/ui/config/ConfigGeneral.qml:98
 msgctxt "@option:check"
@@ -224,26 +227,28 @@ msgstr ""
 #: contents/ui/config/ConfigGeneral.qml:103
 msgctxt "@option:check"
 msgid "Hide tooltip"
-msgstr ""
+msgstr "Hulpballon verbergen"
 
 #: contents/ui/config/ConfigGeneral.qml:107
 msgid "Version:"
-msgstr ""
+msgstr "Versie:"
 
 #: contents/ui/ShaderSource.qml:54
 msgid "Error: Find undeclared arguments."
-msgstr ""
+msgstr "Fout: niet-aangevulde aanvullende opties."
 
 #: contents/ui/Spectrum.qml:177
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
 msgstr ""
+"Fout: het visuele effect kan niet worden geladen. Kies een ander effect op "
+"het instellingenvenster."
 
 #: contents/ui/Spectrum.qml:178
 msgid "Error: Failed to compile image shader."
-msgstr ""
+msgstr "Fout: de afbeeldingsschaduw kan niet worden gecompileerd."
 
 #: contents/ui/Spectrum.qml:179
 msgid "Error: Failed to compile bufffer shader."
-msgstr ""
+msgstr "Fout: de bufferschaduw kan niet worden gecompileerd."

@@ -24,6 +24,7 @@ Kirigami.FormLayout {
     property alias cfg_animateAutoHiding: animateAutoHiding.checked
 
     property alias cfg_gravity:gravity.currentIndex
+    property alias cfg_inversion:inversion.checked
 
     QQC2.SpinBox {
         id:fps
@@ -90,6 +91,11 @@ Kirigami.FormLayout {
             id:gravity
             model:  [i18n("Center"),i18n("North"),i18n("South"),i18n("East"),i18n("West")]
         }
+    }
+
+    QQC2.CheckBox {
+        id:inversion
+        text: i18nc("@option:check", "Invert")
     }
 
     QQC2.CheckBox {
