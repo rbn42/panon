@@ -34,7 +34,7 @@ Item{
         if(server.port==0) return '';
         if(shaderSourceReader.image_shader_source=='') return ''
         var cmd=Utils.chdir_scripts_root()+'exec python3 -m panon.backend.client '
-        cmd+=server.port
+        cmd+=server.url  //+':'+server.port
         var be=['pyaudio','soundcard','fifo'][cfg.backendIndex]
         cmd+=' --backend='+be
         if(be=='soundcard')

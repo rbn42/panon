@@ -2,7 +2,7 @@
 panon client
 
 Usage:
-  main [options] <port> 
+  main [options] <url> 
   main -h | --help
 
 Options:
@@ -35,7 +35,6 @@ from .. import logger
 logger.log('argv: %s', sys.argv[1:])
 
 arguments = docopt(__doc__)
-server_port = int(arguments['<port>'])
 cfg_fps = int(arguments['--fps'])
 bassResolutionLevel = int(arguments['--bass-resolution-level'])
 reduceBass = arguments['--reduce-bass']
@@ -60,7 +59,7 @@ else:
 
 
 async def mainloop():
-    async with websockets.connect(f"ws://localhost:{server_port}") as websocket:
+    async with websockets.connect(arguments['<url>']) as websocket:
 
         spec = spectrum.Spectrum()
         decay = Decay()
