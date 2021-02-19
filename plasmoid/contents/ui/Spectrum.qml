@@ -188,7 +188,7 @@ Item{
         hoverEnabled :true
         anchors.fill: parent
 
-        readonly property double current_x:root.gravity<3?mouseX:mainSE.height-mouseY
+        readonly property double current_x:root.gravity<3?(cfg.inversion?(mainSE.width- mouseX):mouseX):(cfg.inversion?mouseY:(mainSE.height-mouseY))
         readonly property double current_y:[mainSE.height- mouseY,mouseY ,mainSE.width-mouseX ,mouseX ][root.gravity-1]
         property double lastdown_x
         property double lastdown_y
