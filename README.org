@@ -84,6 +84,7 @@ kpackagetool5 -t Plasma/Applet --upgrade plasmoid
     | German translation added by            | [[https://github.com/NLDev][NullDev (Chris)]]                  |
     | "Download New Effects" dialog added by | [[https://github.com/flying-sheep][flying-sheep (Philipp A.)]] |
     | Dutch translation added by            | [[https://github.com/Vistaus][Vistaus (Heimen Stoffels)]]                  |
+    | "Monitor of Current Device" option  added by            | [[https://github.com/yuannan][Yuannan]]                  |
  And thanks for all the reported issues and suggestions, which I would not list here.
 *** Third Party Source 
  | Files                                                                                           | Source                                                                                           | Licensed under |

@@ -105,7 +105,9 @@ Kirigami.FormLayout {
             id:bassResolutionLevel
             model:  ['0 to 22,050Hz','0 to 9,000Hz','0 to 3,000Hz (F7)',
             '0 to 1,800Hz (A6) with higher resolution',
-            '0 to 1,800Hz (A6) with lower latency','0 to 600Hz (D5)']
+            '0 to 1,800Hz (A6) with lower latency',
+            '300 to 1,800Hz (A6) (filter out bass)',
+            '0 to 600Hz (D5)']
         }
     }
 
@@ -152,6 +154,10 @@ Kirigami.FormLayout {
                     l=[[0,1800,100]];
                     break;
 
+                    case '300 to 1,800Hz (A6) (filter out bass)':
+                    l=[[300,1800,100]];
+                    break;
+
                     case '0 to 600Hz (D5)':
                     l=[[0,600,266]]
                     break;
@@ -186,7 +192,7 @@ Kirigami.FormLayout {
                 for(var i in lst)
                     pdItems.append(lst[i])
                 if(lst.length>1){
-                    pdItems.append({name:i18n("Any Active Speaker"),id:'smart'})
+                    pdItems.append({name:i18n("Monitor of Current Device"),id:'smart'})
                     pdItems.append({name:i18n("Mixing All Speakers"),id:'allspeakers'})
                     pdItems.append({name:i18n("Mixing All Microphones"),id:'allmicrophones'})
                     pdItems.append({name:i18n("Mixing All Microphones and Speakers"),id:'all'})
