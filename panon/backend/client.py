@@ -72,8 +72,7 @@ async def mainloop():
 
         logger.log('loop')
         while True:
-            smart_mode = type(spectrum_source) is source.SoundCardSource \
-                              and spectrum_source.device_id == 'smart'
+            smart_mode = type(spectrum_source) is source.SoundCardSource and spectrum_source.device_id == 'smart'
 
             if smart_mode and spectrum_source.smart_device_id == '':
                 spectrum_source.update_smart_device()
