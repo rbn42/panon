@@ -112,6 +112,10 @@ class Spectrum:
             ]
         elif bassResolutionLevel == 5:
             fft_freq = [
+                self.fun(data_history, 5, 30, 6, reduceBass, 1 / 3, 1 / 1.2),    #   300-1800Hz 
+            ]
+        elif bassResolutionLevel == 6:
+            fft_freq = [
                 self.fun(data_history, 0, 10, 16, reduceBass, 1 / 3, 1 / 1.5),    #   0-600Hz     80px
             ]
 

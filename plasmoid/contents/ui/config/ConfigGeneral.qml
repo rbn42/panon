@@ -108,7 +108,7 @@ Kirigami.FormLayout {
         Layout.fillWidth: true
 
         QQC2.Label {
-            text: "0.4.3"
+            text: "0.4.5"
         }
     }
 

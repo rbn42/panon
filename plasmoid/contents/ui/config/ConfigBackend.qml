@@ -105,7 +105,9 @@ Kirigami.FormLayout {
             id:bassResolutionLevel
             model:  ['0 to 22,050Hz','0 to 9,000Hz','0 to 3,000Hz (F7)',
             '0 to 1,800Hz (A6) with higher resolution',
-            '0 to 1,800Hz (A6) with lower latency','0 to 600Hz (D5)']
+            '0 to 1,800Hz (A6) with lower latency',
+            '300 to 1,800Hz (A6) (filter out bass)',
+            '0 to 600Hz (D5)']
         }
     }
 
@@ -150,6 +152,10 @@ Kirigami.FormLayout {
 
                     case '0 to 1,800Hz (A6) with lower latency':
                     l=[[0,1800,100]];
+                    break;
+
+                    case '300 to 1,800Hz (A6) (filter out bass)':
+                    l=[[300,1800,100]];
                     break;
 
                     case '0 to 600Hz (D5)':
