@@ -2,6 +2,10 @@ import numpy as np
 try:
     import soundcard as sc
     p = sc.pulseaudio._PulseAudio()
+    try:
+        sc.set_name('Panon')
+    except (AttributeError, NotImplementedError):
+        pass
 except:
     pass
 
@@ -51,7 +55,6 @@ class FifoSource:
         self.sample_rate = sample_rate
         self.fifo_path = fifo_path
         self.blocksize = sample_rate // fps * channel_count * 2    #int16  44100:16:2
-
         self.start()
 
     def read(self, fps=None):
@@ -125,10 +128,6 @@ class SoundCardSource:
                 for stream in self.streams:
                     stream.__exit__(None, None, None)
 
-                try:
-                    sc.set_name('Panon')
-                except (AttributeError, NotImplementedError):
-                    pass
                 mic = sc.get_microphone(
                     self.smart_device_id + '.monitor',
                     include_loopback=False,
@@ -143,11 +142,6 @@ class SoundCardSource:
                 self.streams = [stream]
 
     def start(self):
-        try:
-            sc.set_name('Panon')
-        except (AttributeError, NotImplementedError):
-            pass
-
         if self.device_id == 'all':
             mics = sc.all_microphones(exclude_monitors=False)
         elif self.device_id == 'allspeakers':
