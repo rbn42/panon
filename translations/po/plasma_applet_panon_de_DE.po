@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2021-02-18 22:46+0800\n"
+"POT-Creation-Date: 2021-02-20 12:46+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Chris (NullDev) <chris@nulldev.org>\n"
 "Language-Team: NullDev <chris@nulldev.org>\n"
@@ -77,7 +77,7 @@ msgid "Latency / resolution:"
 msgstr ""
 
 #: contents/ui/config/ConfigBackend.qml:189
-msgid "Any Active Speaker"
+msgid "Monitor of Current Device"
 msgstr ""
 
 #: contents/ui/config/ConfigBackend.qml:190
@@ -233,7 +233,7 @@ msgstr ""
 msgid "Error: Find undeclared arguments."
 msgstr "Fehler: Undeklarierte Argumente gefunden."
 
-#: contents/ui/Spectrum.qml:177
+#: contents/ui/Spectrum.qml:176
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
@@ -241,11 +241,11 @@ msgstr ""
 "Fehler: Laden des visuellen Effektes fehlgeschlagen. Bitte anderen Effekt im "
 "Konfigurationsdialog auswählen."
 
-#: contents/ui/Spectrum.qml:178
+#: contents/ui/Spectrum.qml:177
 msgid "Error: Failed to compile image shader."
 msgstr "Fehler: Kompilieren der Bilderschattierung fehlgeschlagen."
 
-#: contents/ui/Spectrum.qml:179
+#: contents/ui/Spectrum.qml:178
 msgid "Error: Failed to compile bufffer shader."
 msgstr ""
 "Fehler: Kompilieren der zwischengespeicherten Schattierungen fehlgeschlagen."
