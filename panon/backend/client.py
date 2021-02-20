@@ -80,7 +80,8 @@ async def mainloop():
             if not use_glDFT and spectrum_data is None:
                 # Set fps to 2 to lower CPU usage, when audio is unavailable.
                 latest_wave_data = spectrum_source.read(fps=2)
-                spectrum_source.update_smart_device()
+                if smartmode:
+                    spectrum_source.update_smart_device()
             else:
                 latest_wave_data = spectrum_source.read()
                 isBeat = beatsDetector is not None and beatsDetector.isBeat(latest_wave_data)
