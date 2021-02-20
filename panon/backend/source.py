@@ -1,5 +1,4 @@
 import numpy as np
-import soundcard as sc
 
 
 def binary2numpy(data, num_channel):
@@ -114,6 +113,7 @@ class SoundCardSource:
         return data
 
     def update_smart_device(self, ):
+        import soundcard as sc
         p = sc.pulseaudio._PulseAudio()
         name = p.server_info['default sink id']
 
@@ -141,6 +141,7 @@ class SoundCardSource:
                 self.streams = [stream]
 
     def start(self):
+        import soundcard as sc
         try:
             sc.set_name('Panon')
         except (AttributeError, NotImplementedError):
