@@ -113,19 +113,9 @@ class SoundCardSource:
         return data
 
     def update_smart_device(self, ):
-        if not self.device_id == 'smart':
-            return
-        import subprocess
-        s = subprocess.run(['pacmd', 'list-sink-inputs'], capture_output=True).stdout
-        l = s.decode(errors='ignore').split('\n')
-        name = None
-        for line in l:
-            if line.startswith('\tstate: '):
-                state = line.split()[-1]
-            if line.startswith('\tsink: '):
-                if state == 'RUNNING':
-                    name = line.split('<')[-1][:-1]
-                    break
+        import soundcard as sc
+        p = sc.pulseaudio._PulseAudio()
+        name = p.server_info['default sink id']
 
         if name is not None:
             if not self.smart_device_id == name:
@@ -133,7 +123,6 @@ class SoundCardSource:
                 for stream in self.streams:
                     stream.__exit__(None, None, None)
 
-                import soundcard as sc
                 try:
                     sc.set_name('Panon')
                 except (AttributeError, NotImplementedError):
