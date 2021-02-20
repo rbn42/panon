@@ -72,17 +72,15 @@ async def mainloop():
 
         logger.log('loop')
         while True:
+            smart_mode = type(spectrum_source) is source.SoundCardSource and spectrum_source.device_id == 'smart'
 
-            if type(spectrum_source) is source.SoundCardSource:
-                if spectrum_source.device_id == 'smart':
-                    if spectrum_source.smart_device_id == '':
-                        spectrum_source.update_smart_device()
+            if smart_mode and spectrum_source.smart_device_id == '':
+                spectrum_source.update_smart_device()
 
             if not use_glDFT and spectrum_data is None:
                 # Set fps to 2 to lower CPU usage, when audio is unavailable.
                 latest_wave_data = spectrum_source.read(fps=2)
-                if type(spectrum_source) is source.SoundCardSource:
-                    spectrum_source.update_smart_device()
+                spectrum_source.smart_device_id = ""
             else:
                 latest_wave_data = spectrum_source.read()
                 isBeat = beatsDetector is not None and beatsDetector.isBeat(latest_wave_data)
