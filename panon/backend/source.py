@@ -1,6 +1,7 @@
 import numpy as np
 try:
     import soundcard as sc
+    p = sc.pulseaudio._PulseAudio()
 except:
     pass
 
@@ -116,7 +117,6 @@ class SoundCardSource:
         return data
 
     def update_smart_device(self, ):
-        p = sc.pulseaudio._PulseAudio()
         name = p.server_info['default sink id']
 
         if name is not None:
