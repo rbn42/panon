@@ -95,7 +95,7 @@ Kirigami.FormLayout {
 
     QQC2.CheckBox {
         id:inversion
-        text: i18nc("@option:check", "Invert")
+        text: i18nc("@option:check", "Flip")
     }
 
     QQC2.CheckBox {

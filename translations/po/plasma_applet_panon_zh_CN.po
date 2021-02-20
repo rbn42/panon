@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2021-02-20 12:46+0800\n"
+"POT-Creation-Date: 2021-02-20 22:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,27 +68,27 @@ msgstr ""
 msgid "Audio frequency:"
 msgstr "音域:"
 
-#: contents/ui/config/ConfigBackend.qml:114
+#: contents/ui/config/ConfigBackend.qml:116
 msgid "Test your audio frequency."
 msgstr "测试你的音域"
 
-#: contents/ui/config/ConfigBackend.qml:118
+#: contents/ui/config/ConfigBackend.qml:120
 msgid "Latency / resolution:"
 msgstr "延迟/分辨率"
 
-#: contents/ui/config/ConfigBackend.qml:189
+#: contents/ui/config/ConfigBackend.qml:195
 msgid "Monitor of Current Device"
 msgstr "当前设备的监视器"
 
-#: contents/ui/config/ConfigBackend.qml:190
+#: contents/ui/config/ConfigBackend.qml:196
 msgid "Mixing All Speakers"
 msgstr "混合所有扬声器"
 
-#: contents/ui/config/ConfigBackend.qml:191
+#: contents/ui/config/ConfigBackend.qml:197
 msgid "Mixing All Microphones"
 msgstr "混合所有麦克风"
 
-#: contents/ui/config/ConfigBackend.qml:192
+#: contents/ui/config/ConfigBackend.qml:198
 msgid "Mixing All Microphones and Speakers"
 msgstr "混合所有麦克风和扬声器"
 
@@ -217,8 +217,8 @@ msgstr "西"
 
 #: contents/ui/config/ConfigGeneral.qml:98
 msgctxt "@option:check"
-msgid "Invert"
-msgstr "反转"
+msgid "Flip"
+msgstr "翻转"
 
 #: contents/ui/config/ConfigGeneral.qml:103
 msgctxt "@option:check"
@@ -246,6 +246,10 @@ msgstr "错误:无法编译image shader"
 #: contents/ui/Spectrum.qml:178
 msgid "Error: Failed to compile bufffer shader."
 msgstr "错误:无法编译buffer shader"
+
+#~ msgctxt "@option:check"
+#~ msgid "Invert"
+#~ msgstr "反转"
 
 #~ msgid "Any Active Speaker"
 #~ msgstr "任何一个活动的扬声器"
