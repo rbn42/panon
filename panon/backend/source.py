@@ -1,4 +1,5 @@
 import numpy as np
+from .. import logger
 try:
     import soundcard as sc
     p = sc.pulseaudio._PulseAudio()
@@ -8,6 +9,7 @@ try:
         pass
 except:
     pass
+
 
 def binary2numpy(data, num_channel):
     data = np.frombuffer(data, 'int16')
@@ -124,6 +126,7 @@ class SoundCardSource:
 
         if name is not None:
             if not self.smart_device_id == name:
+                logger.log('update smart device: %s', name)
                 self.smart_device_id = name
                 for stream in self.streams:
                     stream.__exit__(None, None, None)
