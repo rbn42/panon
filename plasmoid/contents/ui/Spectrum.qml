@@ -132,6 +132,7 @@ Item{
         }
     }
 
+    /*
     ShaderEffectSource {
         id:glDFTSES
         width: glDFTSE.width
@@ -165,6 +166,7 @@ Item{
             }
         }
     }
+    */
 
     readonly property bool loadImageShaderSource:   shaderSourceReader.image_shader_source.trim().length>0
     readonly property bool loadBufferShaderSource:  shaderSourceReader.buffer_shader_source.trim().length>0
@@ -233,10 +235,12 @@ Item{
 
                         
                 if(cfg.glDFT){
+                    /*
                     waveBufferSE.newWave=imgsReady.w;
                     waveBufferSES.scheduleUpdate();
                     glDFTSES.scheduleUpdate();
                     mainSE.iChannel1=glDFTSES;
+                    */
                 }else{
                     mainSE.iChannel0=imgsReady.w;
                     mainSE.iChannel1=imgsReady.s;
