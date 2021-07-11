@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtWebSockets 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import "utils.js" as Utils
+// plasma pulseaudio plugin
+import org.kde.plasma.private.volume 0.1 as PlasmaVolume
 /*
  * This module starts a python back-end client, 
  * and pushs messages from the client to a queue.
@@ -30,6 +32,11 @@ Item{
         }
     }
 
+ PlasmaVolume.SinkModel {
+			id: sinkModel
+                        readonly property var o:PulseObject.Ports
+		}
+
     readonly property string startBackEnd:{
         if(server.port==0) return '';
         if(shaderSourceReader.image_shader_source=='') return ''
@@ -57,6 +64,24 @@ Item{
             cmd+=' --enable-wave-data'
         if(shaderSourceReader.enable_iChannel1)
             cmd+=' --enable-spectrum-data'
+        cmd+=' --num-ports='+PlasmaVolume.Ports //currentPort
+
+        console.log('asssss')                                  //qml: asssss
+        console.log(sinkModel.o)                               //qml: undefined
+        console.log(PlasmaVolume.Ports)                        //qml: undefined
+        console.log(PlasmaVolume.PulseObject)                  //qml: [object Object]
+        console.log(sinkModel.defaultSink)                     //qml: QPulseAudio::Sink(0x17ef5f2c140)
+        console.log(sinkModel.default)                         //qml: undefined
+        console.log(sinkModel.default)                         //qml: undefined
+        console.log(sinkModel.PulseObject)                     //qml: undefined
+        console.log(PlasmaVolume.PulseObject.ports)            //qml: undefined
+        console.log(PlasmaVolume.PulseObject.channels)         //qml: undefined
+        console.log(PlasmaVolume.PulseObject.default)          //qml: undefined
+        console.log(PlasmaVolume.PulseObject.volume)           //qml: undefined
+        console.log(PlasmaVolume.PulseObject.length)           //qml: undefined
+        console.log(PlasmaVolume.Description)                  //qml: undefined
+        console.log('asssss2')                                 //qml: asssss2
+
         return cmd
     }
 

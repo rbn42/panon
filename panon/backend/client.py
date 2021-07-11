@@ -17,6 +17,7 @@ Options:
   --debug                       Debug
   --enable-wave-data
   --enable-spectrum-data
+  --num-ports=N                 
 """
 import asyncio
 import numpy as np
