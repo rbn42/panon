@@ -43,11 +43,11 @@ msgstr ""
 #: contents/ui/config/ConfigBackend.qml:43
 #: contents/ui/config/ConfigBackend.qml:58
 msgid "Input device:"
-msgstr "Eingabegeräte"
+msgstr "Eingabegeräte:"
 
 #: contents/ui/config/ConfigBackend.qml:76
 msgid "Fifo path:"
-msgstr "Fifo Pfad"
+msgstr "Fifo Pfad:"
 
 #: contents/ui/config/ConfigBackend.qml:86
 msgctxt "@option:check"
@@ -57,7 +57,7 @@ msgstr "Bass-Stärke reduzieren"
 #: contents/ui/config/ConfigBackend.qml:92
 msgctxt "@option:check"
 msgid "Use GLDFT (to lower CPU Usage) (experimental, not recommended)"
-msgstr ""
+msgstr "GLDFT benutzen (um CPU-Auslastung zu reduzieren) (Experimentell, nicht empfohlen)"
 
 #: contents/ui/config/ConfigBackend.qml:97
 msgctxt "@option:check"
@@ -66,27 +66,27 @@ msgstr ""
 
 #: contents/ui/config/ConfigBackend.qml:101
 msgid "Audio frequency:"
-msgstr "Audio Frequenz"
+msgstr "Audio Frequenz:"
 
 #: contents/ui/config/ConfigBackend.qml:116
 msgid "Test your audio frequency."
-msgstr ""
+msgstr "Audio Frequenz testen."
 
 #: contents/ui/config/ConfigBackend.qml:120
 msgid "Latency / resolution:"
-msgstr ""
+msgstr "Latenz / Auflösung:"
 
 #: contents/ui/config/ConfigBackend.qml:195
 msgid "Monitor of Current Device"
-msgstr ""
+msgstr "Monitor des aktuellen Gerätes"
 
 #: contents/ui/config/ConfigBackend.qml:196
 msgid "Mixing All Speakers"
-msgstr ""
+msgstr "Alle Lautsprecher mischen"
 
 #: contents/ui/config/ConfigBackend.qml:197
 msgid "Mixing All Microphones"
-msgstr ""
+msgstr "Alle Mikrofone mischen"
 
 #: contents/ui/config/ConfigBackend.qml:198
 msgid "Mixing All Microphones and Speakers"
@@ -99,7 +99,7 @@ msgstr "Zufällige Farben"
 #: contents/ui/config/ConfigColors.qml:49
 msgctxt "@label"
 msgid "Color space:"
-msgstr "Farbraum"
+msgstr "Farbraum:"
 
 #: contents/ui/config/ConfigColors.qml:50
 msgctxt "@option:radio"
@@ -154,7 +154,7 @@ msgstr ""
 
 #: contents/ui/config/ConfigGeneral.qml:39
 msgid "Lower FPS saves CPU and battries."
-msgstr "Niedrigere FPS sparen CPU-Leistung und Batterielaufzeit"
+msgstr "Niedrigere FPS sparen CPU-Leistung und Batterielaufzeit."
 
 #: contents/ui/config/ConfigGeneral.qml:44
 msgctxt "@option:radio"
@@ -193,7 +193,7 @@ msgstr "Fülle Breite (funktioniert nicht mit automatischem Verstecken)"
 
 #: contents/ui/config/ConfigGeneral.qml:87
 msgid "Gravity:"
-msgstr "Schwerkraft"
+msgstr "Schwerkraft:"
 
 #: contents/ui/config/ConfigGeneral.qml:92
 msgid "Center"
@@ -218,7 +218,7 @@ msgstr "West"
 #: contents/ui/config/ConfigGeneral.qml:98
 msgctxt "@option:check"
 msgid "Flip"
-msgstr ""
+msgstr "Umdrehen"
 
 #: contents/ui/config/ConfigGeneral.qml:103
 msgctxt "@option:check"
