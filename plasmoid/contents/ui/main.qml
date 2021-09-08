@@ -24,7 +24,7 @@ Item {
         property var currentMetadata: currentData ? currentData.Metadata : {}
         property string track: currentMetadata ? currentMetadata["xesam:title"] || "" : ""
         property string artist: currentMetadata ? currentMetadata["xesam:artist"] || "" : ""
-		property string album: currentMetadata ? currentMetadata["xesam:album"] || "" : ""
+        property string album: currentMetadata ? currentMetadata["xesam:album"] || "" : ""
     }
 
 }
