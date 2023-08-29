@@ -35,6 +35,12 @@ sudo eopkg install qt5-websockets  \
    python-docopt PyAudio numpy python-cffi python-websockets
 #+END_SRC
 
+*** Fedora
+#+BEGIN_SRC sh
+sudo dnf install qt5-qtwebsockets-devel  \
+   python3-cffi python3-docopt python3-numpy python3-pyaudio python3-websockets
+#+END_SRC
+
 ** Installation
 *** Via KDE Store
 
