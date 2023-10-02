@@ -27,6 +27,8 @@ sudo zypper in libQt5WebSockets5 \
 #+BEGIN_SRC sh
 sudo apt-get install qml-module-qt-websockets \
     python3-docopt python3-numpy python3-pyaudio python3-cffi python3-websockets
+
+pip install --upgrade websockets
 #+END_SRC
 
 *** Solus
