@@ -1,6 +1,7 @@
 def canImportAubio():
-    import importlib
-    return importlib.find_loader('aubio') is not None
+    import importlib.util
+    return importlib.util.find_spec('aubio') is not None
+
 
 
 class BeatsDetector:
