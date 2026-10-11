@@ -11,15 +11,9 @@
       <default></default>
     </entry>
 
-    <entry name="randomVisualEffect" type="Bool">
-      <default>false</default>
-    </entry>
-
     <entry name="effectArgValues" type="StringList">
       <default></default>
     </entry>
-    <!--This is a workaround to active "Apply" button for modifications of effectArgValues -->
-    <entry name="effectArgTrigger" type="Bool"></entry>
 
   </group>
   <group name="Backend">
@@ -33,26 +27,14 @@
     <entry name="bassResolutionLevel" type="Int">
       <default>4</default>
     </entry>
-    <entry name="deviceIndex" type="Int">
-      <default>-1</default>
-    </entry>
     <entry name="pulseaudioDevice" type="String">
       <default>default</default>
     </entry>
-    <!--
-    <entry name="backend" type="String">
-      <default>pyaudio</default>
-    </entry>
-    -->
     <entry name="backendIndex" type="Int">
       <default>0</default>
     </entry>
     <entry name="fifoPath" type="String">
       <default>/tmp/mpd.fifo</default>
-    </entry>
-
-    <entry name="glDFT" type="Bool">
-      <default>false</default>
     </entry>
 
   </group>
@@ -83,17 +65,10 @@
       <default>false</default>
     </entry>
 
-    <entry name="hideTooltip" type="Bool">
-      <default>true</default>
-    </entry>
-
 
   </group>
   <group name="Colors">
 
-    <entry name="colorSpaceHSL" type="Bool">
-      <default>true</default>
-    </entry>
     <entry name="colorSpaceHSLuv" type="Bool">
       <default>false</default>
     </entry>

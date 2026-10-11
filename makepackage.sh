@@ -3,22 +3,15 @@
 #Verify the existence of third party files before packaging.
 if [ ! -f "third_party/hsluv-glsl/hsluv-glsl.fsh" ];then
     echo "Cannot find third party files."
-	git submodule update --init
-
+    git submodule update --init
 fi
 
 # Remove caches
-rm ./plasmoid/contents/scripts/__pycache__/ -r
-rm ./plasmoid/contents/scripts/*/__pycache__/ -r
-rm ./plasmoid/contents/scripts/*/*/__pycache__/ -r
-rm ./plasmoid/contents/scripts/*/*/*/__pycache__/ -r
-rm ./panon.plasmoid
+find -L ./plasmoid/contents/scripts -name __pycache__ -type d -prune -exec rm -r {} +
+rm -f ./panon.plasmoid
 
 # i18n
-mkdir build
-cd build 
-cmake ../translations
-make install DESTDIR=../plasmoid/contents/locale
-cd ..
+cmake -S translations -B build -DCMAKE_INSTALL_PREFIX="$PWD/plasmoid/contents/locale"
+cmake --build build --target install
 
-zip -r panon.plasmoid ./plasmoid 
+zip -r panon.plasmoid ./plasmoid

@@ -5,34 +5,34 @@ This is an audio spectrum analyzer for KDE panel.
 ** Requirements
 |                  | Version          |
 |------------------+------------------|
-| OpenGL / GLSL    | >= 3.0 / 1.30    |
-| org.kde.kirigami | >= 2.3 (kf 5.42) |
-| org.kde.newstuff | >= 1.1 (kf 5.63) |
-If your KDE Framework is older than 5.63, see [[../../wiki/Troubleshooting#cannot-load-the-visual-effects-page-in-the-configuration-dialog][here]].
+| KDE Plasma       | >= 6.0           |
+| OpenGL / GLSL    | >= 3.2 / 1.50    |
 ** Dependencies
+
+The visual effects are compiled at runtime with =qsb= (Qt Shader Tools).
    
 *** Arch Linux
 #+BEGIN_SRC sh
-sudo pacman -S qt5-websockets \
-    python-docopt python-numpy python-pyaudio python-cffi python-websockets 
+sudo pacman -S qt6-websockets qt6-shadertools \
+    python-numpy python-pyaudio python-cffi python-websockets 
 #+END_SRC
 
 *** openSUSE
 #+BEGIN_SRC sh
-sudo zypper in libQt5WebSockets5 \
-    python3-docopt python3-numpy python3-PyAudio python3-cffi python3-websockets
+sudo zypper in qt6-websockets-imports qt6-shadertools \
+    python3-numpy python3-PyAudio python3-cffi python3-websockets
 #+END_SRC
 
-*** Ubuntu
+*** Debian / Ubuntu
 #+BEGIN_SRC sh
-sudo apt-get install qml-module-qt-websockets \
-    python3-docopt python3-numpy python3-pyaudio python3-cffi python3-websockets
+sudo apt-get install qml6-module-qtwebsockets qt6-shader-baker \
+    python3-numpy python3-pyaudio python3-cffi python3-websockets
 #+END_SRC
 
-*** Solus
+*** Fedora
 #+BEGIN_SRC sh
-sudo eopkg install qt5-websockets  \
-   python-docopt PyAudio numpy python-cffi python-websockets
+sudo dnf install qt6-qtwebsockets qt6-qtshadertools \
+    python3-numpy python3-pyaudio python3-cffi python3-websockets
 #+END_SRC
 
 ** Installation
@@ -54,21 +54,18 @@ cd panon
 git submodule update --init
 
 # Build translations (optional)
-mkdir build
-cd build
-cmake ../translations
-make install DESTDIR=../plasmoid/contents/locale
-cd ..
+cmake -S translations -B build -DCMAKE_INSTALL_PREFIX="$PWD/plasmoid/contents/locale"
+cmake --build build --target install
 
 # To install
-kpackagetool5 -t Plasma/Applet --install plasmoid
+kpackagetool6 -t Plasma/Applet --install plasmoid
 
 # To upgrade
-kpackagetool5 -t Plasma/Applet --upgrade plasmoid
+kpackagetool6 -t Plasma/Applet --upgrade plasmoid
 #+END_SRC
 
 *** Via AUR
-[[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] is available for ArchLinux. 
+[[https://aur.archlinux.org/packages/plasma5-applets-panon/][plasma5-applets-panon]] is available for ArchLinux (Plasma 5 version). 
 
 ** [[../../wiki/VisualEffects][Visual Effects]]
    

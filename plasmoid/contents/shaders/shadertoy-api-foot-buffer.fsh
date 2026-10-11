@@ -1,11 +1,7 @@
 // vim: set ft=glsl:
-out vec4 out_Color;
-in mediump vec2 qt_TexCoord0;
-
-vec2 getCoord() {
-    return qt_TexCoord0;
-}
+layout(location = 0) in vec2 qt_TexCoord0;
+layout(location = 0) out vec4 out_Color;
 
 void main() {
-    mainImage( out_Color,floor(getCoord()*iResolution.xy) );
+    mainImage(out_Color, floor(qt_TexCoord0 * iResolution.xy));
 }

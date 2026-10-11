@@ -1,24 +1,24 @@
 // vim: set ft=glsl:
-out vec4 out_Color;
-in mediump vec2 qt_TexCoord0;
-// gravity property: North (1), West (4), East (3), South (2)
+layout(location = 0) in vec2 qt_TexCoord0;
+layout(location = 0) out vec4 out_Color;
+// gravity property: North (1), South (2), East (3), West (4)
 uniform int coord_gravity;
-uniform float qt_Opacity;
-uniform bool coord_inversion;
+uniform int coord_inversion;
 
 vec2 getCoord() {
+    bool inversion = coord_inversion != 0;
     switch(coord_gravity) {
-    case 1:
-        return vec2(coord_inversion?(1-qt_TexCoord0.x): qt_TexCoord0.x,1-qt_TexCoord0.y);
     case 2:
-        return vec2(coord_inversion?(1-qt_TexCoord0.x):qt_TexCoord0.x,qt_TexCoord0.y);
+        return vec2(inversion ? (1.0 - qt_TexCoord0.x) : qt_TexCoord0.x, qt_TexCoord0.y);
     case 3:
-        return vec2(coord_inversion?qt_TexCoord0.y:(1-qt_TexCoord0.y),1-qt_TexCoord0.x);
+        return vec2(inversion ? qt_TexCoord0.y : (1.0 - qt_TexCoord0.y), 1.0 - qt_TexCoord0.x);
     case 4:
-        return vec2(coord_inversion?qt_TexCoord0.y:(1-qt_TexCoord0.y),qt_TexCoord0.x);
+        return vec2(inversion ? qt_TexCoord0.y : (1.0 - qt_TexCoord0.y), qt_TexCoord0.x);
+    default:
+        return vec2(inversion ? (1.0 - qt_TexCoord0.x) : qt_TexCoord0.x, 1.0 - qt_TexCoord0.y);
     }
 }
 
 void main() {
-    mainImage( out_Color,floor(getCoord()*iResolution.xy) );
+    mainImage(out_Color, floor(getCoord() * iResolution.xy));
 }

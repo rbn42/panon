@@ -1,31 +1,56 @@
 import numpy as np
 
 NUM_CHANNEL = 2
+SAMPLE_RATE = 44100
 HISTORY_LENGTH = 32 * 8
+
+# Frequency bands of each bass resolution level (see ConfigBackend.qml), from high to low frequency.
+# Lower frequencies use longer windows, which gives a higher resolution but a higher latency.
+# (from, to, latency, weight_from, weight_to): from/to are indices of a 60Hz fft, latency is the
+# window size relative to the fft size, and the weights reduce the bass when reduceBass is enabled.
+BANDS = {
+    1: [
+        (110, 150, 2, None, None),    # 6600-9000Hz
+        (80, 110, 3, None, None),    # 4800-6600Hz
+        (50, 80, 4, None, None),    # 3000-4800Hz
+        (30, 50, 5, 1 / 1.2, 1),    # 1800-3000Hz
+        (10, 30, 6, 1 / 1.5, 1 / 1.2),    # 600-1800Hz
+        (0, 10, 8, 1 / 3, 1 / 1.5),    # 0-600Hz
+    ],
+    2: [
+        (30, 50, 4, 1 / 1.2, 1),    # 1800-3000Hz
+        (10, 30, 8, 1 / 1.5, 1 / 1.2),    # 600-1800Hz
+        (0, 10, 12, 1 / 3, 1 / 1.5),    # 0-600Hz
+    ],
+    3: [
+        (10, 30, 12, 1 / 1.5, 1 / 1.2),    # 600-1800Hz
+        (0, 10, 16, 1 / 3, 1 / 1.5),    # 0-600Hz
+    ],
+    4: [
+        (0, 30, 6, 1 / 3, 1 / 1.2),    # 0-1800Hz
+    ],
+    5: [
+        (5, 30, 6, 1 / 3, 1 / 1.2),    # 300-1800Hz
+    ],
+    6: [
+        (0, 10, 16, 1 / 3, 1 / 1.5),    # 0-600Hz
+    ],
+}
 
 
 class Spectrum:
-    def __init__(
-        self,
-        fft_size=44100 // 60,
-    ):
+    def __init__(self, fft_size=SAMPLE_RATE // 60):
         self.fft_size = fft_size
 
         self.history = np.zeros((self.fft_size * HISTORY_LENGTH, NUM_CHANNEL), dtype='int16')
         self.history_index = 0
 
-    def get_max_wave_size(self):
-        len_history, num_channel = self.history.shape
-        return len_history * num_channel
-
     def updateHistory(self, data):
-        len_history, num_channel = self.history.shape
+        len_history, _ = self.history.shape
 
-        if data is not None and data.shape[0] > 0:
-            len_data, _ = data.shape
-
+        len_data, _ = data.shape
+        if len_data > 0:
             index = self.history_index
-            #assert len_data < len_history
 
             if index + len_data > len_history:
                 self.history[index:] = data[:len_history - index]
@@ -35,91 +60,31 @@ class Spectrum:
                 self.history[index:index + len_data] = data
             self.history_index += len_data
 
-        data_history = np.concatenate([
+        return np.concatenate([
             self.history[self.history_index:],
             self.history[:self.history_index],
         ], axis=0)
 
-        return data_history
-
-    def fun(
-        self,
-        data_history,
-        freq_from,
-        freq_to,
-        latency,
-        reduceBass=False,
-        weight_from=None,
-        weight_to=None,
-    ):
-        size = self.fft_size
-        freq_from = int(freq_from * latency)
-        freq_to = int(freq_to * latency)
-        size = int(size * latency)
-
+    def band(self, data_history, freq_from, freq_to, latency, weight_from=None, weight_to=None):
+        size = int(self.fft_size * latency)
         fft = np.absolute(np.fft.rfft(data_history[-size:], axis=0))
-        result = fft[freq_from:freq_to]
-        if reduceBass and weight_from:
+        result = fft[int(freq_from * latency):int(freq_to * latency)]
+        if weight_from is not None:
             size_output, _ = result.shape
-            result = result * np.arange(weight_from, weight_to, (weight_to - weight_from) / size_output)[:size_output, np.newaxis]
-        debug = False
-        if debug:
-            #add splitters
-            result = np.concatenate([result, np.zeros((8, 2))], axis=0)
-            return result
-        else:
-            return result
+            weights = np.arange(weight_from, weight_to, (weight_to - weight_from) / size_output)[:size_output]
+            result = result * weights[:, np.newaxis]
+        return result
 
-    def computeSpectrum(
-        self,
-        data_history,
-        bassResolutionLevel,
-        reduceBass=False,
-    ):
+    def computeSpectrum(self, data_history, bassResolutionLevel, reduceBass=False):
         if np.max(data_history) == 0:
             return None
 
-        if bassResolutionLevel == 0:
-            fft = np.absolute(np.fft.rfft(data_history[-self.fft_size:], axis=0))    #   0-22050Hz
-            return fft
-        elif bassResolutionLevel == 1:
-            # higher resolution and latency for lower frequency
-            fft_freq = [
-            #self.fun(data_history, 250, 4000, 0.25),    # 25px
-            #self.fun(data_history, 200, 250, 0.5),    # 25px
-            #self.fun(data_history, 150, 200, 1),    # 50px
-                self.fun(data_history, 110, 150, 2),    #   6600-9000Hz 80px
-                self.fun(data_history, 80, 110, 3),    #   4800-6600Hz 90px
-                self.fun(data_history, 50, 80, 4),    #   3000-4800Hz 120px
-                self.fun(data_history, 30, 50, 5, reduceBass, 1 / 1.2, 1),    #   1800-3000Hz 100px
-                self.fun(data_history, 10, 30, 6, reduceBass, 1 / 1.5, 1 / 1.2),    #   600-1800Hz  120px  
-                self.fun(data_history, 0, 10, 8, reduceBass, 1 / 3, 1 / 1.5),    #   0-600Hz     80px 
-            ]
-        elif bassResolutionLevel == 2:
-            fft_freq = [
-                self.fun(data_history, 30, 50, 4, reduceBass, 1 / 1.2, 1),    #   1800-3000Hz 80px
-                self.fun(data_history, 10, 30, 8, reduceBass, 1 / 1.5, 1 / 1.2),    #   600-1800Hz  160px  
-                self.fun(data_history, 0, 10, 12, reduceBass, 1 / 3, 1 / 1.5),    #   0-600Hz     120px 
-            ]
-        elif bassResolutionLevel == 3:
-            fft_freq = [
-                self.fun(data_history, 10, 30, 12, reduceBass, 1 / 1.5, 1 / 1.2),    #   600-1800Hz  120px
-                self.fun(data_history, 0, 10, 16, reduceBass, 1 / 3, 1 / 1.5),    #   0-600Hz     80px
-            ]
-        elif bassResolutionLevel == 4:
-            fft_freq = [
-                self.fun(data_history, 0, 30, 6, reduceBass, 1 / 3, 1 / 1.2),    #   0-1800Hz 
-            ]
-        elif bassResolutionLevel == 5:
-            fft_freq = [
-                self.fun(data_history, 5, 30, 6, reduceBass, 1 / 3, 1 / 1.2),    #   300-1800Hz 
-            ]
-        elif bassResolutionLevel == 6:
-            fft_freq = [
-                self.fun(data_history, 0, 10, 16, reduceBass, 1 / 3, 1 / 1.5),    #   0-600Hz     80px
-            ]
+        if bassResolutionLevel not in BANDS:
+            return np.absolute(np.fft.rfft(data_history[-self.fft_size:], axis=0))    # 0-22050Hz
 
-        fft_freq.reverse()
-        fft = np.concatenate(fft_freq, axis=0)
-
-        return fft
+        bands = []
+        for freq_from, freq_to, latency, weight_from, weight_to in reversed(BANDS[bassResolutionLevel]):
+            if not reduceBass:
+                weight_from = weight_to = None
+            bands.append(self.band(data_history, freq_from, freq_to, latency, weight_from, weight_to))
+        return np.concatenate(bands, axis=0)

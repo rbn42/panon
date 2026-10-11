@@ -20,5 +20,3 @@ uniform sampler2D iChannel3;          // input channel. XX = 2D/Cube
 #define iDate vec4(0,0,0,0)
 //uniform float     iSampleRate;           // sound sample rate (i.e., 44100)
 #define iSampleRate 44100
-
-

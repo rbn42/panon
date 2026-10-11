@@ -9,7 +9,7 @@ assignees: ''
 
 **Desktop (please complete the following information):**
  - OS: [e.g. ArchLinux or Ubuntu]
- - Version of Plasma Framework
+ - Version of Plasma
 
 **Describe the bug**
 A clear and concise description of what the bug is.

@@ -1,8 +1,4 @@
-from soundcard import pulseaudio as sc
 import json
+import soundcard as sc
 
-l = []
-for mic in sc.all_microphones(exclude_monitors=False):
-    l.append({'id': mic.id, 'name': mic.name})
-s = json.dumps(l)
-print(s)
+print(json.dumps([{'id': mic.id, 'name': mic.name} for mic in sc.all_microphones(include_loopback=True)]))

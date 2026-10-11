@@ -1,14 +1,15 @@
 import logging
 
-_logger=None
+_logger = None
 try:
     from systemd.journal import JournalHandler
 
-    _logger = logging.getLogger('demo')
+    _logger = logging.getLogger('panon')
     _logger.addHandler(JournalHandler())
     _logger.setLevel(logging.DEBUG)
-except:
+except ImportError:
     pass
+
 
 def log(*a):
     if _logger is not None:

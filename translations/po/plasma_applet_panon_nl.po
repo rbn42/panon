@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/rbn42/panon/issues\n"
-"POT-Creation-Date: 2021-02-20 22:39+0800\n"
+"POT-Creation-Date: 2026-10-11 20:21+0300\n"
 "PO-Revision-Date: 2021-01-25 14:46+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <vistausss@outlook.com>\n"
@@ -38,206 +38,207 @@ msgctxt "@title"
 msgid "Colors"
 msgstr "Kleuren"
 
-#: contents/ui/config/ConfigBackend.qml:31
+#: contents/ui/config/ConfigBackend.qml:39
 msgid "Back-end:"
 msgstr "Backend:"
 
-#: contents/ui/config/ConfigBackend.qml:43
-#: contents/ui/config/ConfigBackend.qml:58
+#: contents/ui/config/ConfigBackend.qml:45
 msgid "Input device:"
 msgstr "Invoerapparaat:"
 
-#: contents/ui/config/ConfigBackend.qml:76
+#: contents/ui/config/ConfigBackend.qml:56
 msgid "Fifo path:"
 msgstr "Fifo-pad:"
 
-#: contents/ui/config/ConfigBackend.qml:86
+#: contents/ui/config/ConfigBackend.qml:62
 msgctxt "@option:check"
 msgid "Reduce the weight of bass"
 msgstr "Basniveau verlagen"
 
-#: contents/ui/config/ConfigBackend.qml:92
-msgctxt "@option:check"
-msgid "Use GLDFT (to lower CPU Usage) (experimental, not recommended)"
-msgstr ""
-"GLDFT gebruiken (om het cpu-verbruik te verlagen - experimenteel en niet "
-"aanbevolen)"
-
-#: contents/ui/config/ConfigBackend.qml:97
+#: contents/ui/config/ConfigBackend.qml:67
 msgctxt "@option:check"
 msgid "Debug"
 msgstr "Foutopsporing"
 
-#: contents/ui/config/ConfigBackend.qml:101
+#: contents/ui/config/ConfigBackend.qml:72
 msgid "Audio frequency:"
 msgstr "Audiofrequentie:"
 
-#: contents/ui/config/ConfigBackend.qml:116
+#: contents/ui/config/ConfigBackend.qml:79
 msgid "Test your audio frequency."
 msgstr "Test uw audiofrequentie."
 
-#: contents/ui/config/ConfigBackend.qml:120
+#: contents/ui/config/ConfigBackend.qml:83
 msgid "Latency / resolution:"
 msgstr "Vertraging/Resolutie:"
 
-#: contents/ui/config/ConfigBackend.qml:195
+#: contents/ui/config/ConfigBackend.qml:107
 msgid "Monitor of Current Device"
 msgstr ""
 
-#: contents/ui/config/ConfigBackend.qml:196
+#: contents/ui/config/ConfigBackend.qml:108
 msgid "Mixing All Speakers"
 msgstr "Alle luidsprekers worden gemengd"
 
-#: contents/ui/config/ConfigBackend.qml:197
+#: contents/ui/config/ConfigBackend.qml:109
 msgid "Mixing All Microphones"
 msgstr "Alle microfoons worden gemengd"
 
-#: contents/ui/config/ConfigBackend.qml:198
+#: contents/ui/config/ConfigBackend.qml:110
 msgid "Mixing All Microphones and Speakers"
 msgstr "Alle microfoons en luidsprekers worden gemengd"
 
-#: contents/ui/config/ConfigColors.qml:28
+#: contents/ui/config/ConfigColors.qml:40
 msgid "Randomize colors"
 msgstr "Willekeurige kleuren"
 
-#: contents/ui/config/ConfigColors.qml:49
+#: contents/ui/config/ConfigColors.qml:61
 msgctxt "@label"
 msgid "Color space:"
 msgstr "Kleurruimte:"
 
-#: contents/ui/config/ConfigColors.qml:50
+#: contents/ui/config/ConfigColors.qml:62
 msgctxt "@option:radio"
 msgid "HSL"
 msgstr "HSL"
 
-#: contents/ui/config/ConfigColors.qml:56
+#: contents/ui/config/ConfigColors.qml:68
 msgctxt "@option:radio"
 msgid "HSLuv"
 msgstr "HSLuv"
 
-#: contents/ui/config/ConfigColors.qml:62
-#: contents/ui/config/ConfigColors.qml:82
+#: contents/ui/config/ConfigColors.qml:74
+#: contents/ui/config/ConfigColors.qml:86
 msgctxt "@label:spinbox"
 msgid "Hue from"
 msgstr "Tint van"
 
-#: contents/ui/config/ConfigColors.qml:72
+#: contents/ui/config/ConfigColors.qml:80
 #: contents/ui/config/ConfigColors.qml:92
 msgctxt "@label:spinbox"
 msgid "Hue to"
 msgstr "Tint tot"
 
-#: contents/ui/config/ConfigColors.qml:102
-#: contents/ui/config/ConfigColors.qml:122
+#: contents/ui/config/ConfigColors.qml:98
+#: contents/ui/config/ConfigColors.qml:110
 msgctxt "@label:spinbox"
 msgid "Saturation"
 msgstr "Verzadiging"
 
-#: contents/ui/config/ConfigColors.qml:112
-#: contents/ui/config/ConfigColors.qml:132
+#: contents/ui/config/ConfigColors.qml:104
+#: contents/ui/config/ConfigColors.qml:116
 msgctxt "@label:spinbox"
 msgid "Lightness"
 msgstr "Belichting"
 
-#: contents/ui/config/ConfigEffect.qml:23
+#: contents/ui/config/ConfigEffect.qml:38
 msgid "Effects"
 msgstr "Effecten"
 
-#: contents/ui/config/ConfigEffect.qml:36
+#: contents/ui/config/ConfigEffect.qml:48
 msgid "Effect:"
 msgstr "Effect:"
 
-#: contents/ui/config/ConfigEffect.qml:50
+#: contents/ui/config/ConfigEffect.qml:60
 msgid "Hint:"
 msgstr "Hint:"
 
-#: contents/ui/config/ConfigGeneral.qml:31
+#: contents/ui/config/ConfigGeneral.qml:28
 msgctxt "@label:spinbox"
 msgid "FPS:"
 msgstr "FPS:"
 
-#: contents/ui/config/ConfigGeneral.qml:39
-msgid "Lower FPS saves CPU and battries."
+#: contents/ui/config/ConfigGeneral.qml:36
+msgid "Lower FPS saves CPU and batteries."
 msgstr "Verlaag het aantal fps om het cpu- en accuverbruik te verlagen."
 
-#: contents/ui/config/ConfigGeneral.qml:44
+#: contents/ui/config/ConfigGeneral.qml:41
 msgctxt "@option:radio"
 msgid "Show FPS"
 msgstr "FPS tonen"
 
-#: contents/ui/config/ConfigGeneral.qml:53
+#: contents/ui/config/ConfigGeneral.qml:50
 msgctxt "@option:radio"
 msgid "Auto-hide (when audio is gone)"
 msgstr "Automatisch verbergen (als er geen audio wordt afgespeeld)"
 
-#: contents/ui/config/ConfigGeneral.qml:62
+#: contents/ui/config/ConfigGeneral.qml:60
 msgctxt "@option:radio"
 msgid "Animate auto-hiding"
 msgstr "Automatisch verbergen voorzien van effect"
 
-#: contents/ui/config/ConfigGeneral.qml:68
+#: contents/ui/config/ConfigGeneral.qml:66
 msgctxt "@label:spinbox"
 msgid "Height:"
 msgstr "Hoogte:"
 
-#: contents/ui/config/ConfigGeneral.qml:68
+#: contents/ui/config/ConfigGeneral.qml:66
 msgctxt "@label:spinbox"
 msgid "Width:"
 msgstr "Breedte:"
 
-#: contents/ui/config/ConfigGeneral.qml:79
+#: contents/ui/config/ConfigGeneral.qml:77
 msgctxt "@option:check"
 msgid "Fill height (don't work with Auto-hiding)"
 msgstr "Hoogte opvullen (werkt niet i.c.m. automatisch verbergen)"
 
-#: contents/ui/config/ConfigGeneral.qml:79
+#: contents/ui/config/ConfigGeneral.qml:77
 msgctxt "@option:check"
 msgid "Fill width (don't work with Auto-hiding)"
 msgstr "Breedte opvullen (werkt niet i.c.m. automatisch verbergen)"
 
-#: contents/ui/config/ConfigGeneral.qml:87
+#: contents/ui/config/ConfigGeneral.qml:86
 msgid "Gravity:"
 msgstr "Zwaarte:"
 
-#: contents/ui/config/ConfigGeneral.qml:92
+#: contents/ui/config/ConfigGeneral.qml:87
 msgid "Center"
 msgstr "Midden"
 
-#: contents/ui/config/ConfigGeneral.qml:92
+#: contents/ui/config/ConfigGeneral.qml:87
 msgid "North"
 msgstr "Noorden"
 
-#: contents/ui/config/ConfigGeneral.qml:92
+#: contents/ui/config/ConfigGeneral.qml:87
 msgid "South"
 msgstr "Zuiden"
 
-#: contents/ui/config/ConfigGeneral.qml:92
+#: contents/ui/config/ConfigGeneral.qml:87
 msgid "East"
 msgstr "Oosten"
 
-#: contents/ui/config/ConfigGeneral.qml:92
+#: contents/ui/config/ConfigGeneral.qml:87
 msgid "West"
 msgstr "Westen"
 
-#: contents/ui/config/ConfigGeneral.qml:98
+#: contents/ui/config/ConfigGeneral.qml:92
 msgctxt "@option:check"
 msgid "Flip"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:103
-msgctxt "@option:check"
-msgid "Hide tooltip"
-msgstr "Hulpballon verbergen"
-
-#: contents/ui/config/ConfigGeneral.qml:107
+#: contents/ui/config/ConfigGeneral.qml:96
 msgid "Version:"
 msgstr "Versie:"
 
-#: contents/ui/ShaderSource.qml:54
+#: contents/ui/ShaderSource.qml:45
 msgid "Error: Find undeclared arguments."
 msgstr "Fout: niet-aangevulde aanvullende opties."
 
-#: contents/ui/Spectrum.qml:176
+#: contents/ui/ShaderSource.qml:46
+#, fuzzy
+msgid "Error: Failed to compile the visual effect."
+msgstr "Fout: de afbeeldingsschaduw kan niet worden gecompileerd."
+
+#: contents/ui/ShaderSource.qml:47
+msgid "Error: Cannot find qsb. Please install the Qt 6 shader tools."
+msgstr ""
+
+#: contents/ui/ShaderSource.qml:48
+#, fuzzy
+msgid "Error: Invalid argument value:"
+msgstr "Fout: niet-aangevulde aanvullende opties."
+
+#: contents/ui/Spectrum.qml:139
 msgid ""
 "Error: Failed to load the visual effect. Please choose another visual effect "
 "in the configuration dialog."
@@ -245,10 +246,24 @@ msgstr ""
 "Fout: het visuele effect kan niet worden geladen. Kies een ander effect op "
 "het instellingenvenster."
 
-#: contents/ui/Spectrum.qml:177
+#: contents/ui/Spectrum.qml:141
 msgid "Error: Failed to compile image shader."
 msgstr "Fout: de afbeeldingsschaduw kan niet worden gecompileerd."
 
-#: contents/ui/Spectrum.qml:178
-msgid "Error: Failed to compile bufffer shader."
+#: contents/ui/Spectrum.qml:143
+msgid "Error: Failed to compile buffer shader."
 msgstr "Fout: de bufferschaduw kan niet worden gecompileerd."
+
+#: contents/ui/WsConnection.qml:79
+msgid "Error: The audio back-end has stopped."
+msgstr ""
+
+#~ msgctxt "@option:check"
+#~ msgid "Use GLDFT (to lower CPU Usage) (experimental, not recommended)"
+#~ msgstr ""
+#~ "GLDFT gebruiken (om het cpu-verbruik te verlagen - experimenteel en niet "
+#~ "aanbevolen)"
+
+#~ msgctxt "@option:check"
+#~ msgid "Hide tooltip"
+#~ msgstr "Hulpballon verbergen"

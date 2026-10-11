@@ -1,71 +1,48 @@
-import QtQuick 2.0
+import QtQuick
 
 /*
- * The length of this queue is 2. The queue rejects new 
+ * The length of this queue is 2. The queue rejects new
  * messages before the images of old messages are loaded.
  */
 
-Item{
-    // When only spectrum data is enabled, receive raw data to reduce cpu usage.
-    property bool only_spectrum:false
+Item {
+    property PreloadingTextures imgsReady: textures0
 
-    readonly property var cfg:plasmoid.configuration
+    property PreloadingTextures imgsLoading: textures0
 
-    property variant imgsReady:pt0
-
-    property variant imgsLoading:pt0
-
-    function push(message){
-        if(message.length<1){
-            imgsReady=nt
+    function push(message) {
+        if (message.length < 1) {
+            imgsReady = silence
             return
         }
-        if(!imgsLoading.used)
+        if (!imgsLoading.used)
             return
 
-        if(cfg.glDFT){
-            imgsLoading.used=false
-            imgsLoading.w.source = 'data:' + message
-        }else{
-            if(only_spectrum){
-                imgsLoading.used=false
-                imgsLoading.s.source = 'data:' + message
-            }else{
-                var obj = JSON.parse(message)
-                imgsLoading.used=false
-                imgsLoading.s.source = 'data:' + obj.spectrum
-                imgsLoading.w.source = 'data:' + obj.wave
-                imgsLoading.beat = obj.beat
-            }
-        }
+        // When only spectrum data is enabled, the back-end sends the raw data uri
+        // instead of JSON to reduce cpu usage. Detect the format per message, as a
+        // previous back-end may still be sending the other format after the effect changed.
+        const obj = message.startsWith('{') ? JSON.parse(message) : { spectrum: message }
 
-        if(imgsLoading.ready){
-            var p
-            if(imgsLoading==pt0)p=pt1
-            if(imgsLoading==pt1)p=pt0
-            imgsReady=imgsLoading
-            p.used=true
-            imgsLoading=p
-        }
+        imgsLoading.used = false
+        imgsLoading.spectrum.source = obj.spectrum ? 'data:' + obj.spectrum : ''
+        imgsLoading.wave.source = obj.wave ? 'data:' + obj.wave : ''
+        imgsLoading.beat = obj.beat ?? 0
 
+        // Images may be loaded synchronously, in which case ready never changes.
+        if (imgsLoading.ready)
+            loaded(imgsLoading)
     }
 
-    PreloadingTextures{id:nt;audioAvailable:false}
+    function loaded(textures) {
+        imgsReady = textures
+        imgsLoading = textures === textures0 ? textures1 : textures0
+        imgsLoading.used = true
+    }
 
-    PreloadingTextures{id:pt0;onReadyChanged:{
-        if(ready){
-            imgsReady=pt0
-            pt1.used=true
-            imgsLoading=pt1
-        }
-    }}
+    PreloadingTextures { id: silence; audioAvailable: false }
 
-    PreloadingTextures{id:pt1;onReadyChanged:{
-        if(ready){
-            imgsReady=pt1
-            pt0.used=true
-            imgsLoading=pt0
-        }
-    }}
+    PreloadingTextures { id: textures0; onReadyChanged: if (ready) loaded(textures0) }
+
+    PreloadingTextures { id: textures1; onReadyChanged: if (ready) loaded(textures1) }
 
 }

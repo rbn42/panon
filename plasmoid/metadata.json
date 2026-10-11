@@ -1,0 +1,20 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "rbn42"
+            }
+        ],
+        "Category": "Multimedia",
+        "Description": "A Different Audio Spectrum Analyzer",
+        "Description[zh_CN]": "一个音乐视觉特效插件",
+        "Icon": "applications-multimedia",
+        "Id": "panon",
+        "License": "GPL-3.0-or-later",
+        "Name": "Panon",
+        "Version": "0.5.0",
+        "Website": "https://github.com/rbn42/panon"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

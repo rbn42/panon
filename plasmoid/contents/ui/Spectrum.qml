@@ -1,271 +1,211 @@
-import QtQuick 2.0
-import QtQuick.Layouts 1.1
+import QtQuick
+import QtQuick.Layouts
 
-import org.kde.plasma.plasmoid 2.0
-import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasmoid
+import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.components as PlasmaComponents
 
-import QtQuick.Controls 2.0 as QQC2
+Item {
+    id: root
+    // The saved configuration, with the unapplied changes of the configuration dialog on top.
+    readonly property var cfg: {
+        const config = Plasmoid.configuration
+        const values = {}
+        for (const key of config.keys())
+            values[key] = config[key]
+        return Object.assign(values, config.livePreview)    // see config/ConfigPreview.qml
+    }
 
-import "utils.js" as Utils
+    readonly property bool vertical: Plasmoid.formFactor == PlasmaCore.Types.Vertical
 
-Item{
-    id:root
-    readonly property var cfg:plasmoid.configuration
+    property bool audioAvailable
+    property string fps_message: ""
 
-    property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
+    // The inputs of the shaders, see ShadertoyEffect.qml.
+    property double iTime
+    property double iTimeDelta
+    property double iBeat
+    property int iFrame: 0
+    readonly property vector3d iResolution: gravity <= 2 ? Qt.vector3d(width, height, 0) : Qt.vector3d(height, width, 0)
+    readonly property vector4d iMouse: iMouseArea.i
+    property Item iChannel0
+    property Item iChannel1
+    readonly property Item iChannel2: bufferSES
+    readonly property Item iChannel3: textureImage
 
-    // Layout.minimumWidth:  cfg.autoHide ? animatedMinimum: -1
-    Layout.preferredWidth: vertical ?-1: animatedMinimum
-    Layout.preferredHeight: vertical ?  animatedMinimum:-1
-    Layout.maximumWidth:cfg.autoHide?Layout.preferredWidth:-1
-    Layout.maximumHeight:cfg.autoHide?Layout.preferredHeight:-1
+    property double time_first_frame: Date.now()
+    property double time_fps_start: Date.now()
+    property double time_prev_frame: Date.now()
 
-    // Gravity property: Center(0), North (1), West (4), East (3), South (2)
-    readonly property int gravity:{
-        if(cfg.gravity>0)
+    Layout.preferredWidth: vertical ? -1 : animatedMinimum
+    Layout.preferredHeight: vertical ? animatedMinimum : -1
+    Layout.maximumWidth: cfg.autoHide ? Layout.preferredWidth : -1
+    Layout.maximumHeight: cfg.autoHide ? Layout.preferredHeight : -1
+
+    // Gravity property: Center(0), North (1), South (2), East (3), West (4)
+    readonly property int gravity: {
+        if (cfg.gravity > 0)
             return cfg.gravity
-        switch(plasmoid.location){
-            case PlasmaCore.Types.TopEdge:
+        switch (Plasmoid.location) {
+        case PlasmaCore.Types.TopEdge:
             return 2
-            case PlasmaCore.Types.BottomEdge:
-            return 1
-            case PlasmaCore.Types.RightEdge:
+        case PlasmaCore.Types.RightEdge:
             return 3
-            case PlasmaCore.Types.LeftEdge:
+        case PlasmaCore.Types.LeftEdge:
             return 4
         }
         return 1
     }
 
-    property int animatedMinimum:(!cfg.autoHide) || audioAvailable? cfg.preferredWidth:0
+    property int animatedMinimum: !cfg.autoHide || audioAvailable ? cfg.preferredWidth : 0
 
-    Layout.fillWidth: vertical? false:cfg.autoExtend
-    Layout.fillHeight: vertical? cfg.autoExtend :false
-
-
-    ShaderEffect {
-        id:mainSE
-        readonly property bool colorSpaceHSL: cfg.colorSpaceHSL
-        readonly property bool colorSpaceHSLuv:cfg.colorSpaceHSLuv
-
-        Behavior on hueFrom{ NumberAnimation { duration: 1000} }
-        Behavior on hueTo{ NumberAnimation { duration: 1000} }
-        Behavior on saturation{ NumberAnimation { duration: 1000} }
-        Behavior on lightness{ NumberAnimation { duration: 1000} }
-
-        property int hueFrom    :{
-            if(cfg.colorSpaceHSL)
-                return cfg.hslHueFrom
-            else if(cfg.colorSpaceHSLuv)
-                return cfg.hsluvHueFrom
-        }
-        property int hueTo    :{
-            if(cfg.colorSpaceHSL)
-                return cfg.hslHueTo
-            else if(cfg.colorSpaceHSLuv)
-                return cfg.hsluvHueTo
-        }
-        property int saturation  :{
-            if(cfg.colorSpaceHSL)
-                return cfg.hslSaturation
-            else if(cfg.colorSpaceHSLuv)
-                return cfg.hsluvSaturation
-        }
-        property int lightness   :{
-            if(cfg.colorSpaceHSL)
-                return cfg.hslLightness
-            else if(cfg.colorSpaceHSLuv)
-                return cfg.hsluvLightness
-        }
-
-        readonly property variant iMouse:iMouseArea.i
-
-        property double iTime
-        property double iTimeDelta
-        property double iBeat
-        property variant iResolution:root.gravity<=2?Qt.vector3d(mainSE.width,mainSE.height,0):Qt.vector3d(mainSE.height,mainSE.width,0)
-        property int iFrame:0
-        property vector3d iChannelResolution0:iChannel0?Qt.vector3d(iChannel0.width,iChannel0.height,0):Qt.vector3d(0,0,0)
-        property vector3d iChannelResolution1:iChannel1?Qt.vector3d(iChannel1.width,iChannel1.height,0):Qt.vector3d(0,0,0)
-        property vector3d iChannelResolution2:iChannel2?Qt.vector3d(iChannel2.width,iChannel2.height,0):Qt.vector3d(0,0,0)
-        property vector3d iChannelResolution3:iChannel3?Qt.vector3d(iChannel3.width,iChannel3.height,0):Qt.vector3d(0,0,0)
-        property variant iChannel0
-        property variant iChannel1
-        readonly property variant iChannel2:bufferSES
-        readonly property variant iChannel3:Image{source:'file://'+shaderSourceReader.texture_uri}
-
-
-        property int coord_gravity:root.gravity
-        property bool coord_inversion:cfg.inversion
-
-        anchors.fill: parent
-        blending: true
-        fragmentShader:shaderSourceReader.image_shader_source
-    }
-
-    ShaderEffectSource {
-        visible:false
-        id:bufferSES
-        width: mainSE.iResolution.x
-        height: mainSE.iResolution.y
-        recursive :true
-        live:false
-        sourceItem: ShaderEffect {
-            width: mainSE.iResolution.x
-            height: mainSE.iResolution.y
-
-            readonly property double iTime:mainSE.iTime
-            readonly property double iTimeDelta:mainSE.iTimeDelta
-            readonly property double iBeat:mainSE.iBeat
-            readonly property variant iResolution:mainSE.iResolution
-            readonly property int iFrame:mainSE.iFrame
-            readonly property vector3d iChannelResolution0:mainSE.iChannelResolution0
-            readonly property vector3d iChannelResolution1:mainSE.iChannelResolution1
-            readonly property vector3d iChannelResolution2:mainSE.iChannelResolution2
-            readonly property vector3d iChannelResolution3:mainSE.iChannelResolution3
-            readonly property variant iChannel0:mainSE.iChannel0
-            readonly property variant iChannel1:mainSE.iChannel1
-            readonly property variant iChannel2:mainSE.iChannel2
-            readonly property variant iChannel3:mainSE.iChannel3
-            readonly property variant iMouse:mainSE.iMouse
-            fragmentShader:shaderSourceReader.buffer_shader_source
-        }
-    }
-
-    /*
-    ShaderEffectSource {
-        id:glDFTSES
-        width: glDFTSE.width
-        height: glDFTSE.height
-        visible:false
-        live:false
-        sourceItem: ShaderEffect {
-
-            id:glDFTSE
-            width: 200
-            height: 1
-            property int dftSize:glDFTSE.width
-            property int bufferSize:waveBufferSE.width
-            fragmentShader:shaderSourceReader.gldft_source
-
-            readonly property variant waveBuffer:ShaderEffectSource {
-                id:waveBufferSES
-                width: waveBufferSE.width
-                height: waveBufferSE.height
-                live:false
-                sourceItem: ShaderEffect {
-                    id:waveBufferSE
-                    width: 2000
-                    height: 2
-                    property variant newWave
-                    property int bufferSize:waveBufferSE.width
-                    property int newWaveSize:newWave?newWave.width:0
-                    readonly property variant waveBuffer:waveBufferSES
-                    fragmentShader:shaderSourceReader.wave_buffer_source
-                }
-            }
-        }
-    }
-    */
-
-    readonly property bool loadImageShaderSource:   shaderSourceReader.image_shader_source.trim().length>0
-    readonly property bool loadBufferShaderSource:  shaderSourceReader.buffer_shader_source.trim().length>0
-    readonly property bool failCompileImageShader:  loadImageShaderSource && false // (mainSE.status==ShaderEffect.Error)
-    readonly property bool failCompileBufferShader: loadBufferShaderSource && false // (bufferSES.sourceItem.status==ShaderEffect.Error)
-    property string fps_message:""
-    property string error_message:
-        shaderSourceReader.error_message
-        + (loadImageShaderSource ?"":i18n("Error: Failed to load the visual effect. Please choose another visual effect in the configuration dialog."))
-        + (failCompileImageShader?(i18n("Error: Failed to compile image shader.")+mainSE.log):"")
-        + (failCompileBufferShader?(i18n("Error: Failed to compile bufffer shader.")+bufferSES.sourceItem.log):"")
-    QQC2.Label {
-        id:console_output
-        anchors.fill: parent
-        color: PlasmaCore.ColorScope.textColor
-        text:error_message+(cfg.showFps?fps_message:"")
-    }
-
-    MouseArea {
-        id:iMouseArea
-        hoverEnabled :true
-        anchors.fill: parent
-
-        readonly property double current_x:root.gravity<3?(cfg.inversion?(mainSE.width- mouseX):mouseX):(cfg.inversion?mouseY:(mainSE.height-mouseY))
-        readonly property double current_y:[mainSE.height- mouseY,mouseY ,mainSE.width-mouseX ,mouseX ][root.gravity-1]
-        property double lastdown_x
-        property double lastdown_y
-        property double lastclick_x
-        property double lastclick_y
-
-        property var i:Qt.vector4d(lastdown_x,lastdown_y ,pressed?lastclick_x:-lastclick_x,-lastclick_y)
-        onPressed:{
-            lastclick_x=current_x
-            lastclick_y=current_y
-
-            lastdown_x=current_x
-            lastdown_y=current_y
-        }
-        onPositionChanged:{
-            if(pressed){
-                lastdown_x=current_x
-                lastdown_y=current_y
-            }
-        }
-    }
-
-    ShaderSource{id:shaderSourceReader}
-
-    WsConnection{
-        shaderSourceReader:shaderSourceReader
-        queue:MessageQueue{
-            only_spectrum:shaderSourceReader.enable_iChannel1 && !shaderSourceReader.enable_iChannel0
-            onImgsReadyChanged:{
-
-                audioAvailable=imgsReady.audioAvailable
-                var time_current_frame=Date.now()
-                var deltatime=(time_current_frame-time_prev_frame)/1000.0
-                mainSE.iTime=(time_current_frame-time_first_frame) /1000.0
-                mainSE.iTimeDelta=deltatime
-                mainSE.iFrame+=1
-                if(cfg.showFps)
-                    if(mainSE.iFrame%30==1){
-                        fps_message='fps:'+ Math.round(1000*30/(time_current_frame-time_fps_start))
-                        time_fps_start=time_current_frame
-                    }
-
-                        
-                if(cfg.glDFT){
-                    /*
-                    waveBufferSE.newWave=imgsReady.w;
-                    waveBufferSES.scheduleUpdate();
-                    glDFTSES.scheduleUpdate();
-                    mainSE.iChannel1=glDFTSES;
-                    */
-                }else{
-                    mainSE.iChannel0=imgsReady.w;
-                    mainSE.iChannel1=imgsReady.s;
-                    mainSE.iBeat=imgsReady.beat;
-                }
-                if(shaderSourceReader.enable_buffer)
-                    bufferSES.scheduleUpdate();
-
-                time_prev_frame=time_current_frame
-
-            }
-        }
-    }
-
-    property bool audioAvailable
-
-    property double time_first_frame:Date.now()
-    property double time_fps_start:Date.now()
-    property double time_prev_frame:Date.now()
-    Behavior on animatedMinimum{
-        enabled:cfg.animateAutoHiding
+    Behavior on animatedMinimum {
+        enabled: cfg.animateAutoHiding
         NumberAnimation {
             duration: 250
             easing.type: Easing.InCubic
         }
     }
-}
 
+    Layout.fillWidth: !vertical && cfg.autoExtend
+    Layout.fillHeight: vertical && cfg.autoExtend
+
+    // Created once the effect is built, so that Qt's default shader is never used.
+    Loader {
+        id: mainLoader
+        anchors.fill: parent
+        active: shaderSourceReader.loaded
+        sourceComponent: ShadertoyEffect {
+            inputs: root
+
+            Behavior on hueFrom { NumberAnimation { duration: 1000 } }
+            Behavior on hueTo { NumberAnimation { duration: 1000 } }
+            Behavior on saturation { NumberAnimation { duration: 1000 } }
+            Behavior on lightness { NumberAnimation { duration: 1000 } }
+
+            // Color space: HSL (0), HSLuv (1)
+            readonly property int colorSpace: cfg.colorSpaceHSLuv ? 1 : 0
+            property int hueFrom: cfg.colorSpaceHSLuv ? cfg.hsluvHueFrom : cfg.hslHueFrom
+            property int hueTo: cfg.colorSpaceHSLuv ? cfg.hsluvHueTo : cfg.hslHueTo
+            property int saturation: cfg.colorSpaceHSLuv ? cfg.hsluvSaturation : cfg.hslSaturation
+            property int lightness: cfg.colorSpaceHSLuv ? cfg.hsluvLightness : cfg.hslLightness
+
+            readonly property int coord_gravity: root.gravity
+            readonly property int coord_inversion: cfg.inversion ? 1 : 0
+
+            blending: true
+            fragmentShader: shaderSourceReader.image_shader_source
+        }
+    }
+
+    // The buffer of effects with a buffer shader, available to the shaders as iChannel2.
+    ShaderEffectSource {
+        id: bufferSES
+        visible: false
+        width: iResolution.x
+        height: iResolution.y
+        recursive: true
+        live: false
+        sourceItem: bufferLoader.item as Item
+    }
+
+    Loader {
+        id: bufferLoader
+        active: shaderSourceReader.enable_buffer
+        sourceComponent: ShadertoyEffect {
+            inputs: root
+            visible: false
+            width: iResolution.x
+            height: iResolution.y
+            fragmentShader: shaderSourceReader.buffer_shader_source
+        }
+    }
+
+    // The texture.png of the effect, available to the shaders as iChannel3.
+    Image {
+        id: textureImage
+        visible: false
+        source: shaderSourceReader.texture_uri
+    }
+
+    readonly property string error_message: {
+        if (shaderSourceReader.error_message)
+            return shaderSourceReader.error_message
+        if (!shaderSourceReader.loaded)
+            return i18n("Error: Failed to load the visual effect. Please choose another visual effect in the configuration dialog.")
+        if (mainLoader.item?.status === ShaderEffect.Error)
+            return i18n("Error: Failed to compile image shader.") + mainLoader.item.log
+        if (bufferLoader.item?.status === ShaderEffect.Error)
+            return i18n("Error: Failed to compile buffer shader.") + bufferLoader.item.log
+        return wsConnection.error_message
+    }
+
+    PlasmaComponents.Label {
+        anchors.fill: parent
+        text: error_message + (cfg.showFps ? fps_message : "")
+        wrapMode: Text.Wrap
+    }
+
+    MouseArea {
+        id: iMouseArea
+        anchors.fill: parent
+
+        readonly property double current_x: root.gravity < 3 ? (cfg.inversion ? (width - mouseX) : mouseX) : (cfg.inversion ? mouseY : (height - mouseY))
+        readonly property double current_y: [height - mouseY, mouseY, width - mouseX, mouseX][root.gravity - 1]
+        property double lastdown_x
+        property double lastdown_y
+        property double lastclick_x
+        property double lastclick_y
+
+        readonly property vector4d i: Qt.vector4d(lastdown_x, lastdown_y, pressed ? lastclick_x : -lastclick_x, -lastclick_y)
+        onPressed: {
+            lastclick_x = current_x
+            lastclick_y = current_y
+
+            lastdown_x = current_x
+            lastdown_y = current_y
+        }
+        onPositionChanged: {
+            if (pressed) {
+                lastdown_x = current_x
+                lastdown_y = current_y
+            }
+        }
+    }
+
+    ShaderSource {
+        id: shaderSourceReader
+        cfg: root.cfg
+    }
+
+    MessageQueue {
+        id: messageQueue
+        onImgsReadyChanged: {
+            audioAvailable = imgsReady.audioAvailable
+            const time_current_frame = Date.now()
+            iTime = (time_current_frame - time_first_frame) / 1000.0
+            iTimeDelta = (time_current_frame - time_prev_frame) / 1000.0
+            iFrame += 1
+            // Measure the fps every 30 frames.
+            if (cfg.showFps && iFrame % 30 == 1) {
+                fps_message = 'fps:' + Math.round(1000 * 30 / (time_current_frame - time_fps_start))
+                time_fps_start = time_current_frame
+            }
+
+            iChannel0 = imgsReady.wave
+            iChannel1 = imgsReady.spectrum
+            iBeat = imgsReady.beat
+            if (shaderSourceReader.enable_buffer)
+                bufferSES.scheduleUpdate()
+
+            time_prev_frame = time_current_frame
+        }
+    }
+
+    WsConnection {
+        id: wsConnection
+        cfg: root.cfg
+        shaderSource: shaderSourceReader
+        queue: messageQueue
+    }
+}
